@@ -1,0 +1,516 @@
+{
+  "device": "nokia_8110",
+  "generated": "2026-08-11T15:08:38",
+  "texture": "texture.png",
+  "texture_size": [
+    1375,
+    1489
+  ],
+  "canvas": [
+    560,
+    1040
+  ],
+  "part_count": 10,
+  "parts": [
+    {
+      "id": "antenna",
+      "name": "Antenna",
+      "frame": {
+        "x": 800,
+        "y": 810,
+        "w": 79,
+        "h": 318
+      },
+      "corners": [
+        [
+          800,
+          810
+        ],
+        [
+          879,
+          810
+        ],
+        [
+          879,
+          1128
+        ],
+        [
+          800,
+          1128
+        ]
+      ],
+      "uv": [
+        0.581818,
+        0.543989,
+        0.639273,
+        0.757555
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        400.0,
+        130.0
+      ],
+      "size": [
+        60.0,
+        240.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_152.png"
+    },
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 330,
+        "h": 801
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          333,
+          3
+        ],
+        [
+          333,
+          804
+        ],
+        [
+          3,
+          804
+        ]
+      ],
+      "uv": [
+        0.002182,
+        0.002015,
+        0.242182,
+        0.53996
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        560.0
+      ],
+      "size": [
+        330.0,
+        801.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_091.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "frame": {
+        "x": 885,
+        "y": 810,
+        "w": 221,
+        "h": 302
+      },
+      "corners": [
+        [
+          885,
+          810
+        ],
+        [
+          1106,
+          810
+        ],
+        [
+          1106,
+          1112
+        ],
+        [
+          885,
+          1112
+        ]
+      ],
+      "uv": [
+        0.643636,
+        0.543989,
+        0.804364,
+        0.74681
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        700.0
+      ],
+      "size": [
+        221.0,
+        302.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_107.png"
+    },
+    {
+      "id": "rear_chassis",
+      "name": "Rear Chassis",
+      "frame": {
+        "x": 673,
+        "y": 3,
+        "w": 270,
+        "h": 757
+      },
+      "corners": [
+        [
+          673,
+          3
+        ],
+        [
+          943,
+          3
+        ],
+        [
+          943,
+          760
+        ],
+        [
+          673,
+          760
+        ]
+      ],
+      "uv": [
+        0.489455,
+        0.002015,
+        0.685818,
+        0.51041
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        560.0
+      ],
+      "size": [
+        270.0,
+        757.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_092.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "frame": {
+        "x": 949,
+        "y": 3,
+        "w": 297,
+        "h": 741
+      },
+      "corners": [
+        [
+          949,
+          3
+        ],
+        [
+          1246,
+          3
+        ],
+        [
+          1246,
+          744
+        ],
+        [
+          949,
+          744
+        ]
+      ],
+      "uv": [
+        0.690182,
+        0.002015,
+        0.906182,
+        0.499664
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        560.0
+      ],
+      "size": [
+        258.0,
+        644.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_089.png"
+    },
+    {
+      "id": "display_module",
+      "name": "Display Module",
+      "frame": {
+        "x": 3,
+        "y": 810,
+        "w": 270,
+        "h": 676
+      },
+      "corners": [
+        [
+          3,
+          810
+        ],
+        [
+          273,
+          810
+        ],
+        [
+          273,
+          1486
+        ],
+        [
+          3,
+          1486
+        ]
+      ],
+      "uv": [
+        0.002182,
+        0.543989,
+        0.198545,
+        0.997985
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        606.0
+      ],
+      "size": [
+        270.0,
+        676.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_094.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "frame": {
+        "x": 279,
+        "y": 810,
+        "w": 255,
+        "h": 361
+      },
+      "corners": [
+        [
+          279,
+          810
+        ],
+        [
+          534,
+          810
+        ],
+        [
+          534,
+          1171
+        ],
+        [
+          279,
+          1171
+        ]
+      ],
+      "uv": [
+        0.202909,
+        0.543989,
+        0.388364,
+        0.786434
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        690.0
+      ],
+      "size": [
+        255.0,
+        361.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_095.png"
+    },
+    {
+      "id": "keypad_bezel",
+      "name": "Keypad Bezel",
+      "frame": {
+        "x": 540,
+        "y": 810,
+        "w": 254,
+        "h": 341
+      },
+      "corners": [
+        [
+          540,
+          810
+        ],
+        [
+          794,
+          810
+        ],
+        [
+          794,
+          1151
+        ],
+        [
+          540,
+          1151
+        ]
+      ],
+      "uv": [
+        0.392727,
+        0.543989,
+        0.577455,
+        0.773002
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        690.0
+      ],
+      "size": [
+        254.0,
+        341.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_100_punched.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "frame": {
+        "x": 339,
+        "y": 3,
+        "w": 328,
+        "h": 801
+      },
+      "corners": [
+        [
+          339,
+          3
+        ],
+        [
+          667,
+          3
+        ],
+        [
+          667,
+          804
+        ],
+        [
+          339,
+          804
+        ]
+      ],
+      "uv": [
+        0.246545,
+        0.002015,
+        0.485091,
+        0.53996
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        560.0
+      ],
+      "size": [
+        328.0,
+        801.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_090_punched.png"
+    },
+    {
+      "id": "screen_glass",
+      "name": "Screen Glass",
+      "frame": {
+        "x": 1112,
+        "y": 810,
+        "w": 257,
+        "h": 290
+      },
+      "corners": [
+        [
+          1112,
+          810
+        ],
+        [
+          1369,
+          810
+        ],
+        [
+          1369,
+          1100
+        ],
+        [
+          1112,
+          1100
+        ]
+      ],
+      "uv": [
+        0.808727,
+        0.543989,
+        0.995636,
+        0.738751
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        442.0
+      ],
+      "size": [
+        205.0,
+        172.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_8110\\parts\\part_093.png"
+    }
+  ]
+}

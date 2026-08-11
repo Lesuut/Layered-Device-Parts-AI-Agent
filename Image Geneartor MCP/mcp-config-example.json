@@ -1,0 +1,11 @@
+{
+  "_comment": "Ручная регистрация, если не подошёл install.bat. Для Claude Code положить в .mcp.json проекта, либо добавить блок mcpServers в ~/.claude.json. Для Claude Desktop — в claude_desktop_config.json.",
+  "mcpServers": {
+    "flow-images": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\Image Geneartor MCP\\mcp_server.py"
+      ]
+    }
+  }
+}
