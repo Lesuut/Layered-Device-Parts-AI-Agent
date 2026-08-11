@@ -116,10 +116,14 @@ def asset_pack(
         list[dict],
         Field(
             description='Детали в порядке слоёв, снизу вверх. Каждая: '
-            '{"file":"...png","id":"back_cover","name":"Back Cover","layer":0,'
+            '{"file":"...png","id":"back_cover","name":"Back Cover",'
+            '"type":"housing_rear","layer":0,'
             '"position":[x,y],"size":[w,h],"rotation":0}. Обязателен только file; '
             'layer по умолчанию = позиция в списке, position = центр холста, '
-            'size = натуральный размер детали'
+            'size = натуральный размер детали, type = misc. '
+            'type — общая классификация детали, брать из ТИПЫ_ДЕТАЛЕЙ.md '
+            'в корне проекта (прочитать файл, найти подходящий тип, '
+            'а если такого нет — сначала дописать новый в таблицу)'
         ),
     ],
     out_dir: Annotated[str, Field(description="Папка для texture.png и device.json")],
@@ -176,8 +180,9 @@ def asset_update(
         Field(
             description='Правки по id: [{"id":"battery","dx":0,"dy":-12}] или '
             '{"id":"keypad","position":[300,720],"size":[305,392],"rotation":0,'
-            '"layer":5,"scale":1.0,"name":"Keypad"}. dx/dy — сдвиг относительно '
-            'текущей позиции, position — абсолютный центр'
+            '"layer":5,"scale":1.0,"name":"Keypad","type":"button_pad"}. '
+            'dx/dy — сдвиг относительно текущей позиции, position — абсолютный '
+            'центр, type — классификация из ТИПЫ_ДЕТАЛЕЙ.md'
         ),
     ],
 ) -> str:

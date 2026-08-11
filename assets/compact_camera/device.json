@@ -1,0 +1,781 @@
+{
+  "device": "compact_camera",
+  "generated": "2026-08-11T21:21:20",
+  "texture": "texture.png",
+  "texture_size": [
+    1394,
+    1414
+  ],
+  "canvas": [
+    900,
+    620
+  ],
+  "part_count": 15,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 716,
+        "y": 3,
+        "w": 658,
+        "h": 422
+      },
+      "corners": [
+        [
+          716,
+          3
+        ],
+        [
+          1374,
+          3
+        ],
+        [
+          1374,
+          425
+        ],
+        [
+          716,
+          425
+        ]
+      ],
+      "uv": [
+        0.51363,
+        0.002122,
+        0.985653,
+        0.300566
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        310.0
+      ],
+      "size": [
+        658.0,
+        422.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_001.png"
+    },
+    {
+      "id": "top_plate",
+      "name": "Top Plate",
+      "type": "housing_part",
+      "frame": {
+        "x": 3,
+        "y": 1107,
+        "w": 672,
+        "h": 181
+      },
+      "corners": [
+        [
+          3,
+          1107
+        ],
+        [
+          675,
+          1107
+        ],
+        [
+          675,
+          1288
+        ],
+        [
+          3,
+          1288
+        ]
+      ],
+      "uv": [
+        0.002152,
+        0.782885,
+        0.484218,
+        0.910891
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        142.0
+      ],
+      "size": [
+        672.0,
+        181.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_037.png"
+    },
+    {
+      "id": "bottom_plate",
+      "name": "Bottom Plate",
+      "type": "housing_part",
+      "frame": {
+        "x": 681,
+        "y": 1107,
+        "w": 659,
+        "h": 151
+      },
+      "corners": [
+        [
+          681,
+          1107
+        ],
+        [
+          1340,
+          1107
+        ],
+        [
+          1340,
+          1258
+        ],
+        [
+          681,
+          1258
+        ]
+      ],
+      "uv": [
+        0.488522,
+        0.782885,
+        0.961263,
+        0.889675
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        488.0
+      ],
+      "size": [
+        659.0,
+        151.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_027.png"
+    },
+    {
+      "id": "screw_1",
+      "name": "Screw 1",
+      "type": "fastener",
+      "frame": {
+        "x": 553,
+        "y": 1294,
+        "w": 65,
+        "h": 65
+      },
+      "corners": [
+        [
+          553,
+          1294
+        ],
+        [
+          618,
+          1294
+        ],
+        [
+          618,
+          1359
+        ],
+        [
+          553,
+          1359
+        ]
+      ],
+      "uv": [
+        0.3967,
+        0.915134,
+        0.443329,
+        0.961103
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        140.0,
+        140.0
+      ],
+      "size": [
+        34.0,
+        34.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_059.png"
+    },
+    {
+      "id": "screw_2",
+      "name": "Screw 2",
+      "type": "fastener",
+      "frame": {
+        "x": 624,
+        "y": 1294,
+        "w": 64,
+        "h": 65
+      },
+      "corners": [
+        [
+          624,
+          1294
+        ],
+        [
+          688,
+          1294
+        ],
+        [
+          688,
+          1359
+        ],
+        [
+          624,
+          1359
+        ]
+      ],
+      "uv": [
+        0.447633,
+        0.915134,
+        0.493544,
+        0.961103
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        760.0,
+        140.0
+      ],
+      "size": [
+        34.0,
+        34.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_060.png"
+    },
+    {
+      "id": "screw_3",
+      "name": "Screw 3",
+      "type": "fastener",
+      "frame": {
+        "x": 694,
+        "y": 1294,
+        "w": 63,
+        "h": 65
+      },
+      "corners": [
+        [
+          694,
+          1294
+        ],
+        [
+          757,
+          1294
+        ],
+        [
+          757,
+          1359
+        ],
+        [
+          694,
+          1359
+        ]
+      ],
+      "uv": [
+        0.497848,
+        0.915134,
+        0.543042,
+        0.961103
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        140.0,
+        480.0
+      ],
+      "size": [
+        34.0,
+        34.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_061.png"
+    },
+    {
+      "id": "screw_4",
+      "name": "Screw 4",
+      "type": "fastener",
+      "frame": {
+        "x": 763,
+        "y": 1294,
+        "w": 63,
+        "h": 63
+      },
+      "corners": [
+        [
+          763,
+          1294
+        ],
+        [
+          826,
+          1294
+        ],
+        [
+          826,
+          1357
+        ],
+        [
+          763,
+          1357
+        ]
+      ],
+      "uv": [
+        0.547346,
+        0.915134,
+        0.592539,
+        0.959689
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        760.0,
+        480.0
+      ],
+      "size": [
+        34.0,
+        34.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_064.png"
+    },
+    {
+      "id": "viewfinder",
+      "name": "Viewfinder Eyepiece",
+      "type": "optics",
+      "frame": {
+        "x": 3,
+        "y": 1294,
+        "w": 172,
+        "h": 117
+      },
+      "corners": [
+        [
+          3,
+          1294
+        ],
+        [
+          175,
+          1294
+        ],
+        [
+          175,
+          1411
+        ],
+        [
+          3,
+          1411
+        ]
+      ],
+      "uv": [
+        0.002152,
+        0.915134,
+        0.125538,
+        0.997878
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        560.0,
+        175.0
+      ],
+      "size": [
+        138.0,
+        94.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_055.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 600,
+        "y": 802,
+        "w": 190,
+        "h": 252
+      },
+      "corners": [
+        [
+          600,
+          802
+        ],
+        [
+          790,
+          802
+        ],
+        [
+          790,
+          1054
+        ],
+        [
+          600,
+          1054
+        ]
+      ],
+      "uv": [
+        0.430416,
+        0.567185,
+        0.566714,
+        0.745403
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        180.0,
+        330.0
+      ],
+      "size": [
+        150.0,
+        199.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_021.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 730,
+        "y": 446,
+        "w": 658,
+        "h": 308
+      },
+      "corners": [
+        [
+          730,
+          446
+        ],
+        [
+          1388,
+          446
+        ],
+        [
+          1388,
+          754
+        ],
+        [
+          730,
+          754
+        ]
+      ],
+      "uv": [
+        0.523673,
+        0.315417,
+        0.995696,
+        0.533239
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        320.0
+      ],
+      "size": [
+        658.0,
+        308.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_014.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 446,
+        "w": 721,
+        "h": 350
+      },
+      "corners": [
+        [
+          3,
+          446
+        ],
+        [
+          724,
+          446
+        ],
+        [
+          724,
+          796
+        ],
+        [
+          3,
+          796
+        ]
+      ],
+      "uv": [
+        0.002152,
+        0.315417,
+        0.519369,
+        0.562942
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        340.0
+      ],
+      "size": [
+        640.0,
+        311.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\pcb_main.png"
+    },
+    {
+      "id": "sensor_module",
+      "name": "Image Sensor",
+      "type": "sensor",
+      "frame": {
+        "x": 3,
+        "y": 802,
+        "w": 286,
+        "h": 299
+      },
+      "corners": [
+        [
+          3,
+          802
+        ],
+        [
+          289,
+          802
+        ],
+        [
+          289,
+          1101
+        ],
+        [
+          3,
+          1101
+        ]
+      ],
+      "uv": [
+        0.002152,
+        0.567185,
+        0.207317,
+        0.778642
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        507.0,
+        350.0
+      ],
+      "size": [
+        150.0,
+        157.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_044.png"
+    },
+    {
+      "id": "flash_module",
+      "name": "Flash & Viewfinder Module",
+      "type": "optics",
+      "frame": {
+        "x": 181,
+        "y": 1294,
+        "w": 366,
+        "h": 94
+      },
+      "corners": [
+        [
+          181,
+          1294
+        ],
+        [
+          547,
+          1294
+        ],
+        [
+          547,
+          1388
+        ],
+        [
+          181,
+          1388
+        ]
+      ],
+      "uv": [
+        0.129842,
+        0.915134,
+        0.392396,
+        0.981612
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        592.0,
+        168.0
+      ],
+      "size": [
+        356.0,
+        91.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_003.png"
+    },
+    {
+      "id": "lens_assembly",
+      "name": "Lens Assembly",
+      "type": "optics",
+      "frame": {
+        "x": 295,
+        "y": 802,
+        "w": 299,
+        "h": 290
+      },
+      "corners": [
+        [
+          295,
+          802
+        ],
+        [
+          594,
+          802
+        ],
+        [
+          594,
+          1092
+        ],
+        [
+          295,
+          1092
+        ]
+      ],
+      "uv": [
+        0.211621,
+        0.567185,
+        0.426112,
+        0.772277
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        507.0,
+        350.0
+      ],
+      "size": [
+        224.0,
+        217.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 13,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_043.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 707,
+        "h": 437
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          710,
+          3
+        ],
+        [
+          710,
+          440
+        ],
+        [
+          3,
+          440
+        ]
+      ],
+      "uv": [
+        0.002152,
+        0.002122,
+        0.509326,
+        0.311174
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        310.0
+      ],
+      "size": [
+        707.0,
+        437.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 14,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\compact_camera\\parts\\part_035.png"
+    }
+  ]
+}

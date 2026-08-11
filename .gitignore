@@ -18,3 +18,6 @@ desktop.ini
 
 # Asset builder intermediate build dirs (пересобираются из деталей)
 work/*/build/
+
+# Лента событий панели — своя на каждую сессию
+Pipeline Dashboard/state/

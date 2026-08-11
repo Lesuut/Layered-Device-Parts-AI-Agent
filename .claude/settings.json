@@ -1,0 +1,65 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\hook.py\" session-start",
+            "timeout": 25,
+            "statusMessage": "Открываю панель конвейера"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "mcp__flow-images__flow_generate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\promptguard.py\"",
+            "timeout": 10,
+            "statusMessage": "Сверяю промт с Promts/"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__flow-images__.*|mcp__bg-remover__.*|mcp__asset-builder__.*|Read|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\hook.py\" pre",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__flow-images__.*|mcp__bg-remover__.*|mcp__asset-builder__.*|Read|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\hook.py\" post",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\hook.py\" stop",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

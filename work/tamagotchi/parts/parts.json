@@ -1,0 +1,949 @@
+{
+  "parts": [
+    {
+      "index": 1,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_001.png",
+      "filename": "part_001.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        396,
+        102,
+        894,
+        680
+      ],
+      "width": 498,
+      "height": 578,
+      "area_px": 162058,
+      "aspect": 0.862
+    },
+    {
+      "index": 2,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_002.png",
+      "filename": "part_002.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        960,
+        107,
+        1440,
+        644
+      ],
+      "width": 480,
+      "height": 537,
+      "area_px": 143999,
+      "aspect": 0.894
+    },
+    {
+      "index": 3,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_003.png",
+      "filename": "part_003.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1505,
+        151,
+        1660,
+        644
+      ],
+      "width": 155,
+      "height": 493,
+      "area_px": 56092,
+      "aspect": 0.314
+    },
+    {
+      "index": 4,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_004.png",
+      "filename": "part_004.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1728,
+        152,
+        1998,
+        648
+      ],
+      "width": 270,
+      "height": 496,
+      "area_px": 99801,
+      "aspect": 0.544
+    },
+    {
+      "index": 5,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_005.png",
+      "filename": "part_005.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1017,
+        680,
+        1106,
+        774
+      ],
+      "width": 89,
+      "height": 94,
+      "area_px": 6064,
+      "aspect": 0.947
+    },
+    {
+      "index": 6,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_006.png",
+      "filename": "part_006.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1156,
+        680,
+        1245,
+        777
+      ],
+      "width": 89,
+      "height": 97,
+      "area_px": 6039,
+      "aspect": 0.918
+    },
+    {
+      "index": 7,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_007.png",
+      "filename": "part_007.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1294,
+        680,
+        1383,
+        774
+      ],
+      "width": 89,
+      "height": 94,
+      "area_px": 6060,
+      "aspect": 0.947
+    },
+    {
+      "index": 8,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_008.png",
+      "filename": "part_008.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1715,
+        699,
+        2094,
+        1046
+      ],
+      "width": 379,
+      "height": 347,
+      "area_px": 123911,
+      "aspect": 1.092
+    },
+    {
+      "index": 9,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_009.png",
+      "filename": "part_009.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        970,
+        708,
+        1669,
+        1522
+      ],
+      "width": 699,
+      "height": 814,
+      "area_px": 242453,
+      "aspect": 0.859
+    },
+    {
+      "index": 10,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_010.png",
+      "filename": "part_010.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        425,
+        731,
+        505,
+        1033
+      ],
+      "width": 80,
+      "height": 302,
+      "area_px": 12079,
+      "aspect": 0.265
+    },
+    {
+      "index": 11,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_011.png",
+      "filename": "part_011.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        596,
+        731,
+        647,
+        812
+      ],
+      "width": 51,
+      "height": 81,
+      "area_px": 2920,
+      "aspect": 0.63
+    },
+    {
+      "index": 12,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_012.png",
+      "filename": "part_012.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        716,
+        731,
+        860,
+        1052
+      ],
+      "width": 144,
+      "height": 321,
+      "area_px": 28338,
+      "aspect": 0.449
+    },
+    {
+      "index": 13,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_013.png",
+      "filename": "part_013.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        586,
+        821,
+        656,
+        946
+      ],
+      "width": 70,
+      "height": 125,
+      "area_px": 6644,
+      "aspect": 0.56
+    },
+    {
+      "index": 14,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_014.png",
+      "filename": "part_014.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        579,
+        980,
+        667,
+        1033
+      ],
+      "width": 88,
+      "height": 53,
+      "area_px": 3945,
+      "aspect": 1.66
+    },
+    {
+      "index": 15,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_015.png",
+      "filename": "part_015.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        358,
+        1096,
+        876,
+        1686
+      ],
+      "width": 518,
+      "height": 590,
+      "area_px": 236797,
+      "aspect": 0.878
+    },
+    {
+      "index": 16,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_016.png",
+      "filename": "part_016.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1608,
+        1097,
+        2078,
+        1686
+      ],
+      "width": 470,
+      "height": 589,
+      "area_px": 216377,
+      "aspect": 0.798
+    },
+    {
+      "index": 17,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_017.png",
+      "filename": "part_017.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        888,
+        1172,
+        967,
+        1321
+      ],
+      "width": 79,
+      "height": 149,
+      "area_px": 9313,
+      "aspect": 0.53
+    },
+    {
+      "index": 18,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_018.png",
+      "filename": "part_018.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1456,
+        1186,
+        1594,
+        1329
+      ],
+      "width": 138,
+      "height": 143,
+      "area_px": 14709,
+      "aspect": 0.965
+    },
+    {
+      "index": 19,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_019.png",
+      "filename": "part_019.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1466,
+        1347,
+        1509,
+        1422
+      ],
+      "width": 43,
+      "height": 75,
+      "area_px": 1788,
+      "aspect": 0.573
+    },
+    {
+      "index": 20,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_020.png",
+      "filename": "part_020.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1302,
+        1355,
+        1421,
+        1485
+      ],
+      "width": 119,
+      "height": 130,
+      "area_px": 11733,
+      "aspect": 0.915
+    },
+    {
+      "index": 21,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_021.png",
+      "filename": "part_021.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        982,
+        1367,
+        1095,
+        1462
+      ],
+      "width": 113,
+      "height": 95,
+      "area_px": 5554,
+      "aspect": 1.189
+    },
+    {
+      "index": 22,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_022.png",
+      "filename": "part_022.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1523,
+        1427,
+        1567,
+        1502
+      ],
+      "width": 44,
+      "height": 75,
+      "area_px": 1785,
+      "aspect": 0.587
+    },
+    {
+      "index": 23,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_023.png",
+      "filename": "part_023.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1466,
+        1452,
+        1509,
+        1526
+      ],
+      "width": 43,
+      "height": 74,
+      "area_px": 1752,
+      "aspect": 0.581
+    },
+    {
+      "index": 24,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_024.png",
+      "filename": "part_024.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        1467,
+        1557,
+        1589,
+        1676
+      ],
+      "width": 122,
+      "height": 119,
+      "area_px": 9304,
+      "aspect": 1.025
+    },
+    {
+      "index": 25,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_025.png",
+      "filename": "part_025.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_01_2k_nobg.png",
+      "src_bbox": [
+        974,
+        1559,
+        1426,
+        1686
+      ],
+      "width": 452,
+      "height": 127,
+      "area_px": 39416,
+      "aspect": 3.559
+    },
+    {
+      "index": 26,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_026.png",
+      "filename": "part_026.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        391,
+        80,
+        909,
+        676
+      ],
+      "width": 518,
+      "height": 596,
+      "area_px": 242169,
+      "aspect": 0.869
+    },
+    {
+      "index": 27,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_027.png",
+      "filename": "part_027.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1013,
+        85,
+        1626,
+        672
+      ],
+      "width": 613,
+      "height": 587,
+      "area_px": 277832,
+      "aspect": 1.044
+    },
+    {
+      "index": 28,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_028.png",
+      "filename": "part_028.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1719,
+        205,
+        2009,
+        510
+      ],
+      "width": 290,
+      "height": 305,
+      "area_px": 75663,
+      "aspect": 0.951
+    },
+    {
+      "index": 29,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_029.png",
+      "filename": "part_029.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1773,
+        560,
+        1943,
+        646
+      ],
+      "width": 170,
+      "height": 86,
+      "area_px": 11476,
+      "aspect": 1.977
+    },
+    {
+      "index": 30,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_030.png",
+      "filename": "part_030.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        777,
+        718,
+        1669,
+        1372
+      ],
+      "width": 892,
+      "height": 654,
+      "area_px": 404100,
+      "aspect": 1.364
+    },
+    {
+      "index": 31,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_031.png",
+      "filename": "part_031.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        335,
+        740,
+        709,
+        1054
+      ],
+      "width": 374,
+      "height": 314,
+      "area_px": 114491,
+      "aspect": 1.191
+    },
+    {
+      "index": 32,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_032.png",
+      "filename": "part_032.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1681,
+        786,
+        2086,
+        1008
+      ],
+      "width": 405,
+      "height": 222,
+      "area_px": 44679,
+      "aspect": 1.824
+    },
+    {
+      "index": 33,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_033.png",
+      "filename": "part_033.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1748,
+        1066,
+        1839,
+        1150
+      ],
+      "width": 91,
+      "height": 84,
+      "area_px": 5253,
+      "aspect": 1.083
+    },
+    {
+      "index": 34,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_034.png",
+      "filename": "part_034.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1860,
+        1067,
+        1951,
+        1150
+      ],
+      "width": 91,
+      "height": 83,
+      "area_px": 5231,
+      "aspect": 1.096
+    },
+    {
+      "index": 35,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_035.png",
+      "filename": "part_035.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1978,
+        1069,
+        2054,
+        1143
+      ],
+      "width": 76,
+      "height": 74,
+      "area_px": 4028,
+      "aspect": 1.027
+    },
+    {
+      "index": 36,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_036.png",
+      "filename": "part_036.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        2089,
+        1070,
+        2165,
+        1144
+      ],
+      "width": 76,
+      "height": 74,
+      "area_px": 3944,
+      "aspect": 1.027
+    },
+    {
+      "index": 37,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_037.png",
+      "filename": "part_037.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        236,
+        1114,
+        787,
+        1705
+      ],
+      "width": 551,
+      "height": 591,
+      "area_px": 260334,
+      "aspect": 0.932
+    },
+    {
+      "index": 38,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_038.png",
+      "filename": "part_038.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1915,
+        1156,
+        2159,
+        1394
+      ],
+      "width": 244,
+      "height": 238,
+      "area_px": 33851,
+      "aspect": 1.025
+    },
+    {
+      "index": 39,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_039.png",
+      "filename": "part_039.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1422,
+        1192,
+        1559,
+        1352
+      ],
+      "width": 137,
+      "height": 160,
+      "area_px": 14947,
+      "aspect": 0.856
+    },
+    {
+      "index": 40,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_040.png",
+      "filename": "part_040.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1603,
+        1193,
+        1713,
+        1369
+      ],
+      "width": 110,
+      "height": 176,
+      "area_px": 11449,
+      "aspect": 0.625
+    },
+    {
+      "index": 41,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_041.png",
+      "filename": "part_041.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1765,
+        1204,
+        1865,
+        1344
+      ],
+      "width": 100,
+      "height": 140,
+      "area_px": 10625,
+      "aspect": 0.714
+    },
+    {
+      "index": 42,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_042.png",
+      "filename": "part_042.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1095,
+        1421,
+        1142,
+        1489
+      ],
+      "width": 47,
+      "height": 68,
+      "area_px": 1853,
+      "aspect": 0.691
+    },
+    {
+      "index": 43,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_043.png",
+      "filename": "part_043.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1200,
+        1421,
+        1248,
+        1490
+      ],
+      "width": 48,
+      "height": 69,
+      "area_px": 1848,
+      "aspect": 0.696
+    },
+    {
+      "index": 44,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_044.png",
+      "filename": "part_044.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1303,
+        1421,
+        1351,
+        1489
+      ],
+      "width": 48,
+      "height": 68,
+      "area_px": 1853,
+      "aspect": 0.706
+    },
+    {
+      "index": 45,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_045.png",
+      "filename": "part_045.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        836,
+        1427,
+        996,
+        1502
+      ],
+      "width": 160,
+      "height": 75,
+      "area_px": 8817,
+      "aspect": 2.133
+    },
+    {
+      "index": 46,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_046.png",
+      "filename": "part_046.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1832,
+        1428,
+        2163,
+        1541
+      ],
+      "width": 331,
+      "height": 113,
+      "area_px": 26420,
+      "aspect": 2.929
+    },
+    {
+      "index": 47,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_047.png",
+      "filename": "part_047.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1423,
+        1431,
+        1538,
+        1490
+      ],
+      "width": 115,
+      "height": 59,
+      "area_px": 4767,
+      "aspect": 1.949
+    },
+    {
+      "index": 48,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_048.png",
+      "filename": "part_048.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1618,
+        1435,
+        1736,
+        1498
+      ],
+      "width": 118,
+      "height": 63,
+      "area_px": 4775,
+      "aspect": 1.873
+    },
+    {
+      "index": 49,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_049.png",
+      "filename": "part_049.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1094,
+        1516,
+        1142,
+        1585
+      ],
+      "width": 48,
+      "height": 69,
+      "area_px": 1868,
+      "aspect": 0.696
+    },
+    {
+      "index": 50,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_050.png",
+      "filename": "part_050.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1185,
+        1525,
+        1358,
+        1698
+      ],
+      "width": 173,
+      "height": 173,
+      "area_px": 22342,
+      "aspect": 1.0
+    },
+    {
+      "index": 51,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_051.png",
+      "filename": "part_051.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1602,
+        1535,
+        1773,
+        1704
+      ],
+      "width": 171,
+      "height": 169,
+      "area_px": 21603,
+      "aspect": 1.012
+    },
+    {
+      "index": 52,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_052.png",
+      "filename": "part_052.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1397,
+        1536,
+        1564,
+        1704
+      ],
+      "width": 167,
+      "height": 168,
+      "area_px": 20976,
+      "aspect": 0.994
+    },
+    {
+      "index": 53,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_053.png",
+      "filename": "part_053.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        903,
+        1540,
+        959,
+        1595
+      ],
+      "width": 56,
+      "height": 55,
+      "area_px": 2079,
+      "aspect": 1.018
+    },
+    {
+      "index": 54,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_054.png",
+      "filename": "part_054.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        981,
+        1540,
+        1037,
+        1595
+      ],
+      "width": 56,
+      "height": 55,
+      "area_px": 2081,
+      "aspect": 1.018
+    },
+    {
+      "index": 55,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_055.png",
+      "filename": "part_055.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        2050,
+        1579,
+        2149,
+        1674
+      ],
+      "width": 99,
+      "height": 95,
+      "area_px": 7110,
+      "aspect": 1.042
+    },
+    {
+      "index": 56,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_056.png",
+      "filename": "part_056.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1812,
+        1584,
+        2004,
+        1671
+      ],
+      "width": 192,
+      "height": 87,
+      "area_px": 14117,
+      "aspect": 2.207
+    },
+    {
+      "index": 57,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_057.png",
+      "filename": "part_057.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        1094,
+        1611,
+        1142,
+        1680
+      ],
+      "width": 48,
+      "height": 69,
+      "area_px": 1861,
+      "aspect": 0.696
+    },
+    {
+      "index": 58,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_058.png",
+      "filename": "part_058.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        904,
+        1617,
+        959,
+        1673
+      ],
+      "width": 55,
+      "height": 56,
+      "area_px": 2078,
+      "aspect": 0.982
+    },
+    {
+      "index": 59,
+      "file": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\part_059.png",
+      "filename": "part_059.png",
+      "src": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\cut\\img_04_2k_nobg.png",
+      "src_bbox": [
+        981,
+        1617,
+        1036,
+        1673
+      ],
+      "width": 55,
+      "height": 56,
+      "area_px": 2075,
+      "aspect": 0.982
+    }
+  ],
+  "contact_sheet": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\tamagotchi\\parts\\contact_sheet.png"
+}

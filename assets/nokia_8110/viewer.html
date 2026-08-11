@@ -7,7 +7,7 @@
 <style>
   :root {
     --bg: #14161a; --panel: #1c1f26; --line: #2c313b;
-    --text: #e8eaef; --dim: #98a0b0; --accent: #5ac8fa;
+    --text: #e8eaef; --dim: #98a0b0; --accent: #5ac8fa; --danger: #ff6b6b;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
@@ -27,7 +27,7 @@
 
   #drop {
     position: absolute; inset: 0; display: flex; align-items: center;
-    justify-content: center; text-align: center; z-index: 20;
+    justify-content: center; text-align: center; z-index: 40;
     background: rgba(20,22,26,.92); transition: opacity .15s;
   }
   #drop .box {
@@ -40,17 +40,43 @@
   #drop code { color: var(--accent); }
   #pick { margin-top: 14px; }
 
+  /* user-select и user-drag сняты намеренно: на тач-экране второй палец
+     иначе начинает нативное перетаскивание выделения, браузер шлёт dragenter
+     и поверх сцены вылезает окно загрузки ассета. */
   #stage { position: absolute; inset: 0; perspective: 2600px; overflow: hidden;
-           cursor: grab; touch-action: none; }
+           cursor: grab; touch-action: none;
+           user-select: none; -webkit-user-select: none; }
   #stage.drag { cursor: grabbing; }
+  #stage.edit { cursor: default; }
+  #stage.edit .part { cursor: move; }
+  #stage.moving, #stage.moving .part { cursor: grabbing; }
   #world { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; }
   .part {
     position: absolute; transform-style: preserve-3d;
     background-repeat: no-repeat; image-rendering: auto;
+    -webkit-user-drag: none;
     outline: 0 solid rgba(90,200,250,0); transition: outline-color .15s;
   }
   .part.hi { outline: 2px solid var(--accent); }
+  .part.sel { outline: 2px dashed var(--accent); }
+  .part.ghost { opacity: .45; }
   .shadow { position: absolute; background: #000; opacity: .18; filter: blur(6px); }
+
+  /* Схема выносок: SVG поверх сцены, кликам не мешает. */
+  #schema { position: absolute; inset: 0; z-index: 12; pointer-events: none; }
+  #schema text { font: 600 12px/1 system-ui, "Segoe UI", sans-serif; }
+  #schema .lead { stroke-width: 1.4; fill: none; }
+  #schema .dot { stroke: none; }
+  #legend {
+    position: absolute; left: 12px; bottom: 12px; z-index: 13;
+    background: rgba(20,22,26,.86); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 10px; display: none; gap: 4px; flex-direction: column;
+    max-height: 46%; overflow-y: auto; font-size: 12px;
+  }
+  #legend.on { display: flex; }
+  #legend b { font-weight: 600; color: var(--dim); font-size: 11px; text-transform: uppercase; }
+  #legend .li { display: flex; align-items: center; gap: 7px; }
+  #legend .sw { width: 11px; height: 11px; border-radius: 3px; flex: none; }
 
   footer {
     border-top: 1px solid var(--line); background: var(--panel);
@@ -65,21 +91,60 @@
   }
   button:hover { border-color: var(--accent); }
   button.on { background: rgba(90,200,250,.14); border-color: var(--accent); }
+  button:disabled { opacity: .4; cursor: default; border-color: var(--line); }
+  .chk { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+  .chk input { accent-color: var(--accent); }
+
+  /* Корзина: живёт в подвале, но всплывает наверх, пока тащат деталь. */
+  #bin {
+    display: flex; align-items: center; gap: 8px; padding: 6px 14px;
+    border: 1px dashed var(--line); border-radius: 9px; color: var(--dim); font-size: 13px;
+  }
+  #bin.armed { border-color: var(--danger); color: var(--danger); background: rgba(255,107,107,.08); }
+  #bin.hot {
+    border-color: var(--danger); color: #fff; background: rgba(255,107,107,.32);
+    transform: scale(1.06);
+  }
+  #bin .ico { font-size: 17px; }
 
   #list {
-    position: absolute; right: 0; top: 0; bottom: 0; width: 250px; z-index: 10;
-    background: rgba(28,31,38,.94); border-left: 1px solid var(--line);
+    position: absolute; right: 0; top: 0; bottom: 0; width: 320px; z-index: 14;
+    background: rgba(28,31,38,.96); border-left: 1px solid var(--line);
     overflow-y: auto; padding: 8px; transform: translateX(100%); transition: transform .2s;
   }
   #list.open { transform: none; }
-  .row {
-    display: flex; justify-content: space-between; gap: 8px; padding: 6px 8px;
-    border-radius: 6px; cursor: pointer; font-size: 12px;
+  #list .head {
+    color: var(--dim); font-size: 11px; text-transform: uppercase;
+    padding: 4px 6px 8px; letter-spacing: .4px;
   }
-  .row:hover { background: rgba(90,200,250,.12); }
-  .row .n { color: var(--dim); }
-  .row.off { opacity: .4; }
+  .row {
+    display: grid; grid-template-columns: 12px 1fr auto; gap: 6px 8px;
+    align-items: center; padding: 6px; border-radius: 7px; font-size: 12px;
+    border: 1px solid transparent;
+  }
+  .row:hover { background: rgba(90,200,250,.10); }
+  .row.sel { border-color: var(--accent); background: rgba(90,200,250,.12); }
+  .row.off { opacity: .45; }
+  .row .sw { width: 11px; height: 11px; border-radius: 3px; }
+  .row .nm { cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .acts { display: flex; gap: 3px; }
+  .row .acts button { padding: 2px 6px; font-size: 12px; line-height: 1.2; }
+  .row .acts button.del:hover { border-color: var(--danger); color: var(--danger); }
+  .row .tp {
+    grid-column: 2 / 4; background: #171a21; color: var(--text);
+    border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px;
+    font-size: 11px; font-family: ui-monospace, Consolas, monospace; width: 100%;
+  }
+  .row .tp:focus { outline: none; border-color: var(--accent); }
   #err { color: #ff8a80; padding: 10px 16px; font-size: 13px; }
+  #toast {
+    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+    background: rgba(28,31,38,.96); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; z-index: 30; opacity: 0;
+    transition: opacity .2s; pointer-events: none;
+  }
+  #toast.on { opacity: 1; }
+  .dirty { color: #ffd479; }
 </style>
 </head>
 <body>
@@ -88,19 +153,26 @@
   <h1>Device Asset Viewer</h1>
   <span class="meta" id="meta">файлы не загружены</span>
   <span style="flex:1"></span>
+  <label class="chk"><input type="checkbox" id="schemaChk"> Схема типов</label>
+  <button id="editBtn">Редактор</button>
   <button id="toggleList">Детали</button>
   <button id="reload">Загрузить другой</button>
 </header>
 
 <main>
-  <div id="stage"><div id="world"></div></div>
+  <div id="stage">
+    <div id="world"></div>
+    <svg id="schema"></svg>
+  </div>
+  <div id="legend"></div>
   <aside id="list"></aside>
+  <div id="toast"></div>
 
   <div id="drop">
     <div class="box">
       <h2>Перетащи сюда ассет</h2>
       <p>Папку целиком, либо <code>device.json</code> + <code>texture.png</code> вместе.</p>
-      <p>Читается схема: <code>parts[] → frame, position, size, rotation, layer</code></p>
+      <p>Читается схема: <code>parts[] → frame, position, size, rotation, layer, type</code></p>
       <p><input type="file" id="pick" multiple webkitdirectory directory></p>
       <p><input type="file" id="pick2" multiple accept=".json,.png"></p>
       <div id="err"></div>
@@ -126,6 +198,10 @@
   <button id="reset">Сброс вида</button>
   <button id="flatBtn">Вид сверху</button>
   <button id="isoBtn">Изометрия</button>
+  <span style="flex:1"></span>
+  <button id="undoBtn" disabled>↶ Отменить</button>
+  <button id="saveBtn" disabled>Сохранить device.json</button>
+  <div id="bin"><span class="ico">🗑</span><span id="binText">Корзина</span></div>
 </footer>
 
 <!-- Сюда упаковщик вшивает готовый ассет: {"device":{...},"texture":"data:image/png;base64,..."}.
@@ -142,19 +218,60 @@
   const errEl = document.getElementById('err');
   const metaEl = document.getElementById('meta');
   const listEl = document.getElementById('list');
+  const schemaEl = document.getElementById('schema');
+  const legendEl = document.getElementById('legend');
+  const binEl = document.getElementById('bin');
+  const binText = document.getElementById('binText');
+  const toastEl = document.getElementById('toast');
+  const saveBtn = document.getElementById('saveBtn');
+  const undoBtn = document.getElementById('undoBtn');
+  const editBtn = document.getElementById('editBtn');
+  const schemaChk = document.getElementById('schemaChk');
 
   let device = null;         // разобранный device.json
   let texURL = null;         // data/blob URL текстуры
   let nodes = [];            // DOM-узлы деталей
   let hidden = new Set();
+  let selected = null;       // id выбранной детали
+  let editing = false;
+  let dirty = 0;             // сколько правок не сохранено
+  const undoStack = [];      // снимки parts[] до каждой правки
 
   // вид
-  const view = { rx: 0, ry: 0, zoom: 1, explode: 0, spread: 120 };
+  const view = { rx: 0, ry: 0, zoom: 1, explode: 0, spread: 120, base: 1 };
   let playing = false, playT = 0, raf = 0;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const partById = id => device && device.parts.find(p => p.id === id);
+  const nodeById = id => nodes.find(n => n.dataset.id === id);
+
+  // ---------- цвет типа ----------
+  // Цвет обязан быть одинаковым у всех деталей одного типа и стабильным между
+  // запусками — поэтому не палитра по порядку, а чистая функция от строки.
+
+  function typeColor(type) {
+    const s = String(type || 'misc');
+    let h = 2166136261;                      // FNV-1a
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    const hue = h % 360;
+    const sat = 62 + (h >>> 9) % 22;         // 62..83
+    const lig = 56 + (h >>> 17) % 14;        // 56..69
+    return 'hsl(' + hue + ' ' + sat + '% ' + lig + '%)';
+  }
 
   // ---------- загрузка ----------
 
   function fail(msg) { errEl.textContent = msg; }
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toastEl.classList.remove('on'), 1800);
+  }
 
   async function readFiles(files) {
     errEl.textContent = '';
@@ -182,8 +299,15 @@
 
     if (texURL && texURL.startsWith('blob:')) URL.revokeObjectURL(texURL);
     texURL = URL.createObjectURL(tex);
+    adopt(data);
+  }
+
+  function adopt(data) {
     device = data;
     hidden = new Set();
+    selected = null;
+    undoStack.length = 0;
+    setDirty(0);
     build();
     dropEl.classList.add('hide');
   }
@@ -218,13 +342,22 @@
     ]);
   }
 
+  // Реагируем только на перетаскивание ФАЙЛОВ извне. Без этой проверки любой
+  // внутренний drag (выделение, второй палец на тач-экране) открывал окно
+  // загрузки прямо посреди вращения модели.
+  const draggingFiles = dt => !!dt && Array.from(dt.types || []).includes('Files');
+
   ['dragenter', 'dragover'].forEach(ev => document.addEventListener(ev, e => {
+    if (!draggingFiles(e.dataTransfer)) return;
     e.preventDefault(); dropEl.classList.remove('hide'); dropEl.classList.add('hot');
   }));
   document.addEventListener('dragleave', e => {
     if (e.relatedTarget === null) dropEl.classList.remove('hot');
   });
+  // Нативный drag внутри сцены не нужен вообще — он только мешает вращению.
+  stage.addEventListener('dragstart', e => e.preventDefault());
   document.addEventListener('drop', async e => {
+    if (!draggingFiles(e.dataTransfer)) return;
     e.preventDefault();
     dropEl.classList.remove('hot');
     const dt = e.dataTransfer;
@@ -261,13 +394,13 @@
     nodes = [];
     const [tw, th] = device.texture_size || [1024, 1024];
     const [cw, ch] = device.canvas || [1024, 1024];
-    const parts = device.parts.slice().sort((a, b) => a.layer - b.layer);
+    device.parts.sort((a, b) => a.layer - b.layer);
 
     // авто-масштаб под окно
     const fit = Math.min(stage.clientWidth / cw, stage.clientHeight / ch) * 0.8;
     view.base = isFinite(fit) && fit > 0 ? fit : 1;
 
-    for (const p of parts) {
+    for (const p of device.parts) {
       const el = document.createElement('div');
       el.className = 'part';
       const sc = p.scale == null ? 1 : p.scale;
@@ -284,31 +417,177 @@
       world.appendChild(el);
       nodes.push(el);
     }
-    metaEl.textContent = (device.device || 'device') + ' · деталей ' + parts.length
-      + ' · холст ' + cw + '×' + ch + ' · атлас ' + tw + '×' + th;
-    buildList(parts);
+    updateMeta();
+    buildList();
     layout();
   }
 
-  function buildList(parts) {
+  function updateMeta() {
+    const [tw, th] = device.texture_size || [0, 0];
+    const [cw, ch] = device.canvas || [0, 0];
+    metaEl.innerHTML = (device.device || 'device') + ' · деталей ' + device.parts.length
+      + ' · холст ' + cw + '×' + ch + ' · атлас ' + tw + '×' + th
+      + (dirty ? ' · <span class="dirty">не сохранено правок: ' + dirty + '</span>' : '');
+  }
+
+  function setDirty(n) {
+    dirty = n;
+    saveBtn.disabled = !device;
+    undoBtn.disabled = !undoStack.length;
+    if (device) updateMeta();
+  }
+
+  // ---------- правки ----------
+
+  function snapshot() {
+    if (!device) return;
+    undoStack.push(JSON.stringify(device.parts));
+    if (undoStack.length > 60) undoStack.shift();
+  }
+
+  function commit() {
+    setDirty(dirty + 1);
+    buildList();
+    layout();
+  }
+
+  function undo() {
+    if (!undoStack.length) return;
+    device.parts = JSON.parse(undoStack.pop());
+    selected = null;
+    setDirty(Math.max(0, dirty - 1));
+    build();
+    toast('Отменено');
+  }
+
+  // После удаления слои пересобираются подряд с 0: дырка в нумерации ломает
+  // порядок разборки в игре (шаг «снять деталь» упирался бы в пустой слой).
+  function renumberLayers() {
+    device.parts
+      .slice()
+      .sort((a, b) => a.layer - b.layer)
+      .forEach((p, i) => { p.layer = i; });
+  }
+
+  function removePart(id) {
+    const p = partById(id);
+    if (!p) return;
+    snapshot();
+    device.parts = device.parts.filter(x => x.id !== id);
+    renumberLayers();
+    hidden.delete(id);
+    if (selected === id) selected = null;
+    const n = nodeById(id);
+    if (n) { n.remove(); nodes = nodes.filter(x => x !== n); }
+    commit();
+    updateMeta();
+    toast('Вырезано: ' + (p.name || p.id));
+  }
+
+  function moveLayer(id, dir) {
+    const ordered = device.parts.slice().sort((a, b) => a.layer - b.layer);
+    const i = ordered.findIndex(p => p.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= ordered.length) return;
+    snapshot();
+    // меняем слои местами: так номера остаются уникальными, а validate чист
+    const a = ordered[i], b = ordered[j];
+    const t = a.layer; a.layer = b.layer; b.layer = t;
+    commit();
+  }
+
+  function setType(id, value) {
+    const p = partById(id);
+    if (!p) return;
+    const t = String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '') || 'misc';
+    if (p.type === t) return;
+    snapshot();
+    p.type = t;
+    setDirty(dirty + 1);
+    drawSchema();
+    buildList();
+  }
+
+  // ---------- панель деталей ----------
+
+  function buildList() {
+    if (!device) return;
+    const scrollTop = listEl.scrollTop;
     listEl.innerHTML = '';
-    parts.forEach(p => {
+    const head = document.createElement('div');
+    head.className = 'head';
+    head.textContent = editing
+      ? 'слои сверху вниз · клик — выбрать · ✕ вырезать'
+      : 'слои сверху вниз · клик — скрыть';
+    listEl.appendChild(head);
+
+    const ordered = device.parts.slice().sort((a, b) => b.layer - a.layer);
+    ordered.forEach(p => {
       const row = document.createElement('div');
-      row.className = 'row';
-      row.innerHTML = '<span>' + (p.name || p.id) + '</span><span class="n">L' + p.layer + '</span>';
-      row.addEventListener('click', () => {
+      row.className = 'row' + (hidden.has(p.id) ? ' off' : '') + (selected === p.id ? ' sel' : '');
+
+      const sw = document.createElement('span');
+      sw.className = 'sw';
+      sw.style.background = typeColor(p.type);
+      sw.title = p.type || 'misc';
+
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = (p.name || p.id);
+      nm.title = p.id + ' · слой ' + p.layer;
+
+      const acts = document.createElement('span');
+      acts.className = 'acts';
+      const mk = (txt, title, fn, cls) => {
+        const b = document.createElement('button');
+        b.textContent = txt; b.title = title;
+        if (cls) b.className = cls;
+        b.addEventListener('click', ev => { ev.stopPropagation(); fn(); });
+        return b;
+      };
+      acts.appendChild(mk('L' + p.layer, 'слой', () => {}, 'lay'));
+      acts.lastChild.disabled = true;
+      if (editing) {
+        acts.appendChild(mk('↑', 'слой выше', () => moveLayer(p.id, 1)));
+        acts.appendChild(mk('↓', 'слой ниже', () => moveLayer(p.id, -1)));
+      }
+      acts.appendChild(mk(hidden.has(p.id) ? '◌' : '●', 'показать/скрыть', () => {
         if (hidden.has(p.id)) hidden.delete(p.id); else hidden.add(p.id);
-        row.classList.toggle('off');
-        layout();
+        buildList(); layout();
+      }));
+      if (editing) acts.appendChild(mk('✕', 'вырезать из ассета', () => removePart(p.id), 'del'));
+
+      row.append(sw, nm, acts);
+
+      if (editing) {
+        const tp = document.createElement('input');
+        tp.className = 'tp';
+        tp.value = p.type || 'misc';
+        tp.title = 'тип детали — общий для всех устройств, см. ТИПЫ_ДЕТАЛЕЙ.md';
+        tp.addEventListener('change', () => setType(p.id, tp.value));
+        tp.addEventListener('keydown', e => { if (e.key === 'Enter') tp.blur(); });
+        row.appendChild(tp);
+      }
+
+      row.addEventListener('click', () => {
+        if (editing) select(p.id);
+        else {
+          if (hidden.has(p.id)) hidden.delete(p.id); else hidden.add(p.id);
+          buildList(); layout();
+        }
       });
-      row.addEventListener('mouseenter', () => {
-        const n = nodes.find(n => n.dataset.id === p.id); if (n) n.classList.add('hi');
-      });
-      row.addEventListener('mouseleave', () => {
-        const n = nodes.find(n => n.dataset.id === p.id); if (n) n.classList.remove('hi');
-      });
+      row.addEventListener('mouseenter', () => { const n = nodeById(p.id); if (n) n.classList.add('hi'); });
+      row.addEventListener('mouseleave', () => { const n = nodeById(p.id); if (n) n.classList.remove('hi'); });
       listEl.appendChild(row);
     });
+    listEl.scrollTop = scrollTop;
+  }
+
+  function select(id) {
+    selected = (selected === id) ? null : id;
+    nodes.forEach(n => n.classList.toggle('sel', n.dataset.id === selected));
+    buildList();
   }
 
   // ---------- раскладка / трансформы ----------
@@ -338,25 +617,258 @@
     const s = view.base * view.zoom;
     world.style.transform =
       'rotateX(' + view.rx + 'deg) rotateY(' + view.ry + 'deg) scale(' + s + ')';
+    drawSchema();
   }
 
-  // ---------- управление ----------
+  // ---------- схема типов ----------
 
-  let dragging = false, lx = 0, ly = 0;
+  function drawSchema() {
+    while (schemaEl.firstChild) schemaEl.removeChild(schemaEl.firstChild);
+    legendEl.classList.toggle('on', schemaChk.checked && !!device);
+    if (!schemaChk.checked || !device) return;
+
+    const box = stage.getBoundingClientRect();
+    schemaEl.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+    schemaEl.setAttribute('width', box.width);
+    schemaEl.setAttribute('height', box.height);
+
+    const shown = device.parts.filter(p => !hidden.has(p.id));
+    if (!shown.length) return;
+
+    // Радиус выноски считаем от габарита всей сборки на экране, чтобы подписи
+    // ушли за пределы устройства, а не легли поверх деталей.
+    let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+    const centers = new Map();
+    for (const p of shown) {
+      const n = nodeById(p.id);
+      if (!n) continue;
+      const r = n.getBoundingClientRect();
+      const cx = r.left + r.width / 2 - box.left;
+      const cy = r.top + r.height / 2 - box.top;
+      centers.set(p.id, [cx, cy]);
+      minX = Math.min(minX, r.left - box.left); maxX = Math.max(maxX, r.right - box.left);
+      minY = Math.min(minY, r.top - box.top);   maxY = Math.max(maxY, r.bottom - box.top);
+    }
+    if (!centers.size) return;
+
+    const ox = (minX + maxX) / 2, oy = (minY + maxY) / 2;
+    // Кольцо выносок — эллипс по габариту сборки: на широком устройстве круг
+    // вылезал за окно и концы схлопывались клампом в одну точку.
+    // Кольцо заранее ужимаем под окно. Раньше вылезшие концы подрезал кламп
+    // ниже — и несколько выносок садились на одну точку края, круговой порядок
+    // рвался, линии снова пересекались. Ужать радиус целиком безопасно: порядок
+    // концов сохраняется.
+    const fitX = Math.max(Math.min(ox - 70, box.width - 70 - ox), 40);
+    const fitY = Math.max(Math.min(oy - 22, box.height - 22 - oy), 34);
+    const Rx = Math.min(Math.max((maxX - minX) / 2 + 60, 110), fitX);
+    const Ry = Math.min(Math.max((maxY - minY) / 2 + 44, 90), fitY);
+
+    // Детали лежат друг на друге — если вести выноску «наружу от центра», все
+    // подписи слипнутся. Поэтому концы разложены равномерно по кольцу, как на
+    // настоящей выносной схеме.
+    //
+    // Порядок концов — по УГЛУ детали относительно центра сборки, а не по слою.
+    // Отрезки из точек, разложенных по кольцу в том же круговом порядке, что и
+    // их источники, не пересекаются; сортировка по слою давала детали слева
+    // якорь справа, и выноски шли крест-накрест через всю схему. Детали, чьи
+    // центры совпали (стопка по оси), получают соседние концы — их выноски
+    // выходят из одной точки и пересечься не могут; тай-брейк по удалению от
+    // центра просто делает раскладку устойчивой между перерисовками.
+    const TOP = -Math.PI / 2;                     // кольцо начинаем сверху
+    const norm = a => {
+      let x = a - TOP;
+      while (x < 0) x += Math.PI * 2;
+      while (x >= Math.PI * 2) x -= Math.PI * 2;
+      return x;
+    };
+    const ordered = shown
+      .filter(p => centers.has(p.id))
+      .map(p => {
+        const [cx, cy] = centers.get(p.id);
+        return { p, a: norm(Math.atan2(cy - oy, cx - ox)), d: Math.hypot(cx - ox, cy - oy) };
+      })
+      .sort((u, v) => u.a - v.a || v.d - u.d);
+    const n = ordered.length;
+    ordered.forEach((o, i) => {
+      const p = o.p;
+      const c = centers.get(p.id);
+      const ang = TOP + (i + 0.5) / n * Math.PI * 2;
+      let ex = ox + Math.cos(ang) * Rx;
+      let ey = oy + Math.sin(ang) * Ry;
+      const right = Math.cos(ang) >= 0;
+      const shelf = right ? 30 : -30;
+      // держим полку и подпись внутри окна
+      ex = Math.min(Math.max(ex, 66), box.width - 66);
+      ey = Math.min(Math.max(ey, 18), box.height - 14);
+      const tx = ex + shelf;
+      const col = typeColor(p.type);
+
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('class', 'lead');
+      path.setAttribute('stroke', col);
+      path.setAttribute('d', 'M' + c[0] + ',' + c[1] + ' L' + ex + ',' + ey + ' L' + tx + ',' + ey);
+      schemaEl.appendChild(path);
+
+      const dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('class', 'dot');
+      dot.setAttribute('cx', c[0]); dot.setAttribute('cy', c[1]); dot.setAttribute('r', 3);
+      dot.setAttribute('fill', col);
+      schemaEl.appendChild(dot);
+
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', tx + (right ? 4 : -4));
+      label.setAttribute('y', ey - 5);
+      label.setAttribute('fill', col);
+      label.setAttribute('text-anchor', right ? 'start' : 'end');
+      label.textContent = p.type || 'misc';
+      schemaEl.appendChild(label);
+
+      const sub = document.createElementNS(NS, 'text');
+      sub.setAttribute('x', tx + (right ? 4 : -4));
+      sub.setAttribute('y', ey + 12);
+      sub.setAttribute('fill', 'rgba(232,234,239,.62)');
+      sub.setAttribute('text-anchor', right ? 'start' : 'end');
+      sub.setAttribute('font-size', '10');
+      sub.textContent = p.name || p.id;
+      schemaEl.appendChild(sub);
+    });
+
+    // легенда: по одному образцу на тип
+    legendEl.innerHTML = '';
+    const title = document.createElement('b');
+    title.textContent = 'типы деталей';
+    legendEl.appendChild(title);
+    const seen = new Map();
+    shown.forEach(p => seen.set(p.type || 'misc', (seen.get(p.type || 'misc') || 0) + 1));
+    Array.from(seen.entries()).sort((a, b) => a[0].localeCompare(b[0])).forEach(([t, cnt]) => {
+      const li = document.createElement('div');
+      li.className = 'li';
+      const sw = document.createElement('span');
+      sw.className = 'sw';
+      sw.style.background = typeColor(t);
+      const tx = document.createElement('span');
+      tx.textContent = t + (cnt > 1 ? ' ×' + cnt : '');
+      li.append(sw, tx);
+      legendEl.appendChild(li);
+    });
+  }
+
+  // ---------- перетаскивание детали в корзину ----------
+
+  let move = null;   // {id, sx, sy}
+
+  function overBin(x, y) {
+    const r = binEl.getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+  }
+
+  function startMove(id, e) {
+    const p = partById(id);
+    if (!p) return;
+    move = { id, sx: e.clientX, sy: e.clientY };
+    select(id);
+    stage.classList.add('moving');
+    binEl.classList.add('armed');
+    binText.textContent = 'Брось сюда — вырежу';
+  }
+
+  // Позиция детали правке не подлежит: она задана сборкой и должна совпадать
+  // с тем, что видит игра. Перетаскивание оставлено только ради корзины —
+  // деталь под курсором не смещается, меняется лишь подсветка сброса.
+  function doMove(e) {
+    if (!move) return;
+    const hot = overBin(e.clientX, e.clientY);
+    binEl.classList.toggle('hot', hot);
+    const n = nodeById(move.id);
+    if (n) n.classList.toggle('ghost', hot);
+  }
+
+  function endMove(e) {
+    if (!move) return;
+    const id = move.id;
+    const drop = e && overBin(e.clientX, e.clientY);
+    const n = nodeById(id);
+    if (n) n.classList.remove('ghost');
+    move = null;
+    stage.classList.remove('moving');
+    binEl.classList.remove('armed', 'hot');
+    binText.textContent = 'Корзина';
+
+    if (drop) removePart(id);
+  }
+
+  // ---------- управление сценой ----------
+
+  // Указатели считаем поимённо: вращает только ПЕРВЫЙ палец, второй включает
+  // щипковый зум. Раньше каждый pointerdown перехватывал вращение на себя,
+  // и от второго касания модель прыгала.
+  const pointers = new Map();
+  let dragging = false, lx = 0, ly = 0, pinchDist = 0, pinchZoom = 1;
+
+  const firstId = () => pointers.keys().next().value;
+  function spread() {
+    const [a, b] = Array.from(pointers.values());
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+  function grabFrom(id) {
+    const p = pointers.get(id);
+    if (!p) return;
+    dragging = true; lx = p.x; ly = p.y; stage.classList.add('drag');
+  }
+  function setZoom(z) {
+    view.zoom = Math.max(0.1, Math.min(3, z));
+    document.getElementById('zoom').value = String(Math.round(view.zoom * 100));
+  }
+
   stage.addEventListener('pointerdown', e => {
-    dragging = true; lx = e.clientX; ly = e.clientY;
-    stage.classList.add('drag'); stage.setPointerCapture(e.pointerId);
+    // в редакторе клик по детали двигает её, клик по пустому месту вращает сцену
+    if (editing && pointers.size === 0) {
+      const hit = e.target.closest && e.target.closest('.part');
+      if (hit && !hidden.has(hit.dataset.id)) {
+        stage.setPointerCapture(e.pointerId);
+        startMove(hit.dataset.id, e);
+        return;
+      }
+      if (!hit) select(null);
+    }
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    stage.setPointerCapture(e.pointerId);
+    if (pointers.size === 1) {
+      grabFrom(e.pointerId);
+    } else if (pointers.size === 2) {
+      dragging = false; stage.classList.remove('drag');
+      pinchDist = spread(); pinchZoom = view.zoom;
+    }
   });
   stage.addEventListener('pointermove', e => {
-    if (!dragging) return;
+    if (move) { doMove(e); return; }
+    const p = pointers.get(e.pointerId);
+    if (!p) return;
+    p.x = e.clientX; p.y = e.clientY;
+
+    if (pointers.size >= 2) {
+      if (pointers.size === 2 && pinchDist > 0) {
+        setZoom(pinchZoom * spread() / pinchDist);
+        layout();
+      }
+      return;
+    }
+    if (!dragging || e.pointerId !== firstId()) return;
     view.ry += (e.clientX - lx) * 0.35;
     view.rx -= (e.clientY - ly) * 0.35;
     view.rx = Math.max(-89, Math.min(89, view.rx));
     lx = e.clientX; ly = e.clientY;
     layout();
   });
-  ['pointerup', 'pointercancel'].forEach(ev => stage.addEventListener(ev, () => {
-    dragging = false; stage.classList.remove('drag');
+  ['pointerup', 'pointercancel'].forEach(ev => stage.addEventListener(ev, e => {
+    if (move) { endMove(e); return; }
+    pointers.delete(e.pointerId);
+    if (pointers.size === 1) {
+      // палец убрали — оставшийся продолжает вращать, без рывка от старых координат
+      pinchDist = 0; grabFrom(firstId());
+    } else if (pointers.size === 0) {
+      dragging = false; pinchDist = 0; stage.classList.remove('drag');
+    }
   }));
   stage.addEventListener('wheel', e => {
     e.preventDefault();
@@ -392,7 +904,72 @@
     view.rx = 54; view.ry = -32; layout();
   });
   document.getElementById('toggleList').addEventListener('click', e => {
-    listEl.classList.toggle('open'); e.target.classList.toggle('on');
+    listEl.classList.toggle('open'); e.currentTarget.classList.toggle('on');
+  });
+
+  editBtn.addEventListener('click', () => {
+    editing = !editing;
+    editBtn.classList.toggle('on', editing);
+    stage.classList.toggle('edit', editing);
+    if (editing) {
+      listEl.classList.add('open');
+      document.getElementById('toggleList').classList.add('on');
+      toast('Редактор: ↑↓ — слой, ✕ или бросок в корзину — вырезать. Позиция не правится');
+    } else {
+      select(null);
+    }
+    buildList();
+  });
+
+  schemaChk.addEventListener('change', drawSchema);
+  undoBtn.addEventListener('click', undo);
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
+    if (e.key === 'Delete' && editing && selected) removePart(selected);
+  });
+
+  // ---------- сохранение ----------
+
+  function cleanCopy() {
+    const out = JSON.parse(JSON.stringify(device));
+    out.parts.sort((a, b) => a.layer - b.layer);
+    out.part_count = out.parts.length;
+    out.parts.forEach(p => { if (!p.type) p.type = 'misc'; });
+    return out;
+  }
+
+  saveBtn.addEventListener('click', async () => {
+    if (!device) return;
+    const text = JSON.stringify(cleanCopy(), null, 2);
+    const blob = new Blob([text], { type: 'application/json' });
+    // Chrome по file:// умеет писать поверх выбранного файла — тогда правка
+    // сразу попадает в папку ассета; остальным браузерам остаётся скачивание
+    if (window.showSaveFilePicker) {
+      try {
+        const h = await window.showSaveFilePicker({
+          suggestedName: 'device.json',
+          types: [{ description: 'device.json', accept: { 'application/json': ['.json'] } }],
+        });
+        const w = await h.createWritable();
+        await w.write(blob);
+        await w.close();
+        setDirty(0);
+        return toast('Сохранено. Пересобери ОТКРЫТЬ_*.html: asset_viewer');
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+      }
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'device.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    setDirty(0);
+    toast('Скачан device.json — положи его в папку ассета');
+  });
+
+  window.addEventListener('beforeunload', e => {
+    if (dirty) { e.preventDefault(); e.returnValue = ''; }
   });
 
   const playBtn = document.getElementById('play');
@@ -434,11 +1011,8 @@
     if (!payload.device.parts || !payload.device.parts.length) {
       return fail('Во вшитом ассете нет деталей.');
     }
-    device = payload.device;
     texURL = payload.texture;
-    hidden = new Set();
-    build();
-    dropEl.classList.add('hide');
+    adopt(payload.device);
   })();
 })();
 </script>

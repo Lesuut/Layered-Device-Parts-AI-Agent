@@ -1,32 +1,17 @@
-Take the exploded-view technical diagram provided as reference and convert it into a top-down flat-lay "teardown parts layout", showing every component of the device separated and organized on a plain background.
+CAMERA: strict orthographic top-down view, 90° directly overhead, like a flatbed scanner. NOT isometric, NOT 3D, NOT tilted, NOT the angle from the reference image. Every part must be perfectly flat, straight-on, zero perspective, zero foreshortening. This is the most important rule — ignore the reference image's camera angle completely and replace it with a flat top-down view, like Image 2.
 
-Art style requirements (must match the reference image exactly):
+Take every component from the reference exploded diagram and lay it out flat on a pure white background (
+#FFFFFF), each part separated, not touching, not overlapping.
 
-Preserve the exact same illustration style as the source image — same line-art technique, same level of linework detail, same flat-color-with-soft-shading rendering, same color palette and material rendering (matte plastic, metal, glossy screen glass, PCB textures).
-Do not switch to full photorealism, do not switch to a different rendering technique — the output must look like it was drawn by the same illustrator as the reference, just with parts rearranged.
-Keep the same stroke weight, same shading style (flat cel-shading with soft gradients), same overall color saturation and lighting mood as the source.
+Keep the exact same art style, linework, colors, and shading as the reference — just change the camera angle to flat top-down and rearrange the parts.
 
-Background requirements:
+No shadows anywhere (no drop shadow, no ambient occlusion) — flat, evenly lit.
 
-Pure solid white background (
-#FFFFFF), completely flat, no tray, no frame, no border, no gradient, no vignette.
-No drop shadows, no cast shadows, no ambient occlusion under or around any part — every component must appear perfectly flat-lit with zero shadow, as if lit evenly from all directions.
-No reflections on the floor/background.
+Show only the parts that exist in the reference, in the exact same quantity — do not add, invent, or duplicate screws/springs/buttons to fill space.
 
-Layout requirements:
+Back cover: show its INNER side (facing into the device), not the outer/exterior side.
+Front shell and PCB: show their outer/working face, facing up, flat.
 
-Every single component from the exploded diagram must be extracted and placed separately, with clear spacing between each part — no part may overlap or touch another part.
-All components must be oriented as if standing upright in their normal, in-device orientation. If the phone is normally held vertically (portrait), every part — front shell, back cover, screen, keypad, PCB, buttons, battery — must also be laid out vertically (portrait), not rotated sideways or diagonally.
-Every part must be shown facing directly toward the camera, showing its true front/outer working surface — the same surface that would be visible or face outward when the device is fully assembled.
-Example: the back cover must show its outer/exterior surface (the side visible from outside the phone), NOT its inner surface.
-Example: the front shell must show its outer face with the screen cutout and button holes facing up.
-Example: the PCB must show the side with the main chips and connectors facing up.
-No part should be flipped, mirrored, or shown from its hidden/interior side unless that part has no distinct front/back (like a screw or spring).
-Small components (screws, springs, connectors, SIM card, speaker, microphone, camera module, antenna, flex cables) should each be placed individually, neatly grouped by size, also facing camera.
+No text, no labels, no numbers, no watermark, no frame, no tray.
 
-Strictly exclude:
-
-No text, no labels, no numbers, no captions, no logos added artificially, no watermark
-No shadows of any kind, no background tray/frame
-
-Goal: the result should look like it belongs to the exact same illustrated teardown series as the reference image — same hand, same style — but on a pure white, shadowless background, with every part correctly reorganized: never stacked, never rotated incorrectly, always facing the camera showing its true front/exterior surface.
+Every part must look like it was scanned flat from directly above — no tilt, no isometric angle, anywhere in the image.

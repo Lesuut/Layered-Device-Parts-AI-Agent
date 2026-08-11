@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Device Asset Viewer — слоёная сборка</title>
+<style>
+  :root {
+    --bg: #14161a; --panel: #1c1f26; --line: #2c313b;
+    --text: #e8eaef; --dim: #98a0b0; --accent: #5ac8fa; --danger: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 14px/1.45 system-ui, "Segoe UI", Roboto, sans-serif;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  header {
+    padding: 10px 16px; border-bottom: 1px solid var(--line);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    background: var(--panel);
+  }
+  header h1 { font-size: 15px; margin: 0; font-weight: 600; letter-spacing: .2px; }
+  header .meta { color: var(--dim); font-size: 12px; }
+  main { flex: 1; position: relative; overflow: hidden; }
+
+  #drop {
+    position: absolute; inset: 0; display: flex; align-items: center;
+    justify-content: center; text-align: center; z-index: 40;
+    background: rgba(20,22,26,.92); transition: opacity .15s;
+  }
+  #drop .box {
+    border: 2px dashed var(--line); border-radius: 14px; padding: 40px 52px; max-width: 620px;
+  }
+  #drop.hide { opacity: 0; pointer-events: none; }
+  #drop.hot .box { border-color: var(--accent); background: rgba(90,200,250,.06); }
+  #drop h2 { margin: 0 0 10px; font-size: 18px; }
+  #drop p { margin: 6px 0; color: var(--dim); }
+  #drop code { color: var(--accent); }
+  #pick { margin-top: 14px; }
+
+  /* user-select и user-drag сняты намеренно: на тач-экране второй палец
+     иначе начинает нативное перетаскивание выделения, браузер шлёт dragenter
+     и поверх сцены вылезает окно загрузки ассета. */
+  #stage { position: absolute; inset: 0; perspective: 2600px; overflow: hidden;
+           cursor: grab; touch-action: none;
+           user-select: none; -webkit-user-select: none; }
+  #stage.drag { cursor: grabbing; }
+  #stage.edit { cursor: default; }
+  #stage.edit .part { cursor: move; }
+  #stage.moving, #stage.moving .part { cursor: grabbing; }
+  #world { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; }
+  .part {
+    position: absolute; transform-style: preserve-3d;
+    background-repeat: no-repeat; image-rendering: auto;
+    -webkit-user-drag: none;
+    outline: 0 solid rgba(90,200,250,0); transition: outline-color .15s;
+  }
+  .part.hi { outline: 2px solid var(--accent); }
+  .part.sel { outline: 2px dashed var(--accent); }
+  .part.ghost { opacity: .45; }
+  .shadow { position: absolute; background: #000; opacity: .18; filter: blur(6px); }
+
+  /* Схема выносок: SVG поверх сцены, кликам не мешает. */
+  #schema { position: absolute; inset: 0; z-index: 12; pointer-events: none; }
+  #schema text { font: 600 12px/1 system-ui, "Segoe UI", sans-serif; }
+  #schema .lead { stroke-width: 1.4; fill: none; }
+  #schema .dot { stroke: none; }
+  #legend {
+    position: absolute; left: 12px; bottom: 12px; z-index: 13;
+    background: rgba(20,22,26,.86); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 10px; display: none; gap: 4px; flex-direction: column;
+    max-height: 46%; overflow-y: auto; font-size: 12px;
+  }
+  #legend.on { display: flex; }
+  #legend b { font-weight: 600; color: var(--dim); font-size: 11px; text-transform: uppercase; }
+  #legend .li { display: flex; align-items: center; gap: 7px; }
+  #legend .sw { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+
+  footer {
+    border-top: 1px solid var(--line); background: var(--panel);
+    padding: 10px 16px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+  }
+  .ctl { display: flex; align-items: center; gap: 8px; }
+  .ctl label { color: var(--dim); font-size: 12px; min-width: 74px; }
+  input[type=range] { width: 190px; accent-color: var(--accent); }
+  button {
+    background: #262b34; color: var(--text); border: 1px solid var(--line);
+    border-radius: 7px; padding: 6px 12px; cursor: pointer; font-size: 13px;
+  }
+  button:hover { border-color: var(--accent); }
+  button.on { background: rgba(90,200,250,.14); border-color: var(--accent); }
+  button:disabled { opacity: .4; cursor: default; border-color: var(--line); }
+  .chk { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+  .chk input { accent-color: var(--accent); }
+
+  /* Корзина: живёт в подвале, но всплывает наверх, пока тащат деталь. */
+  #bin {
+    display: flex; align-items: center; gap: 8px; padding: 6px 14px;
+    border: 1px dashed var(--line); border-radius: 9px; color: var(--dim); font-size: 13px;
+  }
+  #bin.armed { border-color: var(--danger); color: var(--danger); background: rgba(255,107,107,.08); }
+  #bin.hot {
+    border-color: var(--danger); color: #fff; background: rgba(255,107,107,.32);
+    transform: scale(1.06);
+  }
+  #bin .ico { font-size: 17px; }
+
+  #list {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 320px; z-index: 14;
+    background: rgba(28,31,38,.96); border-left: 1px solid var(--line);
+    overflow-y: auto; padding: 8px; transform: translateX(100%); transition: transform .2s;
+  }
+  #list.open { transform: none; }
+  #list .head {
+    color: var(--dim); font-size: 11px; text-transform: uppercase;
+    padding: 4px 6px 8px; letter-spacing: .4px;
+  }
+  .row {
+    display: grid; grid-template-columns: 12px 1fr auto; gap: 6px 8px;
+    align-items: center; padding: 6px; border-radius: 7px; font-size: 12px;
+    border: 1px solid transparent;
+  }
+  .row:hover { background: rgba(90,200,250,.10); }
+  .row.sel { border-color: var(--accent); background: rgba(90,200,250,.12); }
+  .row.off { opacity: .45; }
+  .row .sw { width: 11px; height: 11px; border-radius: 3px; }
+  .row .nm { cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .acts { display: flex; gap: 3px; }
+  .row .acts button { padding: 2px 6px; font-size: 12px; line-height: 1.2; }
+  .row .acts button.del:hover { border-color: var(--danger); color: var(--danger); }
+  .row .tp {
+    grid-column: 2 / 4; background: #171a21; color: var(--text);
+    border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px;
+    font-size: 11px; font-family: ui-monospace, Consolas, monospace; width: 100%;
+  }
+  .row .tp:focus { outline: none; border-color: var(--accent); }
+  #err { color: #ff8a80; padding: 10px 16px; font-size: 13px; }
+  #toast {
+    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+    background: rgba(28,31,38,.96); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; z-index: 30; opacity: 0;
+    transition: opacity .2s; pointer-events: none;
+  }
+  #toast.on { opacity: 1; }
+  .dirty { color: #ffd479; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Device Asset Viewer</h1>
+  <span class="meta" id="meta">файлы не загружены</span>
+  <span style="flex:1"></span>
+  <label class="chk"><input type="checkbox" id="schemaChk"> Схема типов</label>
+  <button id="editBtn">Редактор</button>
+  <button id="toggleList">Детали</button>
+  <button id="reload">Загрузить другой</button>
+</header>
+
+<main>
+  <div id="stage">
+    <div id="world"></div>
+    <svg id="schema"></svg>
+  </div>
+  <div id="legend"></div>
+  <aside id="list"></aside>
+  <div id="toast"></div>
+
+  <div id="drop">
+    <div class="box">
+      <h2>Перетащи сюда ассет</h2>
+      <p>Папку целиком, либо <code>device.json</code> + <code>texture.png</code> вместе.</p>
+      <p>Читается схема: <code>parts[] → frame, position, size, rotation, layer, type</code></p>
+      <p><input type="file" id="pick" multiple webkitdirectory directory></p>
+      <p><input type="file" id="pick2" multiple accept=".json,.png"></p>
+      <div id="err"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="ctl">
+    <label for="explode">Разборка</label>
+    <input type="range" id="explode" min="0" max="100" value="0">
+    <span id="explodeVal" class="meta">0%</span>
+  </div>
+  <div class="ctl">
+    <label for="spread">Шаг слоя</label>
+    <input type="range" id="spread" min="10" max="400" value="120">
+  </div>
+  <div class="ctl">
+    <label for="zoom">Масштаб</label>
+    <input type="range" id="zoom" min="10" max="300" value="100">
+  </div>
+  <button id="play">▶ Анимация</button>
+  <button id="reset">Сброс вида</button>
+  <button id="flatBtn">Вид сверху</button>
+  <button id="isoBtn">Изометрия</button>
+  <span style="flex:1"></span>
+  <button id="undoBtn" disabled>↶ Отменить</button>
+  <button id="saveBtn" disabled>Сохранить device.json</button>
+  <div id="bin"><span class="ico">🗑</span><span id="binText">Корзина</span></div>
+</footer>
+
+<!-- Сюда упаковщик вшивает готовый ассет: {"device":{...},"texture":"data:image/png;base64,..."}.
+     Пока тут null — страница работает в режиме перетаскивания файлов. -->
+<script id="asset-payload" type="application/json">null</script>
+
+<script>
+(() => {
+  "use strict";
+
+  const stage = document.getElementById('stage');
+  const world = document.getElementById('world');
+  const dropEl = document.getElementById('drop');
+  const errEl = document.getElementById('err');
+  const metaEl = document.getElementById('meta');
+  const listEl = document.getElementById('list');
+  const schemaEl = document.getElementById('schema');
+  const legendEl = document.getElementById('legend');
+  const binEl = document.getElementById('bin');
+  const binText = document.getElementById('binText');
+  const toastEl = document.getElementById('toast');
+  const saveBtn = document.getElementById('saveBtn');
+  const undoBtn = document.getElementById('undoBtn');
+  const editBtn = document.getElementById('editBtn');
+  const schemaChk = document.getElementById('schemaChk');
+
+  let device = null;         // разобранный device.json
+  let texURL = null;         // data/blob URL текстуры
+  let nodes = [];            // DOM-узлы деталей
+  let hidden = new Set();
+  let selected = null;       // id выбранной детали
+  let editing = false;
+  let dirty = 0;             // сколько правок не сохранено
+  const undoStack = [];      // снимки parts[] до каждой правки
+
+  // вид
+  const view = { rx: 0, ry: 0, zoom: 1, explode: 0, spread: 120, base: 1 };
+  let playing = false, playT = 0, raf = 0;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const partById = id => device && device.parts.find(p => p.id === id);
+  const nodeById = id => nodes.find(n => n.dataset.id === id);
+
+  // ---------- цвет типа ----------
+  // Цвет обязан быть одинаковым у всех деталей одного типа и стабильным между
+  // запусками — поэтому не палитра по порядку, а чистая функция от строки.
+
+  function typeColor(type) {
+    const s = String(type || 'misc');
+    let h = 2166136261;                      // FNV-1a
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    const hue = h % 360;
+    const sat = 62 + (h >>> 9) % 22;         // 62..83
+    const lig = 56 + (h >>> 17) % 14;        // 56..69
+    return 'hsl(' + hue + ' ' + sat + '% ' + lig + '%)';
+  }
+
+  // ---------- загрузка ----------
+
+  function fail(msg) { errEl.textContent = msg; }
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toastEl.classList.remove('on'), 1800);
+  }
+
+  async function readFiles(files) {
+    errEl.textContent = '';
+    let jsonFile = null, pngFiles = [];
+    for (const f of files) {
+      const n = (f.name || '').toLowerCase();
+      if (n.endsWith('.json')) { if (!jsonFile || n.includes('device')) jsonFile = f; }
+      else if (n.endsWith('.png')) pngFiles.push(f);
+    }
+    if (!jsonFile) {
+      const names = Array.from(files).map(f => f.name).slice(0, 8).join(', ');
+      return fail('Не нашёл .json среди ' + files.length + ' файлов'
+        + (names ? ' (' + names + ')' : '') + '.');
+    }
+    let data;
+    try { data = JSON.parse(await jsonFile.text()); }
+    catch (e) { return fail('JSON не разобрался: ' + e.message); }
+    if (!data.parts || !data.parts.length) return fail('В JSON нет массива parts.');
+
+    const wantName = (data.texture || 'texture.png').toLowerCase().split(/[\\/]/).pop();
+    let tex = pngFiles.find(f => f.name.toLowerCase() === wantName);
+    // превью не годится как текстура — отбрасываем заведомо служебные файлы
+    if (!tex) tex = pngFiles.find(f => !/preview|contact|sheet/i.test(f.name));
+    if (!tex) return fail('Не нашёл текстуру (' + wantName + ') среди перетащенных файлов.');
+
+    if (texURL && texURL.startsWith('blob:')) URL.revokeObjectURL(texURL);
+    texURL = URL.createObjectURL(tex);
+    adopt(data);
+  }
+
+  function adopt(data) {
+    device = data;
+    hidden = new Set();
+    selected = null;
+    undoStack.length = 0;
+    setDirty(0);
+    build();
+    dropEl.classList.add('hide');
+  }
+
+  function collectEntries(entries) {
+    // поддержка перетаскивания папки. Все колбэки обвешаны обработчиком ошибки:
+    // без него один незавершившийся вызов подвешивал Promise.all и загрузка
+    // молча умирала.
+    const out = [];
+    const walk = entry => new Promise(res => {
+      if (!entry) return res();
+      if (entry.isFile) {
+        entry.file(f => { out.push(f); res(); }, () => res());
+      } else if (entry.isDirectory) {
+        const rd = entry.createReader();
+        // readEntries отдаёт не больше ~100 записей за вызов — читаем, пока не пусто
+        const readChunk = () => rd.readEntries(async ents => {
+          if (!ents.length) return res();
+          for (const e of ents) await walk(e);
+          readChunk();
+        }, () => res());
+        readChunk();
+      } else res();
+    });
+    return Promise.all(entries.map(walk)).then(() => out);
+  }
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise(res => setTimeout(() => res(null), ms))
+    ]);
+  }
+
+  // Реагируем только на перетаскивание ФАЙЛОВ извне. Без этой проверки любой
+  // внутренний drag (выделение, второй палец на тач-экране) открывал окно
+  // загрузки прямо посреди вращения модели.
+  const draggingFiles = dt => !!dt && Array.from(dt.types || []).includes('Files');
+
+  ['dragenter', 'dragover'].forEach(ev => document.addEventListener(ev, e => {
+    if (!draggingFiles(e.dataTransfer)) return;
+    e.preventDefault(); dropEl.classList.remove('hide'); dropEl.classList.add('hot');
+  }));
+  document.addEventListener('dragleave', e => {
+    if (e.relatedTarget === null) dropEl.classList.remove('hot');
+  });
+  // Нативный drag внутри сцены не нужен вообще — он только мешает вращению.
+  stage.addEventListener('dragstart', e => e.preventDefault());
+  document.addEventListener('drop', async e => {
+    if (!draggingFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    dropEl.classList.remove('hot');
+    const dt = e.dataTransfer;
+    if (!dt) return fail('Браузер не передал данные перетаскивания.');
+
+    // dataTransfer живёт только внутри обработчика — снимаем всё синхронно,
+    // до первого await: и плоский список файлов, и записи файловой системы.
+    const flat = Array.from(dt.files || []);
+    const entries = [];
+    for (const it of Array.from(dt.items || [])) {
+      const entry = it.webkitGetAsEntry && it.webkitGetAsEntry();
+      if (entry) entries.push(entry);
+    }
+
+    let files = flat;
+    if (entries.length) {
+      // обход папок; если завис — падаем обратно на плоский список
+      const walked = await withTimeout(collectEntries(entries), 5000);
+      if (walked && walked.length) files = walked;
+    }
+    if (!files.length) {
+      return fail('Перетащено 0 файлов. Попробуй кнопки выбора ниже.');
+    }
+    readFiles(files);
+  });
+  document.getElementById('pick').addEventListener('change', e => readFiles(e.target.files));
+  document.getElementById('pick2').addEventListener('change', e => readFiles(e.target.files));
+  document.getElementById('reload').addEventListener('click', () => dropEl.classList.remove('hide'));
+
+  // ---------- построение сцены ----------
+
+  function build() {
+    world.innerHTML = '';
+    nodes = [];
+    const [tw, th] = device.texture_size || [1024, 1024];
+    const [cw, ch] = device.canvas || [1024, 1024];
+    device.parts.sort((a, b) => a.layer - b.layer);
+
+    // авто-масштаб под окно
+    const fit = Math.min(stage.clientWidth / cw, stage.clientHeight / ch) * 0.8;
+    view.base = isFinite(fit) && fit > 0 ? fit : 1;
+
+    for (const p of device.parts) {
+      const el = document.createElement('div');
+      el.className = 'part';
+      const sc = p.scale == null ? 1 : p.scale;
+      const w = p.size[0] * sc, h = p.size[1] * sc;
+      const f = p.frame;
+      // кроп из атласа: масштабируем всю текстуру так, чтобы кадр занял w x h
+      el.style.width = w + 'px';
+      el.style.height = h + 'px';
+      el.style.backgroundImage = 'url(' + texURL + ')';
+      el.style.backgroundSize = (tw * w / f.w) + 'px ' + (th * h / f.h) + 'px';
+      el.style.backgroundPosition = (-f.x * w / f.w) + 'px ' + (-f.y * h / f.h) + 'px';
+      el.dataset.id = p.id;
+      el._p = p;
+      world.appendChild(el);
+      nodes.push(el);
+    }
+    updateMeta();
+    buildList();
+    layout();
+  }
+
+  function updateMeta() {
+    const [tw, th] = device.texture_size || [0, 0];
+    const [cw, ch] = device.canvas || [0, 0];
+    metaEl.innerHTML = (device.device || 'device') + ' · деталей ' + device.parts.length
+      + ' · холст ' + cw + '×' + ch + ' · атлас ' + tw + '×' + th
+      + (dirty ? ' · <span class="dirty">не сохранено правок: ' + dirty + '</span>' : '');
+  }
+
+  function setDirty(n) {
+    dirty = n;
+    saveBtn.disabled = !device;
+    undoBtn.disabled = !undoStack.length;
+    if (device) updateMeta();
+  }
+
+  // ---------- правки ----------
+
+  function snapshot() {
+    if (!device) return;
+    undoStack.push(JSON.stringify(device.parts));
+    if (undoStack.length > 60) undoStack.shift();
+  }
+
+  function commit() {
+    setDirty(dirty + 1);
+    buildList();
+    layout();
+  }
+
+  function undo() {
+    if (!undoStack.length) return;
+    device.parts = JSON.parse(undoStack.pop());
+    selected = null;
+    setDirty(Math.max(0, dirty - 1));
+    build();
+    toast('Отменено');
+  }
+
+  function removePart(id) {
+    const p = partById(id);
+    if (!p) return;
+    snapshot();
+    device.parts = device.parts.filter(x => x.id !== id);
+    hidden.delete(id);
+    if (selected === id) selected = null;
+    const n = nodeById(id);
+    if (n) { n.remove(); nodes = nodes.filter(x => x !== n); }
+    commit();
+    updateMeta();
+    toast('Вырезано: ' + (p.name || p.id));
+  }
+
+  function moveLayer(id, dir) {
+    const ordered = device.parts.slice().sort((a, b) => a.layer - b.layer);
+    const i = ordered.findIndex(p => p.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= ordered.length) return;
+    snapshot();
+    // меняем слои местами: так номера остаются уникальными, а validate чист
+    const a = ordered[i], b = ordered[j];
+    const t = a.layer; a.layer = b.layer; b.layer = t;
+    commit();
+  }
+
+  function setType(id, value) {
+    const p = partById(id);
+    if (!p) return;
+    const t = String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '') || 'misc';
+    if (p.type === t) return;
+    snapshot();
+    p.type = t;
+    setDirty(dirty + 1);
+    drawSchema();
+    buildList();
+  }
+
+  // ---------- панель деталей ----------
+
+  function buildList() {
+    if (!device) return;
+    const scrollTop = listEl.scrollTop;
+    listEl.innerHTML = '';
+    const head = document.createElement('div');
+    head.className = 'head';
+    head.textContent = editing
+      ? 'слои сверху вниз · клик — выбрать · ✕ вырезать'
+      : 'слои сверху вниз · клик — скрыть';
+    listEl.appendChild(head);
+
+    const ordered = device.parts.slice().sort((a, b) => b.layer - a.layer);
+    ordered.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'row' + (hidden.has(p.id) ? ' off' : '') + (selected === p.id ? ' sel' : '');
+
+      const sw = document.createElement('span');
+      sw.className = 'sw';
+      sw.style.background = typeColor(p.type);
+      sw.title = p.type || 'misc';
+
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = (p.name || p.id);
+      nm.title = p.id + ' · слой ' + p.layer;
+
+      const acts = document.createElement('span');
+      acts.className = 'acts';
+      const mk = (txt, title, fn, cls) => {
+        const b = document.createElement('button');
+        b.textContent = txt; b.title = title;
+        if (cls) b.className = cls;
+        b.addEventListener('click', ev => { ev.stopPropagation(); fn(); });
+        return b;
+      };
+      acts.appendChild(mk('L' + p.layer, 'слой', () => {}, 'lay'));
+      acts.lastChild.disabled = true;
+      if (editing) {
+        acts.appendChild(mk('↑', 'слой выше', () => moveLayer(p.id, 1)));
+        acts.appendChild(mk('↓', 'слой ниже', () => moveLayer(p.id, -1)));
+      }
+      acts.appendChild(mk(hidden.has(p.id) ? '◌' : '●', 'показать/скрыть', () => {
+        if (hidden.has(p.id)) hidden.delete(p.id); else hidden.add(p.id);
+        buildList(); layout();
+      }));
+      if (editing) acts.appendChild(mk('✕', 'вырезать из ассета', () => removePart(p.id), 'del'));
+
+      row.append(sw, nm, acts);
+
+      if (editing) {
+        const tp = document.createElement('input');
+        tp.className = 'tp';
+        tp.value = p.type || 'misc';
+        tp.title = 'тип детали — общий для всех устройств, см. ТИПЫ_ДЕТАЛЕЙ.md';
+        tp.addEventListener('change', () => setType(p.id, tp.value));
+        tp.addEventListener('keydown', e => { if (e.key === 'Enter') tp.blur(); });
+        row.appendChild(tp);
+      }
+
+      row.addEventListener('click', () => {
+        if (editing) select(p.id);
+        else {
+          if (hidden.has(p.id)) hidden.delete(p.id); else hidden.add(p.id);
+          buildList(); layout();
+        }
+      });
+      row.addEventListener('mouseenter', () => { const n = nodeById(p.id); if (n) n.classList.add('hi'); });
+      row.addEventListener('mouseleave', () => { const n = nodeById(p.id); if (n) n.classList.remove('hi'); });
+      listEl.appendChild(row);
+    });
+    listEl.scrollTop = scrollTop;
+  }
+
+  function select(id) {
+    selected = (selected === id) ? null : id;
+    nodes.forEach(n => n.classList.toggle('sel', n.dataset.id === selected));
+    buildList();
+  }
+
+  // ---------- раскладка / трансформы ----------
+
+  function layout() {
+    if (!device) return;
+    const [cw, ch] = device.canvas || [1024, 1024];
+    const layers = device.parts.map(p => p.layer);
+    const minL = Math.min(...layers), maxL = Math.max(...layers);
+    const span = Math.max(maxL - minL, 1);
+
+    for (const el of nodes) {
+      const p = el._p;
+      const sc = p.scale == null ? 1 : p.scale;
+      const w = p.size[0] * sc, h = p.size[1] * sc;
+      // позиция — центр детали в координатах холста; холст центрируем в мире
+      const x = p.position[0] - cw / 2 - w / 2;
+      const y = p.position[1] - ch / 2 - h / 2;
+      // слои: нижний (layer 0) уходит вниз по Z, верхние поднимаются
+      const t = (p.layer - minL) / span;
+      const z = (t - 0.5) * view.spread * span * view.explode;
+      el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + z + 'px)'
+        + (p.rotation ? ' rotateZ(' + p.rotation + 'deg)' : '');
+      el.style.display = hidden.has(p.id) ? 'none' : '';
+      el.style.zIndex = String(1000 + p.layer);
+    }
+    const s = view.base * view.zoom;
+    world.style.transform =
+      'rotateX(' + view.rx + 'deg) rotateY(' + view.ry + 'deg) scale(' + s + ')';
+    drawSchema();
+  }
+
+  // ---------- схема типов ----------
+
+  function drawSchema() {
+    while (schemaEl.firstChild) schemaEl.removeChild(schemaEl.firstChild);
+    legendEl.classList.toggle('on', schemaChk.checked && !!device);
+    if (!schemaChk.checked || !device) return;
+
+    const box = stage.getBoundingClientRect();
+    schemaEl.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+    schemaEl.setAttribute('width', box.width);
+    schemaEl.setAttribute('height', box.height);
+
+    const shown = device.parts.filter(p => !hidden.has(p.id));
+    if (!shown.length) return;
+
+    // Радиус выноски считаем от габарита всей сборки на экране, чтобы подписи
+    // ушли за пределы устройства, а не легли поверх деталей.
+    let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+    const centers = new Map();
+    for (const p of shown) {
+      const n = nodeById(p.id);
+      if (!n) continue;
+      const r = n.getBoundingClientRect();
+      const cx = r.left + r.width / 2 - box.left;
+      const cy = r.top + r.height / 2 - box.top;
+      centers.set(p.id, [cx, cy]);
+      minX = Math.min(minX, r.left - box.left); maxX = Math.max(maxX, r.right - box.left);
+      minY = Math.min(minY, r.top - box.top);   maxY = Math.max(maxY, r.bottom - box.top);
+    }
+    if (!centers.size) return;
+
+    const ox = (minX + maxX) / 2, oy = (minY + maxY) / 2;
+    const R = Math.max(Math.hypot(maxX - minX, maxY - minY) / 2 + 46, 120);
+
+    // Детали лежат друг на друге — если вести выноску «наружу от центра», все
+    // подписи слипнутся. Поэтому концы разложены равномерно по кругу, как на
+    // настоящей выносной схеме.
+    const ordered = shown.slice().sort((a, b) => a.layer - b.layer);
+    const n = ordered.length;
+    ordered.forEach((p, i) => {
+      const c = centers.get(p.id);
+      if (!c) return;
+      const ang = (-Math.PI / 2) + (i + 0.5) / n * Math.PI * 2;
+      let ex = ox + Math.cos(ang) * R;
+      let ey = oy + Math.sin(ang) * R;
+      const right = Math.cos(ang) >= 0;
+      const shelf = right ? 30 : -30;
+      // держим полку и подпись внутри окна
+      ex = Math.min(Math.max(ex, 66), box.width - 66);
+      ey = Math.min(Math.max(ey, 18), box.height - 14);
+      const tx = ex + shelf;
+      const col = typeColor(p.type);
+
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('class', 'lead');
+      path.setAttribute('stroke', col);
+      path.setAttribute('d', 'M' + c[0] + ',' + c[1] + ' L' + ex + ',' + ey + ' L' + tx + ',' + ey);
+      schemaEl.appendChild(path);
+
+      const dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('class', 'dot');
+      dot.setAttribute('cx', c[0]); dot.setAttribute('cy', c[1]); dot.setAttribute('r', 3);
+      dot.setAttribute('fill', col);
+      schemaEl.appendChild(dot);
+
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', tx + (right ? 4 : -4));
+      label.setAttribute('y', ey - 5);
+      label.setAttribute('fill', col);
+      label.setAttribute('text-anchor', right ? 'start' : 'end');
+      label.textContent = p.type || 'misc';
+      schemaEl.appendChild(label);
+
+      const sub = document.createElementNS(NS, 'text');
+      sub.setAttribute('x', tx + (right ? 4 : -4));
+      sub.setAttribute('y', ey + 12);
+      sub.setAttribute('fill', 'rgba(232,234,239,.62)');
+      sub.setAttribute('text-anchor', right ? 'start' : 'end');
+      sub.setAttribute('font-size', '10');
+      sub.textContent = p.name || p.id;
+      schemaEl.appendChild(sub);
+    });
+
+    // легенда: по одному образцу на тип
+    legendEl.innerHTML = '';
+    const title = document.createElement('b');
+    title.textContent = 'типы деталей';
+    legendEl.appendChild(title);
+    const seen = new Map();
+    shown.forEach(p => seen.set(p.type || 'misc', (seen.get(p.type || 'misc') || 0) + 1));
+    Array.from(seen.entries()).sort((a, b) => a[0].localeCompare(b[0])).forEach(([t, cnt]) => {
+      const li = document.createElement('div');
+      li.className = 'li';
+      const sw = document.createElement('span');
+      sw.className = 'sw';
+      sw.style.background = typeColor(t);
+      const tx = document.createElement('span');
+      tx.textContent = t + (cnt > 1 ? ' ×' + cnt : '');
+      li.append(sw, tx);
+      legendEl.appendChild(li);
+    });
+  }
+
+  // ---------- перетаскивание детали ----------
+  // Экранный сдвиг переводим в координаты холста через ту же матрицу, что
+  // задана миру: rotateX(rx) · rotateY(ry) · scale(s). Для точки в плоскости
+  // слоя (z фиксирован) прямое преобразование —
+  //   X = wx·cos(ry),  Y = wx·sin(rx)·sin(ry) + wy·cos(rx)
+  // отсюда и обратное. Без этого при наклонённой сцене деталь уезжала вбок.
+
+  function screenToCanvas(dxs, dys) {
+    const s = view.base * view.zoom;
+    const a = view.rx * Math.PI / 180, b = view.ry * Math.PI / 180;
+    const cb = Math.cos(b), ca = Math.cos(a);
+    const wx = dxs / (s * (Math.abs(cb) < 0.15 ? Math.sign(cb) * 0.15 || 0.15 : cb));
+    const wy = (dys / s - wx * Math.sin(a) * Math.sin(b))
+      / (Math.abs(ca) < 0.15 ? Math.sign(ca) * 0.15 || 0.15 : ca);
+    return [wx, wy];
+  }
+
+  let move = null;   // {id, startPos, sx, sy, moved}
+
+  function overBin(x, y) {
+    const r = binEl.getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+  }
+
+  function startMove(id, e) {
+    const p = partById(id);
+    if (!p) return;
+    move = { id, start: p.position.slice(), sx: e.clientX, sy: e.clientY, moved: false };
+    select(id);
+    stage.classList.add('moving');
+    binEl.classList.add('armed');
+    binText.textContent = 'Брось сюда — вырежу';
+  }
+
+  function doMove(e) {
+    if (!move) return;
+    const p = partById(move.id);
+    if (!p) return;
+    const [dx, dy] = screenToCanvas(e.clientX - move.sx, e.clientY - move.sy);
+    if (!move.moved && Math.hypot(e.clientX - move.sx, e.clientY - move.sy) > 3) {
+      snapshot();                    // снимок один раз на всё перетаскивание
+      move.moved = true;
+    }
+    p.position = [Math.round((move.start[0] + dx) * 10) / 10,
+                  Math.round((move.start[1] + dy) * 10) / 10];
+    const hot = overBin(e.clientX, e.clientY);
+    binEl.classList.toggle('hot', hot);
+    const n = nodeById(move.id);
+    if (n) n.classList.toggle('ghost', hot);
+    layout();
+  }
+
+  function endMove(e) {
+    if (!move) return;
+    const id = move.id, moved = move.moved;
+    const drop = e && overBin(e.clientX, e.clientY);
+    const n = nodeById(id);
+    if (n) n.classList.remove('ghost');
+    move = null;
+    stage.classList.remove('moving');
+    binEl.classList.remove('armed', 'hot');
+    binText.textContent = 'Корзина';
+
+    if (drop) {
+      if (moved) undoStack.pop();    // снимок перетаскивания заменит снимок удаления
+      removePart(id);
+      return;
+    }
+    if (moved) { setDirty(dirty + 1); buildList(); }
+  }
+
+  // ---------- управление сценой ----------
+
+  // Указатели считаем поимённо: вращает только ПЕРВЫЙ палец, второй включает
+  // щипковый зум. Раньше каждый pointerdown перехватывал вращение на себя,
+  // и от второго касания модель прыгала.
+  const pointers = new Map();
+  let dragging = false, lx = 0, ly = 0, pinchDist = 0, pinchZoom = 1;
+
+  const firstId = () => pointers.keys().next().value;
+  function spread() {
+    const [a, b] = Array.from(pointers.values());
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+  function grabFrom(id) {
+    const p = pointers.get(id);
+    if (!p) return;
+    dragging = true; lx = p.x; ly = p.y; stage.classList.add('drag');
+  }
+  function setZoom(z) {
+    view.zoom = Math.max(0.1, Math.min(3, z));
+    document.getElementById('zoom').value = String(Math.round(view.zoom * 100));
+  }
+
+  stage.addEventListener('pointerdown', e => {
+    // в редакторе клик по детали двигает её, клик по пустому месту вращает сцену
+    if (editing && pointers.size === 0) {
+      const hit = e.target.closest && e.target.closest('.part');
+      if (hit && !hidden.has(hit.dataset.id)) {
+        stage.setPointerCapture(e.pointerId);
+        startMove(hit.dataset.id, e);
+        return;
+      }
+      if (!hit) select(null);
+    }
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    stage.setPointerCapture(e.pointerId);
+    if (pointers.size === 1) {
+      grabFrom(e.pointerId);
+    } else if (pointers.size === 2) {
+      dragging = false; stage.classList.remove('drag');
+      pinchDist = spread(); pinchZoom = view.zoom;
+    }
+  });
+  stage.addEventListener('pointermove', e => {
+    if (move) { doMove(e); return; }
+    const p = pointers.get(e.pointerId);
+    if (!p) return;
+    p.x = e.clientX; p.y = e.clientY;
+
+    if (pointers.size >= 2) {
+      if (pointers.size === 2 && pinchDist > 0) {
+        setZoom(pinchZoom * spread() / pinchDist);
+        layout();
+      }
+      return;
+    }
+    if (!dragging || e.pointerId !== firstId()) return;
+    view.ry += (e.clientX - lx) * 0.35;
+    view.rx -= (e.clientY - ly) * 0.35;
+    view.rx = Math.max(-89, Math.min(89, view.rx));
+    lx = e.clientX; ly = e.clientY;
+    layout();
+  });
+  ['pointerup', 'pointercancel'].forEach(ev => stage.addEventListener(ev, e => {
+    if (move) { endMove(e); return; }
+    pointers.delete(e.pointerId);
+    if (pointers.size === 1) {
+      // палец убрали — оставшийся продолжает вращать, без рывка от старых координат
+      pinchDist = 0; grabFrom(firstId());
+    } else if (pointers.size === 0) {
+      dragging = false; pinchDist = 0; stage.classList.remove('drag');
+    }
+  }));
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    view.zoom = Math.max(0.1, Math.min(3, view.zoom * (e.deltaY > 0 ? 0.92 : 1.08)));
+    document.getElementById('zoom').value = String(Math.round(view.zoom * 100));
+    layout();
+  }, { passive: false });
+
+  const expl = document.getElementById('explode');
+  const explVal = document.getElementById('explodeVal');
+  expl.addEventListener('input', () => {
+    view.explode = expl.value / 100;
+    explVal.textContent = expl.value + '%';
+    layout();
+  });
+  document.getElementById('spread').addEventListener('input', e => {
+    view.spread = +e.target.value; layout();
+  });
+  document.getElementById('zoom').addEventListener('input', e => {
+    view.zoom = e.target.value / 100; layout();
+  });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    view.rx = 0; view.ry = 0; view.zoom = 1; view.explode = 0;
+    expl.value = 0; explVal.textContent = '0%';
+    document.getElementById('zoom').value = 100;
+    layout();
+  });
+  document.getElementById('flatBtn').addEventListener('click', () => {
+    view.rx = 0; view.ry = 0; layout();
+  });
+  document.getElementById('isoBtn').addEventListener('click', () => {
+    view.rx = 54; view.ry = -32; layout();
+  });
+  document.getElementById('toggleList').addEventListener('click', e => {
+    listEl.classList.toggle('open'); e.currentTarget.classList.toggle('on');
+  });
+
+  editBtn.addEventListener('click', () => {
+    editing = !editing;
+    editBtn.classList.toggle('on', editing);
+    stage.classList.toggle('edit', editing);
+    if (editing) {
+      listEl.classList.add('open');
+      document.getElementById('toggleList').classList.add('on');
+      toast('Редактор: тяни деталь мышью, в корзину — вырезать, ↑↓ — слой');
+    } else {
+      select(null);
+    }
+    buildList();
+  });
+
+  schemaChk.addEventListener('change', drawSchema);
+  undoBtn.addEventListener('click', undo);
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
+    if (e.key === 'Delete' && editing && selected) removePart(selected);
+  });
+
+  // ---------- сохранение ----------
+
+  function cleanCopy() {
+    const out = JSON.parse(JSON.stringify(device));
+    out.parts.sort((a, b) => a.layer - b.layer);
+    out.part_count = out.parts.length;
+    out.parts.forEach(p => { if (!p.type) p.type = 'misc'; });
+    return out;
+  }
+
+  saveBtn.addEventListener('click', async () => {
+    if (!device) return;
+    const text = JSON.stringify(cleanCopy(), null, 2);
+    const blob = new Blob([text], { type: 'application/json' });
+    // Chrome по file:// умеет писать поверх выбранного файла — тогда правка
+    // сразу попадает в папку ассета; остальным браузерам остаётся скачивание
+    if (window.showSaveFilePicker) {
+      try {
+        const h = await window.showSaveFilePicker({
+          suggestedName: 'device.json',
+          types: [{ description: 'device.json', accept: { 'application/json': ['.json'] } }],
+        });
+        const w = await h.createWritable();
+        await w.write(blob);
+        await w.close();
+        setDirty(0);
+        return toast('Сохранено. Пересобери ОТКРЫТЬ_*.html: asset_viewer');
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+      }
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'device.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    setDirty(0);
+    toast('Скачан device.json — положи его в папку ассета');
+  });
+
+  window.addEventListener('beforeunload', e => {
+    if (dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  const playBtn = document.getElementById('play');
+  playBtn.addEventListener('click', () => {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Пауза' : '▶ Анимация';
+    playBtn.classList.toggle('on', playing);
+    if (playing) {
+      if (view.rx === 0 && view.ry === 0) { view.rx = 48; view.ry = -26; }
+      tick();
+    } else cancelAnimationFrame(raf);
+  });
+
+  function tick() {
+    playT += 0.012;
+    // маятник разборки: 0 -> 1 -> 0, плавно
+    const e = (1 - Math.cos(playT)) / 2;
+    view.explode = e;
+    view.ry += 0.25;
+    expl.value = String(Math.round(e * 100));
+    explVal.textContent = expl.value + '%';
+    layout();
+    if (playing) raf = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', () => { if (device) { build(); } });
+
+  // ---------- автозагрузка вшитого ассета ----------
+  // file:// не даёт странице читать соседние файлы (CORS), поэтому упаковщик
+  // кладёт JSON и текстуру прямо внутрь этой страницы — открывается двойным
+  // кликом и сразу показывает сборку.
+  (function bootEmbedded() {
+    const el = document.getElementById('asset-payload');
+    if (!el) return;
+    let payload = null;
+    try { payload = JSON.parse(el.textContent || 'null'); }
+    catch (e) { return fail('Вшитый ассет не разобрался: ' + e.message); }
+    if (!payload || !payload.device || !payload.texture) return;
+    if (!payload.device.parts || !payload.device.parts.length) {
+      return fail('Во вшитом ассете нет деталей.');
+    }
+    texURL = payload.texture;
+    adopt(payload.device);
+  })();
+})();
+</script>
+</body>
+</html>

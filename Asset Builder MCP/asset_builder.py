@@ -433,6 +433,9 @@ def pack_atlas(
             {
                 "id": pid,
                 "name": s.get("name") or pid.replace("_", " ").title(),
+                # общая классификация детали, единая для всех устройств:
+                # список типов и правила выбора — в ТИПЫ_ДЕТАЛЕЙ.md в корне
+                "type": slug(s.get("type") or "misc"),
                 "frame": {"x": int(x), "y": int(y), "w": int(w), "h": int(h)},
                 # четыре угла кадра в текстуре: по часовой от левого верхнего
                 "corners": [
@@ -607,7 +610,7 @@ def update_parts(json_path: str | Path, updates: list[dict]) -> dict:
     """Точечно поправить детали в device.json.
 
     updates: [{"id":"battery","position":[x,y],"size":[w,h],"rotation":0,
-               "layer":2,"scale":1.0,"name":"Battery"}]
+               "layer":2,"scale":1.0,"name":"Battery","type":"battery"}]
     Передавай только те поля, что меняешь. dx/dy сдвигают позицию относительно.
     """
     data, _ = load_device(json_path)
@@ -631,9 +634,10 @@ def update_parts(json_path: str | Path, updates: list[dict]) -> dict:
                 p[key] = float(u[key])
         if "layer" in u:
             p["layer"] = int(u["layer"])
-        for key in ("id", "name"):
-            if key in u and key != "id":
-                p[key] = u[key]
+        if "name" in u:
+            p["name"] = u["name"]
+        if "type" in u:
+            p["type"] = slug(u["type"])
         changed.append(pid)
 
     data["parts"].sort(key=lambda p: p["layer"])

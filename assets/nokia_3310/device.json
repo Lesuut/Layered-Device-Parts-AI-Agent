@@ -15,6 +15,7 @@
     {
       "id": "back_cover",
       "name": "Back Cover",
+      "type": "housing_rear",
       "frame": {
         "x": 3,
         "y": 844,
@@ -65,6 +66,7 @@
     {
       "id": "rear_chassis",
       "name": "Rear Chassis",
+      "type": "housing_rear",
       "frame": {
         "x": 378,
         "y": 3,
@@ -115,6 +117,7 @@
     {
       "id": "battery",
       "name": "Battery BL-5C",
+      "type": "battery",
       "frame": {
         "x": 997,
         "y": 844,
@@ -165,6 +168,7 @@
     {
       "id": "main_pcb",
       "name": "Main Board",
+      "type": "circuit_board",
       "frame": {
         "x": 756,
         "y": 3,
@@ -215,6 +219,7 @@
     {
       "id": "keypad_membrane",
       "name": "Keypad Membrane",
+      "type": "membrane",
       "frame": {
         "x": 371,
         "y": 844,
@@ -265,6 +270,7 @@
     {
       "id": "keypad",
       "name": "Keypad",
+      "type": "button_pad",
       "frame": {
         "x": 686,
         "y": 844,
@@ -315,6 +321,7 @@
     {
       "id": "front_shell",
       "name": "Front Shell",
+      "type": "housing_front",
       "frame": {
         "x": 3,
         "y": 3,

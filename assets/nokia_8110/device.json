@@ -15,6 +15,7 @@
     {
       "id": "antenna",
       "name": "Antenna",
+      "type": "antenna",
       "frame": {
         "x": 800,
         "y": 810,
@@ -65,6 +66,7 @@
     {
       "id": "back_cover",
       "name": "Back Cover",
+      "type": "housing_rear",
       "frame": {
         "x": 3,
         "y": 3,
@@ -115,6 +117,7 @@
     {
       "id": "battery",
       "name": "Battery",
+      "type": "battery",
       "frame": {
         "x": 885,
         "y": 810,
@@ -165,6 +168,7 @@
     {
       "id": "rear_chassis",
       "name": "Rear Chassis",
+      "type": "housing_rear",
       "frame": {
         "x": 673,
         "y": 3,
@@ -215,6 +219,7 @@
     {
       "id": "main_pcb",
       "name": "Main Board",
+      "type": "circuit_board",
       "frame": {
         "x": 949,
         "y": 3,
@@ -265,6 +270,7 @@
     {
       "id": "display_module",
       "name": "Display Module",
+      "type": "display",
       "frame": {
         "x": 3,
         "y": 810,
@@ -315,6 +321,7 @@
     {
       "id": "keypad",
       "name": "Keypad",
+      "type": "button_pad",
       "frame": {
         "x": 279,
         "y": 810,
@@ -365,6 +372,7 @@
     {
       "id": "keypad_bezel",
       "name": "Keypad Bezel",
+      "type": "housing_front",
       "frame": {
         "x": 540,
         "y": 810,
@@ -415,6 +423,7 @@
     {
       "id": "front_shell",
       "name": "Front Shell",
+      "type": "housing_front",
       "frame": {
         "x": 339,
         "y": 3,
@@ -465,6 +474,7 @@
     {
       "id": "screen_glass",
       "name": "Screen Glass",
+      "type": "display",
       "frame": {
         "x": 1112,
         "y": 810,
