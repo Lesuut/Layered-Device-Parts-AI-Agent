@@ -10,8 +10,9 @@
 
 ```
 install.bat            установка: зависимости + MCP + скилл
-bg_remove.py           вся логика + CLI
-mcp_server.py          MCP-сервер (3 инструмента)
+bg_remove.py           вырезание фона: вся логика + CLI
+refine.py              доводка: карта дыр, пробивка по метке, срез каймы + CLI
+mcp_server.py          MCP-сервер (6 инструментов)
 skills/bg-remove/      скилл для Claude Code
 requirements.txt       зависимости
 ```
@@ -54,6 +55,12 @@ python bg_remove.py "C:\images\*.jpeg" --method white
 python bg_remove.py C:\images --recursive --out C:\cut
 python bg_remove.py photo.jpg --method ai --ai-model human
 python bg_remove.py --check                          # что доступно в системе
+python bg_remove.py in.jpeg --shrink 2               # сразу срезать белую кайму
+
+python refine.py inspect cut.png                     # карта дыр: cut_holes.png/.json
+python refine.py punch   cut.png --ids 1,4,7         # выбить дыры по номерам
+python refine.py punch   cut.png --points 640x320    # ... или по своей точке
+python refine.py shrink  C:\parts --px 2             # срезать кайму у всей папки
 ```
 
 | Ключ | Смысл |
@@ -83,7 +90,13 @@ python bg_remove.py --check                          # что доступно �
 |---|---|
 | `bg_check` | библиотеки, доступность ИИ, скачанные модели |
 | `bg_remove` | файлы/папка/маска → PNG с прозрачностью, отдаёт пути |
+| `bg_inspect` | карта непробитых белых пятен с номерами (PNG + JSON) |
+| `bg_punch` | выбить белое по номерам с карты или по своим точкам |
+| `bg_shrink` | срезать N px по всей границе — убрать белую кайму |
 | `bg_install_ai` | доустановка rembg+onnxruntime |
+
+Полный цикл: `bg_remove` → `bg_inspect` → агент смотрит карту глазами →
+`bg_punch(ids=[...])` → `bg_shrink(px=2)`.
 
 В ответе `bg_remove` по каждому файлу: `path`, `method`, `width`/`height`,
 `bytes`, `opaque_share` (доля непрозрачных пикселей) и `notes`.

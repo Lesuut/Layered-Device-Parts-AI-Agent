@@ -161,6 +161,70 @@ def remove_white_bg(
     return alpha
 
 
+def disk(radius: int) -> np.ndarray:
+    """Круглый структурный элемент: диагонали съедаются так же, как прямые."""
+    r = int(max(radius, 1))
+    y, x = np.ogrid[-r : r + 1, -r : r + 1]
+    return (x * x + y * y) <= r * r + 0.5
+
+
+def shrink_alpha(
+    alpha: np.ndarray,
+    px: int = 2,
+    thr: float = 0.5,
+    soft: float = 0.5,
+    min_island: int = 6,
+) -> tuple[np.ndarray, dict]:
+    """Срезать `px` пикселей вглубь по всей границе с прозрачностью.
+
+    Вырезание всегда оставляет по контуру тонкую светлую кайму от фона:
+    пиксель на границе наполовину фоновый, и никакой defringe его не спасёт.
+    Дешевле не угадывать цвет, а просто выбросить эти пиксели — эрозия идёт
+    и по внешнему контуру, и вокруг дыр, то есть везде, где непрозрачное
+    касается прозрачного.
+
+    За кадром считаем «непрозрачно» (border_value=1): деталь, упирающаяся
+    в рамку кадра, не должна там обрезаться.
+
+    min_island — выкинуть оставшиеся после эрозии крошки меньше N пикселей.
+    Возвращает (новая альфа, статистика).
+    """
+    px = int(px)
+    if px <= 0:
+        return alpha, {"shrink_px": 0}
+
+    solid = alpha >= thr
+    before = int(solid.sum())
+    eroded = ndimage.binary_erosion(solid, structure=disk(px), border_value=1)
+
+    if min_island > 0 and eroded.any():
+        labels, n = ndimage.label(eroded)
+        if n:
+            sizes = np.bincount(labels.ravel())
+            small = np.zeros(n + 1, dtype=bool)
+            small[1:] = sizes[1:] < int(min_island)
+            eroded &= ~small[labels]
+
+    mask = eroded.astype(np.float32)
+    if soft > 0:
+        # Лёгкое размытие маски возвращает единственный полупрозрачный пиксель
+        # на кромке — без него после эрозии край становится «лесенкой».
+        mask = ndimage.gaussian_filter(mask, sigma=float(soft))
+
+    out = np.minimum(alpha, mask)
+    after = int((out >= thr).sum())
+    stats = {
+        "shrink_px": px,
+        "solid_before": before,
+        "solid_after": after,
+        "removed_px": before - after,
+        "removed_share": round((before - after) / before, 4) if before else 0.0,
+    }
+    if before and (before - after) / before > 0.35:
+        stats["warning"] = "срезано больше трети объекта — px слишком большой для этой детали"
+    return out, stats
+
+
 def defringe(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
     """Убрать белую кайму: распремножить цвет, снятый с белого фона.
 
@@ -267,6 +331,9 @@ def remove_background(
     trim: bool = False,
     pad: int = 0,
     keep_holes: bool = True,
+    shrink: int = 0,
+    shrink_soft: float = 0.5,
+    min_island: int = 6,
     ai_model: str = "general",
     alpha_matting: bool = False,
     suffix: str = "_nobg",
@@ -333,6 +400,12 @@ def remove_background(
         alpha = alpha * src_alpha  # уважаем прозрачность исходника
         notes.append("у исходника уже была альфа — перемножил")
 
+    shrink_stats = None
+    if shrink > 0:
+        alpha, shrink_stats = shrink_alpha(alpha, shrink, soft=shrink_soft, min_island=min_island)
+        if "warning" in shrink_stats:
+            notes.append(shrink_stats["warning"])
+
     coverage = float((alpha > 0.5).mean())
     if coverage >= 0.999:
         notes.append("фон не найден: почти всё осталось непрозрачным")
@@ -364,6 +437,7 @@ def remove_background(
         "source_size": [w, h],
         "bytes": dst.stat().st_size,
         "opaque_share": round(coverage, 4),
+        "shrink": shrink_stats,
         "trimmed_box": box,
         "elapsed_sec": round(time.time() - started, 2),
         "notes": notes,
@@ -515,6 +589,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Выбивать ВСЕ белые пиксели, включая внутренние (по умолчанию они остаются)",
     )
+    p.add_argument(
+        "--shrink",
+        type=int,
+        default=0,
+        help="Срезать N px вглубь по всей границе с прозрачностью — убирает белую кайму (0)",
+    )
+    p.add_argument("--shrink-soft", type=float, default=0.5, help="Сглаживание кромки после среза")
+    p.add_argument("--min-island", type=int, default=6, help="Выкидывать куски мельче N px (6)")
     p.add_argument("--suffix", default="_nobg", help="Суффикс имени выходного файла")
     p.add_argument(
         "--compress", type=int, default=6, help="Сжатие PNG 0-9 (6). 9 медленнее в 8 раз"
@@ -555,6 +637,9 @@ def main() -> int:
         trim=args.trim,
         pad=args.pad,
         keep_holes=not args.no_keep_holes,
+        shrink=args.shrink,
+        shrink_soft=args.shrink_soft,
+        min_island=args.min_island,
         ai_model=args.ai_model,
         alpha_matting=args.alpha_matting,
         suffix=args.suffix,
