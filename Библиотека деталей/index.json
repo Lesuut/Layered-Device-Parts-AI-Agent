@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-13T03:50:04",
+  "updated": "2026-08-14T18:03:55",
   "parts": {
     "b96a82112576b26dc96e17615d502b06962c5384": {
       "file": "использованные/compact_camera_part_001_b96a8211.png",
@@ -695,7 +695,8 @@
         290
       ],
       "origins": [
-        "work\\compact_camera\\parts\\part_043.png"
+        "work\\compact_camera\\parts\\part_043.png",
+        "work\\polaroid\\parts\\part_lens.png"
       ],
       "added": "2026-08-12T22:14:36",
       "used": true,
@@ -13326,10 +13327,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "front_shell",
+      "type": "housing_front"
     },
     "e626d9823e816b41767a28cf789d3f0d10168a67": {
       "file": "неиспользованные/ipod_classic_part_002_e626d982.png",
@@ -13360,10 +13362,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "chassis",
+      "type": "chassis"
     },
     "9c73a01b3f6154481d83f2a5d08fb5955886ea76": {
       "file": "неиспользованные/ipod_classic_part_004_9c73a01b.png",
@@ -13410,10 +13413,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "lcd_screen",
+      "type": "display"
     },
     "f5f6aa62da712b7ce6be4e14e790f3342efd625b": {
       "file": "неиспользованные/ipod_classic_part_007_f5f6aa62.png",
@@ -13460,10 +13464,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "click_wheel",
+      "type": "button_pad"
     },
     "be87f1181c9b2bbca6a2270fc839292558a4aea8": {
       "file": "неиспользованные/ipod_classic_part_010_be87f118.png",
@@ -13558,10 +13563,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_prev",
+      "type": "button"
     },
     "8d98be20637b28803d15dc667e2e6839f3377ea8": {
       "file": "использованные/ipod_classic_part_016_8d98be20.png",
@@ -13576,10 +13582,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_menu",
+      "type": "button"
     },
     "1ad9dee624dd053ec74c9dba9b30a110619d37a7": {
       "file": "использованные/ipod_classic_part_017_1ad9dee6.png",
@@ -13594,10 +13601,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_menu",
+      "type": "button"
     },
     "abbaaa30ecf7914bda09933deec82734c1210474": {
       "file": "использованные/ipod_classic_part_018_abbaaa30.png",
@@ -13612,10 +13620,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_menu",
+      "type": "button"
     },
     "da3ac244bd4abc8967682fb7be261dfae726cb01": {
       "file": "неиспользованные/ipod_classic_part_019_da3ac244.png",
@@ -13918,10 +13927,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "327847e40eb61bfad197e4a86a0f7c8cdab8388d": {
       "file": "неиспользованные/ipod_classic_part_038_327847e4.png",
@@ -13952,10 +13962,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "a0167294f2d4857900ad3e47c2a0e3a443c9e811": {
       "file": "использованные/ipod_classic_part_040_a0167294.png",
@@ -13970,10 +13981,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "d45550c110c8a3105c5c126925c6e6ea537995b5": {
       "file": "неиспользованные/ipod_classic_part_041_d45550c1.png",
@@ -14020,10 +14032,11 @@
       "added": "2026-08-13T01:35:32",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\build\\device.json",
+        "assets\\ipod_classic\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "speaker",
+      "type": "speaker"
     },
     "04c7be68deb8261696ae99f599e2d93c88295a21": {
       "file": "неиспользованные/ipod_classic_part_044_04c7be68.png",
@@ -14214,10 +14227,11 @@
       "added": "2026-08-13T01:51:26",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "antenna",
+      "type": "antenna"
     },
     "4508ccffbe9d0611d49b3920ca978c076a7b0014": {
       "file": "неиспользованные/nokia_5110_part_003_4508ccff.png",
@@ -14298,10 +14312,11 @@
       "added": "2026-08-13T01:51:26",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "e14e2ea232a1c733815a163d34ca1b36155e37f8": {
       "file": "неиспользованные/nokia_5110_part_008_e14e2ea2.png",
@@ -14844,7 +14859,8 @@
       "added": "2026-08-13T01:55:29",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "back_cover",
       "type": "housing_rear"
@@ -14862,7 +14878,8 @@
       "added": "2026-08-13T01:55:29",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "main_pcb",
       "type": "circuit_board"
@@ -14880,7 +14897,8 @@
       "added": "2026-08-13T01:55:29",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "keypad_membrane",
       "type": "membrane"
@@ -14898,7 +14916,8 @@
       "added": "2026-08-13T01:55:29",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "back_cover",
       "type": "housing_rear"
@@ -14916,7 +14935,8 @@
       "added": "2026-08-13T01:55:29",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "front_shell",
       "type": "housing_front"
@@ -14934,7 +14954,8 @@
       "added": "2026-08-13T01:57:26",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\build\\device.json",
+        "assets\\nokia_5110\\device.json"
       ],
       "id": "lcd_screen",
       "type": "display"
@@ -14952,10 +14973,11 @@
       "added": "2026-08-13T02:14:37",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "chassis",
+      "type": "chassis"
     },
     "bf59692e73a1e8f2bed2a0adda0aa72c3554b8c9": {
       "file": "использованные/nokia_2110_part_002_bf59692e.png",
@@ -14970,10 +14992,11 @@
       "added": "2026-08-13T02:14:37",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "1df24a7079080aced42ec105ee87757742d3c47e": {
       "file": "неиспользованные/nokia_2110_part_003_1df24a70.png",
@@ -15036,10 +15059,11 @@
       "added": "2026-08-13T02:14:37",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "9c01f290c0241260314853b55b79fcb7b3df5564": {
       "file": "неиспользованные/nokia_2110_part_007_9c01f290.png",
@@ -15166,10 +15190,11 @@
       "added": "2026-08-13T02:14:37",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "speaker",
+      "type": "speaker"
     },
     "cb46d6a3f4e428ea8e607d98df8bcf8bb81fd000": {
       "file": "неиспользованные/nokia_2110_part_015_cb46d6a3.png",
@@ -15296,10 +15321,11 @@
       "added": "2026-08-13T02:16:07",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "lcd_screen",
+      "type": "display"
     },
     "29bc89bd058315918d2d935ece0d30f4b07d8b22": {
       "file": "неиспользованные/nokia_2110_part_005_29bc89bd.png",
@@ -15346,10 +15372,11 @@
       "added": "2026-08-13T02:16:07",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad",
+      "type": "button_pad"
     },
     "262d63116efeb7061040961c8841535ca69c919e": {
       "file": "неиспользованные/nokia_2110_part_008_262d6311.png",
@@ -15892,10 +15919,11 @@
       "added": "2026-08-13T02:17:23",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "080495f09df30c5f7d9478409975640841f3b337": {
       "file": "использованные/nokia_2110_part_018_rot_080495f0.png",
@@ -15910,7 +15938,8 @@
       "added": "2026-08-13T02:17:23",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
       "id": "antenna",
       "type": "antenna"
@@ -15928,7 +15957,8 @@
       "added": "2026-08-13T02:17:23",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\build\\device.json",
+        "assets\\nokia_2110\\device.json"
       ],
       "id": "front_shell",
       "type": "housing_front"
@@ -15946,10 +15976,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "front_shell",
+      "type": "housing_front"
     },
     "0164e7b63625e896243dd25c16467b3c9033bf7a": {
       "file": "использованные/nokia_3210_part_002_0164e7b6.png",
@@ -15964,10 +15995,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "mid_frame",
+      "type": "chassis"
     },
     "3f4a010bb310f278cf112f3796c8af6214155ea1": {
       "file": "неиспользованные/nokia_3210_part_003_3f4a010b.png",
@@ -16014,10 +16046,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "nav_pad",
+      "type": "button_pad"
     },
     "c8ff9255c8a149486c7ae7ebd21f6bddb13cd2e7": {
       "file": "неиспользованные/nokia_3210_part_006_c8ff9255.png",
@@ -16048,10 +16081,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_nav",
+      "type": "button"
     },
     "a4a1a524971b2c5b3065cce0b9c20ebad5c7827d": {
       "file": "использованные/nokia_3210_part_008_a4a1a524.png",
@@ -16066,10 +16100,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad",
+      "type": "button_pad"
     },
     "ab8630588cc6994b2cfcd571943008e2c54d7227": {
       "file": "неиспользованные/nokia_3210_part_009_ab863058.png",
@@ -16342,10 +16377,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "rear_chassis",
+      "type": "chassis"
     },
     "e4a22e468fc1beea678dc5860cd516d1179dc353": {
       "file": "использованные/nokia_3210_part_026_e4a22e46.png",
@@ -16360,10 +16396,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "e1e7cb20fefe8444c677f053e8d4a42f72e79e26": {
       "file": "неиспользованные/nokia_3210_part_027_e1e7cb20.png",
@@ -16442,10 +16479,11 @@
       "added": "2026-08-13T02:25:42",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "speaker",
+      "type": "speaker"
     },
     "6aa5c4f5a8a104f3041e68dc78720995c92e2b00": {
       "file": "неиспользованные/nokia_3210_part_032_6aa5c4f5.png",
@@ -16476,7 +16514,8 @@
       "added": "2026-08-13T02:27:20",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
       "id": "battery",
       "type": "battery"
@@ -16494,7 +16533,8 @@
       "added": "2026-08-13T02:27:20",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
       "id": "main_pcb",
       "type": "circuit_board"
@@ -16512,10 +16552,11 @@
       "added": "2026-08-13T02:29:27",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\build\\device.json",
+        "assets\\nokia_3210\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "lcd_screen",
+      "type": "display"
     },
     "c3b4823325e9bb090b6da04ad7be0a85da974f0d": {
       "file": "использованные/nokia_ngage_part_001_c3b48233.png",
@@ -16530,13 +16571,14 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "e141c37b5ecc294f5eb05ad80efc1a9f270f0a80": {
-      "file": "неиспользованные/nokia_ngage_part_002_e141c37b.png",
+      "file": "использованные/nokia_ngage_part_002_e141c37b.png",
       "device": "nokia_ngage",
       "size": [
         503,
@@ -16546,10 +16588,12 @@
         "work\\nokia_ngage\\parts\\part_002.png"
       ],
       "added": "2026-08-13T03:09:36",
-      "used": false,
-      "used_in": [],
-      "id": null,
-      "type": null
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "front_panel",
+      "type": "housing_front"
     },
     "23d137fd242e661e2f21586d46ba5eadeb693e37": {
       "file": "использованные/nokia_ngage_part_003_23d137fd.png",
@@ -16564,10 +16608,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "774826838c6d49b2f4845b61bb7f165928b92d2d": {
       "file": "неиспользованные/nokia_ngage_part_004_77482683.png",
@@ -16598,10 +16643,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad",
+      "type": "button_pad"
     },
     "12c04b27f7ff5b3743860933a516b1f4ea61af38": {
       "file": "неиспользованные/nokia_ngage_part_006_12c04b27.png",
@@ -16664,10 +16710,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "dpad",
+      "type": "button_pad"
     },
     "c7ca657819df99d336e9f821c44d4adecc70b49b": {
       "file": "использованные/nokia_ngage_part_010_c7ca6578.png",
@@ -16682,10 +16729,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad_membrane",
+      "type": "membrane"
     },
     "5645190a4d386849425d0ca5f3f11c2981e43e3a": {
       "file": "использованные/nokia_ngage_part_011_5645190a.png",
@@ -16718,10 +16766,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "a7c7d82c402b448f3dab0afc566f47bae5b9e2f9": {
       "file": "использованные/nokia_ngage_part_013_a7c7d82c.png",
@@ -16736,10 +16785,11 @@
       "added": "2026-08-13T03:09:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "speaker",
+      "type": "speaker"
     },
     "9981b13299d1ab111dba5a0fa4a62a9f2f7355f1": {
       "file": "неиспользованные/nokia_ngage_part_014_9981b132.png",
@@ -17234,7 +17284,8 @@
       "added": "2026-08-13T03:11:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
       "id": "front_panel",
       "type": "housing_front"
@@ -17252,7 +17303,8 @@
       "added": "2026-08-13T03:13:16",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\build\\device.json",
+        "assets\\nokia_ngage\\device.json"
       ],
       "id": "display",
       "type": "display"
@@ -17366,10 +17418,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "speaker",
+      "type": "speaker"
     },
     "d382a698375f3936361ae6992df2409316b31a2f": {
       "file": "неиспользованные/sony_ericsson_w810_part_008_d382a698.png",
@@ -17400,10 +17453,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "11ced6303ae367ebf07ef787c923e5a706fbdf51": {
       "file": "неиспользованные/sony_ericsson_w810_part_010_11ced630.png",
@@ -17434,10 +17488,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_call",
+      "type": "button"
     },
     "9abbecf1cdcc9081a4b3144f003bf0d86f11e504": {
       "file": "неиспользованные/sony_ericsson_w810_part_012_9abbecf1.png",
@@ -17468,10 +17523,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_end",
+      "type": "button"
     },
     "b43901d6bacfd83e6ad39ebcaa0efacb2633e757": {
       "file": "неиспользованные/sony_ericsson_w810_part_014_b43901d6.png",
@@ -17502,10 +17558,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "nav_ring",
+      "type": "button_pad"
     },
     "a09ad97f9e3a639bbb7288fb67038b5fa3411a9a": {
       "file": "неиспользованные/sony_ericsson_w810_part_016_a09ad97f.png",
@@ -17552,10 +17609,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad",
+      "type": "button_pad"
     },
     "cc585337bd497ea065a941e1bb93922ca3be02f6": {
       "file": "использованные/sony_ericsson_w810_part_019_cc585337.png",
@@ -17570,10 +17628,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "chassis",
+      "type": "chassis"
     },
     "c779f2834cbbdb34373701cd620e3e380e041cd2": {
       "file": "использованные/sony_ericsson_w810_part_020_c779f283.png",
@@ -17588,10 +17647,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "936fc22a56f418b1419ccf72eae692b8ec671653": {
       "file": "неиспользованные/sony_ericsson_w810_part_021_936fc22a.png",
@@ -17654,10 +17714,11 @@
       "added": "2026-08-13T03:20:36",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "1f36a75241db8a2ccfc422807474d5775b19aeec": {
       "file": "неиспользованные/sony_ericsson_w810_part_025_1f36a752.png",
@@ -18104,10 +18165,11 @@
       "added": "2026-08-13T03:23:16",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "display",
+      "type": "display"
     },
     "368acc6f51200db85aa50f0b3d269cd54dabe80f": {
       "file": "использованные/sony_ericsson_w810_front_panel_368acc6f.png",
@@ -18122,10 +18184,11 @@
       "added": "2026-08-13T03:23:16",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\build\\device.json",
+        "assets\\sony_ericsson_w810\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "front_panel",
+      "type": "housing_front"
     },
     "f06c80885a51f5a63481bebc4720281f16f636db": {
       "file": "использованные/gamepad_ds2_part_001_f06c8088.png",
@@ -18140,13 +18203,14 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "bottom_shell",
+      "type": "housing_rear"
     },
     "542e4ae3d90b319350eac68f009490934b010fbe": {
-      "file": "неиспользованные/gamepad_ds2_part_002_542e4ae3.png",
+      "file": "использованные/gamepad_ds2_part_002_542e4ae3.png",
       "device": "gamepad_ds2",
       "size": [
         953,
@@ -18156,10 +18220,12 @@
         "work\\gamepad_ds2\\parts\\part_002.png"
       ],
       "added": "2026-08-13T03:29:50",
-      "used": false,
-      "used_in": [],
-      "id": null,
-      "type": null
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "top_shell",
+      "type": "housing_front"
     },
     "7d223555e38ba3cbbcd9abcf321a9f2ec56f432c": {
       "file": "использованные/gamepad_ds2_part_003_7d223555.png",
@@ -18174,10 +18240,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "b3d849ce78296556613b89acc494d20c64198328": {
       "file": "использованные/gamepad_ds2_part_004_b3d849ce.png",
@@ -18192,10 +18259,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "membrane_main",
+      "type": "membrane"
     },
     "92f12c16919fcd630cae5fd81377b8159231a719": {
       "file": "неиспользованные/gamepad_ds2_part_005_92f12c16.png",
@@ -18434,10 +18502,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "membrane_dpad",
+      "type": "membrane"
     },
     "a28d9d1861bd46d3760c72044d59d87b0b859459": {
       "file": "неиспользованные/gamepad_ds2_part_020_a28d9d18.png",
@@ -18468,10 +18537,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "rumble_motor",
+      "type": "mechanism"
     },
     "a20daa2e4671d004dd2219820296bc01f9afda7d": {
       "file": "использованные/gamepad_ds2_part_022_a20daa2e.png",
@@ -18486,10 +18556,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "dpad",
+      "type": "button_pad"
     },
     "e4155656d886de757b1671b731454e4a73421ec0": {
       "file": "использованные/gamepad_ds2_part_023_e4155656.png",
@@ -18504,10 +18575,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "stick_left",
+      "type": "stick"
     },
     "9580eaeb38bbce6cfcade797cd06c556e83a0d2c": {
       "file": "неиспользованные/gamepad_ds2_part_024_9580eaeb.png",
@@ -18650,10 +18722,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_triangle",
+      "type": "button"
     },
     "3be9e51105cb1e745ccd7b6ed977564a08ea694d": {
       "file": "неиспользованные/gamepad_ds2_part_033_3be9e511.png",
@@ -18700,10 +18773,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_square",
+      "type": "button"
     },
     "48e3ecd6a53cb481a8c91c1d06d16487aa3812bf": {
       "file": "использованные/gamepad_ds2_part_036_48e3ecd6.png",
@@ -18718,10 +18792,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_triangle",
+      "type": "button"
     },
     "b7a0ba8c2dd7a573997860ce581bd8470e8f9a70": {
       "file": "использованные/gamepad_ds2_part_037_b7a0ba8c.png",
@@ -18736,10 +18811,11 @@
       "added": "2026-08-13T03:29:50",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "btn_cross",
+      "type": "button"
     },
     "d0fbd1c4315ee240e6d73384a8087d7008b106ef": {
       "file": "неиспользованные/gamepad_ds2_part_038_d0fbd1c4.png",
@@ -19122,7 +19198,8 @@
       "added": "2026-08-13T03:31:31",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\build\\device.json",
+        "assets\\gamepad_ds2\\device.json"
       ],
       "id": "top_shell",
       "type": "housing_front"
@@ -19158,10 +19235,11 @@
       "added": "2026-08-13T03:41:34",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "chassis",
+      "type": "chassis"
     },
     "b0f7e49a05c63e604c61a2ad4f6becbbb5bde374": {
       "file": "неиспользованные/blackberry_part_003_b0f7e49a.png",
@@ -19292,7 +19370,7 @@
       "type": null
     },
     "83d5c9177ba3a2dc207312b00cf1ca1397260565": {
-      "file": "неиспользованные/blackberry_part_011_83d5c917.png",
+      "file": "использованные/blackberry_part_011_83d5c917.png",
       "device": "blackberry",
       "size": [
         480,
@@ -19302,10 +19380,12 @@
         "work\\blackberry\\parts\\part_011.png"
       ],
       "added": "2026-08-13T03:41:34",
-      "used": false,
-      "used_in": [],
-      "id": null,
-      "type": null
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "front_panel",
+      "type": "housing_front"
     },
     "5c8c48a4339e1da58317e96888544e6dd438e803": {
       "file": "неиспользованные/blackberry_part_012_5c8c48a4.png",
@@ -19384,10 +19464,11 @@
       "added": "2026-08-13T03:41:34",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "back_cover",
+      "type": "housing_rear"
     },
     "68222c50101d17ad41e67fe78a1db2132e3dfabd": {
       "file": "неиспользованные/blackberry_part_017_68222c50.png",
@@ -19434,10 +19515,11 @@
       "added": "2026-08-13T03:41:34",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "battery",
+      "type": "battery"
     },
     "cbffb822c95d1e41eb235b8014974ef5c912c5e5": {
       "file": "использованные/blackberry_part_020_cbffb822.png",
@@ -19452,10 +19534,11 @@
       "added": "2026-08-13T03:41:34",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "nav_row",
+      "type": "button_pad"
     },
     "605ee051045fe983f91d21ffe6c4624345b0b214": {
       "file": "использованные/blackberry_part_021_605ee051.png",
@@ -19470,10 +19553,11 @@
       "added": "2026-08-13T03:41:34",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "keypad",
+      "type": "button_pad"
     },
     "3b3c4f1af66eab79769220389c65864af4b51d17": {
       "file": "неиспользованные/blackberry_part_022_3b3c4f1a.png",
@@ -19568,10 +19652,11 @@
       "added": "2026-08-13T03:42:57",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "main_pcb",
+      "type": "circuit_board"
     },
     "b819faa18c8f4ae24391611c994ae61667b91137": {
       "file": "использованные/blackberry_display_lcd_b819faa1.png",
@@ -19586,10 +19671,11 @@
       "added": "2026-08-13T03:42:57",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "display",
+      "type": "display"
     },
     "8168d64b5da35d2671050b355aec3619fe17e6d0": {
       "file": "использованные/blackberry_front_panel_8168d64b.png",
@@ -19604,10 +19690,11 @@
       "added": "2026-08-13T03:42:57",
       "used": true,
       "used_in": [
-        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json"
+        "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\build\\device.json",
+        "assets\\blackberry\\device.json"
       ],
-      "id": null,
-      "type": null
+      "id": "front_panel",
+      "type": "housing_front"
     },
     "b40934db5370fb103d746187115b1d3778eca18b": {
       "file": "неиспользованные/palm_pda_part_001_b40934db.png",
@@ -20136,6 +20223,3024 @@
       "used_in": [],
       "id": null,
       "type": null
+    },
+    "4bb1b63e2f127eaa27d8fb99c74624c03487e4c1": {
+      "file": "неиспользованные/blackberry_part_001_4bb1b63e.png",
+      "device": "blackberry",
+      "size": [
+        481,
+        128
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9d1685e6f0fb81d164e2795a161ff07280d7fe2c": {
+      "file": "использованные/blackberry_part_002_9d1685e6.png",
+      "device": "blackberry",
+      "size": [
+        466,
+        859
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_002.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "chassis",
+      "type": "chassis"
+    },
+    "a79ccda85dea47bf830c4bd15ee140de70ad421f": {
+      "file": "использованные/blackberry_part_016_a79ccda8.png",
+      "device": "blackberry",
+      "size": [
+        398,
+        800
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_016.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "f04bc0767f84d990bc07053d5c894cc761e52351": {
+      "file": "использованные/blackberry_part_019_f04bc076.png",
+      "device": "blackberry",
+      "size": [
+        271,
+        451
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_019.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
+    },
+    "a58f827f9002f912727352515282504d6e7a6018": {
+      "file": "использованные/blackberry_part_020_a58f827f.png",
+      "device": "blackberry",
+      "size": [
+        453,
+        102
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_020.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "nav_row",
+      "type": "button_pad"
+    },
+    "4cd41c4d3821eaf58ffb8e7919f0221eb5772f24": {
+      "file": "использованные/blackberry_part_021_4cd41c4d.png",
+      "device": "blackberry",
+      "size": [
+        480,
+        291
+      ],
+      "origins": [
+        "work\\blackberry\\parts\\part_021.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\blackberry\\device.json"
+      ],
+      "id": "keypad",
+      "type": "button_pad"
+    },
+    "10a314ced0116582297ec3109e39f060a37e9c6e": {
+      "file": "использованные/gamepad_ds2_part_001_10a314ce.png",
+      "device": "gamepad_ds2",
+      "size": [
+        1015,
+        581
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "bottom_shell",
+      "type": "housing_rear"
+    },
+    "f6a46bc19ae855696edf9710c7a2a750941c7b1c": {
+      "file": "использованные/gamepad_ds2_part_003_f6a46bc1.png",
+      "device": "gamepad_ds2",
+      "size": [
+        820,
+        538
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_003.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "43ba298aaf524a6cbf3348c989e7b9e9a468aeb3": {
+      "file": "использованные/gamepad_ds2_part_004_43ba298a.png",
+      "device": "gamepad_ds2",
+      "size": [
+        896,
+        259
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_004.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "membrane_main",
+      "type": "membrane"
+    },
+    "ca32a9c06a1966920c98da01c9a10f8b00460639": {
+      "file": "использованные/gamepad_ds2_part_019_ca32a9c0.png",
+      "device": "gamepad_ds2",
+      "size": [
+        254,
+        255
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_019.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "membrane_dpad",
+      "type": "membrane"
+    },
+    "db30577e08f9b24790ead52d86a8d6de2523771c": {
+      "file": "использованные/gamepad_ds2_part_021_db30577e.png",
+      "device": "gamepad_ds2",
+      "size": [
+        317,
+        171
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_021.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "rumble_motor",
+      "type": "mechanism"
+    },
+    "43519b058c451402697a8feaae3cad3262973fb3": {
+      "file": "использованные/gamepad_ds2_part_022_43519b05.png",
+      "device": "gamepad_ds2",
+      "size": [
+        194,
+        193
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_022.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "dpad",
+      "type": "button_pad"
+    },
+    "f0ce0c876bb65759fca3410b2cd7d08dcfa54370": {
+      "file": "использованные/gamepad_ds2_part_023_f0ce0c87.png",
+      "device": "gamepad_ds2",
+      "size": [
+        169,
+        170
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_023.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "stick_left",
+      "type": "stick"
+    },
+    "7b85fa6887af7d14a09b0d91197258ab6a8568a7": {
+      "file": "использованные/gamepad_ds2_part_032_7b85fa68.png",
+      "device": "gamepad_ds2",
+      "size": [
+        94,
+        94
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_032.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "btn_triangle",
+      "type": "button"
+    },
+    "c4262327230dbcaad816a494ba027e9813a0d916": {
+      "file": "использованные/gamepad_ds2_part_035_c4262327.png",
+      "device": "gamepad_ds2",
+      "size": [
+        93,
+        94
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_035.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "btn_square",
+      "type": "button"
+    },
+    "336592492fad9bb91a2bb0e036d290cf5b6ed662": {
+      "file": "использованные/gamepad_ds2_part_036_33659249.png",
+      "device": "gamepad_ds2",
+      "size": [
+        94,
+        94
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_036.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "btn_triangle",
+      "type": "button"
+    },
+    "400ce6ba6a2ea1691b73a79021e02aaba7d81152": {
+      "file": "использованные/gamepad_ds2_part_037_400ce6ba.png",
+      "device": "gamepad_ds2",
+      "size": [
+        95,
+        94
+      ],
+      "origins": [
+        "work\\gamepad_ds2\\parts\\part_037.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\gamepad_ds2\\device.json"
+      ],
+      "id": "btn_cross",
+      "type": "button"
+    },
+    "5ed1da5a95d9cd3e13118648cad973ea9fd8290c": {
+      "file": "использованные/ipod_classic_part_001_5ed1da5a.png",
+      "device": "ipod_classic",
+      "size": [
+        402,
+        654
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "front_shell",
+      "type": "housing_front"
+    },
+    "d1993f821522505a3cd216630d783f2fab900f58": {
+      "file": "использованные/ipod_classic_part_003_d1993f82.png",
+      "device": "ipod_classic",
+      "size": [
+        320,
+        607
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_003.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "chassis",
+      "type": "chassis"
+    },
+    "c86fb188fe933fccc69b00a3b12b47e61ab5c10a": {
+      "file": "использованные/ipod_classic_part_006_c86fb188.png",
+      "device": "ipod_classic",
+      "size": [
+        366,
+        309
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_006.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "lcd_screen",
+      "type": "display"
+    },
+    "e5f2fa77fcf8f96e2e2a6e22db4924dbd0115a08": {
+      "file": "использованные/ipod_classic_part_009_e5f2fa77.png",
+      "device": "ipod_classic",
+      "size": [
+        252,
+        251
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_009.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "click_wheel",
+      "type": "button_pad"
+    },
+    "14079afcabf56cd4bbeebe6b328f8dfdca56f2d3": {
+      "file": "использованные/ipod_classic_part_015_14079afc.png",
+      "device": "ipod_classic",
+      "size": [
+        67,
+        82
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_015.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "btn_prev",
+      "type": "button"
+    },
+    "ea85675a1c1332049f9e61cf582e910e3ebfdd6b": {
+      "file": "использованные/ipod_classic_part_016_ea85675a.png",
+      "device": "ipod_classic",
+      "size": [
+        68,
+        82
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_016.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "btn_menu",
+      "type": "button"
+    },
+    "28d09f94395a686285e74edf4769d36fae15f84a": {
+      "file": "использованные/ipod_classic_part_017_28d09f94.png",
+      "device": "ipod_classic",
+      "size": [
+        68,
+        82
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_017.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "btn_menu",
+      "type": "button"
+    },
+    "1e9188259beb445f3854e9b6059ce847479c3271": {
+      "file": "использованные/ipod_classic_part_018_1e918825.png",
+      "device": "ipod_classic",
+      "size": [
+        68,
+        82
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_018.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "btn_menu",
+      "type": "button"
+    },
+    "b389b45a2038bc76489acb54b0668c13472b68ad": {
+      "file": "использованные/ipod_classic_part_037_b389b45a.png",
+      "device": "ipod_classic",
+      "size": [
+        254,
+        402
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_037.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
+    },
+    "a49a1993ac3d466702e9a12ef7d5f408ef6bfbbe": {
+      "file": "использованные/ipod_classic_part_039_a49a1993.png",
+      "device": "ipod_classic",
+      "size": [
+        465,
+        852
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_039.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "70e89b5392e7a316364f213d2620b4a3b39b055c": {
+      "file": "использованные/ipod_classic_part_040_70e89b53.png",
+      "device": "ipod_classic",
+      "size": [
+        393,
+        827
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_040.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "9e10b2749edd4b7f8caefe9a124fbc2399333f25": {
+      "file": "использованные/ipod_classic_part_043_9e10b274.png",
+      "device": "ipod_classic",
+      "size": [
+        146,
+        161
+      ],
+      "origins": [
+        "work\\ipod_classic\\parts\\part_043.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\ipod_classic\\device.json"
+      ],
+      "id": "speaker",
+      "type": "speaker"
+    },
+    "d98a3e8b88878bc337f0bfbe64849335c964259a": {
+      "file": "использованные/nokia_2110_part_001_d98a3e8b.png",
+      "device": "nokia_2110",
+      "size": [
+        335,
+        938
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "chassis",
+      "type": "chassis"
+    },
+    "dc5ef2719b57050d1674a399860e00828ecc1e8b": {
+      "file": "использованные/nokia_2110_part_002_dc5ef271.png",
+      "device": "nokia_2110",
+      "size": [
+        332,
+        820
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts\\part_002.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "f246d28aa820d7dcf85e7ecfb33d49a23b7dd4c5": {
+      "file": "использованные/nokia_2110_part_006_f246d28a.png",
+      "device": "nokia_2110",
+      "size": [
+        325,
+        410
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts\\part_006.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
+    },
+    "61369253afb2d81359396a0a3696a8090af52767": {
+      "file": "использованные/nokia_2110_part_014_61369253.png",
+      "device": "nokia_2110",
+      "size": [
+        82,
+        122
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts\\part_014.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "speaker",
+      "type": "speaker"
+    },
+    "39359b000ab365812f3ed9f5b6514169c1b8cb7b": {
+      "file": "использованные/nokia_2110_part_004_39359b00.png",
+      "device": "nokia_2110",
+      "size": [
+        438,
+        275
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts_b\\part_004.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "lcd_screen",
+      "type": "display"
+    },
+    "cbc91b6f5884eef5bca03e0aeba6416c78a48ce0": {
+      "file": "использованные/nokia_2110_part_007_cbc91b6f.png",
+      "device": "nokia_2110",
+      "size": [
+        350,
+        445
+      ],
+      "origins": [
+        "work\\nokia_2110\\parts_b\\part_007.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_2110\\device.json"
+      ],
+      "id": "keypad",
+      "type": "button_pad"
+    },
+    "955228eb7d8d242576988e64591ab73c010be576": {
+      "file": "использованные/nokia_3210_part_001_955228eb.png",
+      "device": "nokia_3210",
+      "size": [
+        372,
+        783
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "front_shell",
+      "type": "housing_front"
+    },
+    "dfd6bd7b8a5c122882c6e868e466d039bb8624ec": {
+      "file": "использованные/nokia_3210_part_002_dfd6bd7b.png",
+      "device": "nokia_3210",
+      "size": [
+        327,
+        642
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_002.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "mid_frame",
+      "type": "chassis"
+    },
+    "62604e1a15b2fe529b6948821a2f30d607f1ad3e": {
+      "file": "использованные/nokia_3210_part_005_62604e1a.png",
+      "device": "nokia_3210",
+      "size": [
+        329,
+        155
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_005.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "nav_pad",
+      "type": "button_pad"
+    },
+    "54a0c88c01c5f99472a63e74c2d476f05c9f06da": {
+      "file": "использованные/nokia_3210_part_008_54a0c88c.png",
+      "device": "nokia_3210",
+      "size": [
+        312,
+        295
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_008.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "keypad",
+      "type": "button_pad"
+    },
+    "e40d6b93d93ca2413acaff8af263bd53047bd432": {
+      "file": "неиспользованные/nokia_3210_part_023_e40d6b93.png",
+      "device": "nokia_3210",
+      "size": [
+        459,
+        334
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_023.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e7befe650af3f49d54d97e6a07b97edf50990401": {
+      "file": "использованные/nokia_3210_part_025_e7befe65.png",
+      "device": "nokia_3210",
+      "size": [
+        369,
+        783
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_025.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "rear_chassis",
+      "type": "chassis"
+    },
+    "cb70a47e308daa5d56f26931e804367a3821756d": {
+      "file": "использованные/nokia_3210_part_026_cb70a47e.png",
+      "device": "nokia_3210",
+      "size": [
+        351,
+        783
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_026.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "a8ae402305a1f7502375264f22320663504b20fb": {
+      "file": "использованные/nokia_3210_part_031_a8ae4023.png",
+      "device": "nokia_3210",
+      "size": [
+        136,
+        114
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_031.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_3210\\device.json"
+      ],
+      "id": "speaker",
+      "type": "speaker"
+    },
+    "cf3c559e57cab9fae3bd43f736e3d6e8ee4d7055": {
+      "file": "неиспользованные/nokia_3210_part_032_rot_cf3c559e.png",
+      "device": "nokia_3210",
+      "size": [
+        91,
+        327
+      ],
+      "origins": [
+        "work\\nokia_3210\\parts\\part_032_rot.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "4e3d942e193b4aefc0a88d4cda3ac7123a63ec94": {
+      "file": "использованные/nokia_5110_part_002_4e3d942e.png",
+      "device": "nokia_5110",
+      "size": [
+        95,
+        759
+      ],
+      "origins": [
+        "work\\nokia_5110\\parts\\part_002.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_5110\\device.json"
+      ],
+      "id": "antenna",
+      "type": "antenna"
+    },
+    "6ef91e9e8e90ebcb94894caa15f9784713af63b1": {
+      "file": "неиспользованные/nokia_5110_part_006_6ef91e9e.png",
+      "device": "nokia_5110",
+      "size": [
+        364,
+        648
+      ],
+      "origins": [
+        "work\\nokia_5110\\parts\\part_006.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "950c66b960253564b086520cb3048db28472cb7b": {
+      "file": "использованные/nokia_5110_part_007_950c66b9.png",
+      "device": "nokia_5110",
+      "size": [
+        409,
+        466
+      ],
+      "origins": [
+        "work\\nokia_5110\\parts\\part_007.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_5110\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
+    },
+    "4fce081ac84acbbb9a204e52388999c7637379ac": {
+      "file": "неиспользованные/nokia_5110_pcb_crop_4fce081a.png",
+      "device": "nokia_5110",
+      "size": [
+        946,
+        385
+      ],
+      "origins": [
+        "work\\nokia_5110\\parts\\pcb_crop.png"
+      ],
+      "added": "2026-08-14T18:03:53",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "1948692e6f27a7a1c9d97a574ef8cf2b230b3b5a": {
+      "file": "использованные/nokia_ngage_part_001_1948692e.png",
+      "device": "nokia_ngage",
+      "size": [
+        490,
+        786
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "ab5f7c106237b80801ec05f45858f45ed5c926fb": {
+      "file": "использованные/nokia_ngage_part_002_punched_ab5f7c10.png",
+      "device": "nokia_ngage",
+      "size": [
+        503,
+        793
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_002_punched.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "front_panel",
+      "type": "housing_front"
+    },
+    "8e5e51589350bc92f7a95400a928ae9046cabcd7": {
+      "file": "использованные/nokia_ngage_part_003_8e5e5158.png",
+      "device": "nokia_ngage",
+      "size": [
+        456,
+        961
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_003.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "bc057ffd40d985e6042858284dd4ea8caea259a0": {
+      "file": "использованные/nokia_ngage_part_005_bc057ffd.png",
+      "device": "nokia_ngage",
+      "size": [
+        380,
+        327
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_005.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "keypad",
+      "type": "button_pad"
+    },
+    "cb50f1421a32d7cc456d742318ed760a43c54be8": {
+      "file": "использованные/nokia_ngage_part_009_cb50f142.png",
+      "device": "nokia_ngage",
+      "size": [
+        202,
+        200
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_009.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "dpad",
+      "type": "button_pad"
+    },
+    "4ade123695aa830b5a59843f02498d409f2d05ba": {
+      "file": "использованные/nokia_ngage_part_010_4ade1236.png",
+      "device": "nokia_ngage",
+      "size": [
+        274,
+        252
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_010.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "keypad_membrane",
+      "type": "membrane"
+    },
+    "539dbf18d320d282fda414678d62972e00c4ca4c": {
+      "file": "неиспользованные/nokia_ngage_part_011_539dbf18.png",
+      "device": "nokia_ngage",
+      "size": [
+        711,
+        635
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_011.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "6cb5f2674402e8d66537a7fdae4d687ecc54c6bb": {
+      "file": "использованные/nokia_ngage_part_012_6cb5f267.png",
+      "device": "nokia_ngage",
+      "size": [
+        332,
+        281
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_012.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
+    },
+    "8a5429184ea808fd3b754cb79962895fd0c4223c": {
+      "file": "использованные/nokia_ngage_part_013_8a542918.png",
+      "device": "nokia_ngage",
+      "size": [
+        82,
+        117
+      ],
+      "origins": [
+        "work\\nokia_ngage\\parts\\part_013.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\nokia_ngage\\device.json"
+      ],
+      "id": "speaker",
+      "type": "speaker"
+    },
+    "7b5c5aa724072f4c34c5e689f9ddf44536794411": {
+      "file": "использованные/polaroid_part_001_7b5c5aa7.png",
+      "device": "polaroid",
+      "size": [
+        607,
+        546
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_001.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "d98b903f2f625be3ad003c575156587a7f29f15e": {
+      "file": "использованные/polaroid_part_002_d98b903f.png",
+      "device": "polaroid",
+      "size": [
+        570,
+        279
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_002.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "flash_cover",
+      "type": "housing_part"
+    },
+    "5b43af4d1b461828bfcc003ff4eb7c61b868933d": {
+      "file": "использованные/polaroid_part_003_5b43af4d.png",
+      "device": "polaroid",
+      "size": [
+        577,
+        245
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_003.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "3b59b9464b16ccb9cbff784d38035f9b8fec54d7": {
+      "file": "неиспользованные/polaroid_part_004_3b59b946.png",
+      "device": "polaroid",
+      "size": [
+        244,
+        244
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_004.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "6cfc2d38f1a149c401e4f5e7da7abb8e743cfed1": {
+      "file": "неиспользованные/polaroid_part_005_6cfc2d38.png",
+      "device": "polaroid",
+      "size": [
+        648,
+        1273
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_005.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "6e672e28b70463ce8c823ed2149bd8674c93f946": {
+      "file": "неиспользованные/polaroid_part_006_6e672e28.png",
+      "device": "polaroid",
+      "size": [
+        406,
+        138
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_006.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ff6ff7524984e3a2c1c568470fbd9e1d0d818ea7": {
+      "file": "использованные/polaroid_part_007_ff6ff752.png",
+      "device": "polaroid",
+      "size": [
+        648,
+        676
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_007.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "chassis",
+      "type": "chassis"
+    },
+    "3bc04f67ca3521979aed88ea9bcd75d6c9d01a8e": {
+      "file": "неиспользованные/polaroid_part_008_3bc04f67.png",
+      "device": "polaroid",
+      "size": [
+        60,
+        181
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_008.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9844de51144afb58a7a8f9016a111c0b5389aeff": {
+      "file": "неиспользованные/polaroid_part_009_9844de51.png",
+      "device": "polaroid",
+      "size": [
+        120,
+        173
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_009.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "04cee774fbeadb8ff31638519052556a616fa559": {
+      "file": "неиспользованные/polaroid_part_010_04cee774.png",
+      "device": "polaroid",
+      "size": [
+        68,
+        159
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_010.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "77d3652bce29dc40da8973fef6e582ee48396edf": {
+      "file": "неиспользованные/polaroid_part_011_77d3652b.png",
+      "device": "polaroid",
+      "size": [
+        71,
+        157
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_011.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "cecc3b32c6f2607c30bdd41b3245b7295c170617": {
+      "file": "неиспользованные/polaroid_part_012_cecc3b32.png",
+      "device": "polaroid",
+      "size": [
+        86,
+        157
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_012.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "7521f6efd5defdda8f28114af2b0f0a5db48c7ec": {
+      "file": "неиспользованные/polaroid_part_013_7521f6ef.png",
+      "device": "polaroid",
+      "size": [
+        68,
+        151
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_013.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "b8ec217df1fbc3007f78ba3d031d330db9d47823": {
+      "file": "неиспользованные/polaroid_part_014_b8ec217d.png",
+      "device": "polaroid",
+      "size": [
+        45,
+        149
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_014.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "79a52955837b161f44d8fe7f4a3371c3e7603fbb": {
+      "file": "неиспользованные/polaroid_part_015_79a52955.png",
+      "device": "polaroid",
+      "size": [
+        64,
+        149
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_015.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "fd9c25c5123a2f91468de212e588652a9a0e0c89": {
+      "file": "неиспользованные/polaroid_part_016_fd9c25c5.png",
+      "device": "polaroid",
+      "size": [
+        108,
+        99
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_016.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e0b7a5d64b83268e49942d5252f5f2b14e622de4": {
+      "file": "неиспользованные/polaroid_part_017_e0b7a5d6.png",
+      "device": "polaroid",
+      "size": [
+        104,
+        174
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_017.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e1f08769a7bb566a088dad2cb293436744e0f0dc": {
+      "file": "неиспользованные/polaroid_part_018_e1f08769.png",
+      "device": "polaroid",
+      "size": [
+        703,
+        110
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_018.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "1283f599d34a481a19c2b75a5f2ef34310bb180d": {
+      "file": "неиспользованные/polaroid_part_019_1283f599.png",
+      "device": "polaroid",
+      "size": [
+        79,
+        53
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_019.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "eed3fd4b2cfa1ae9799baaa2f28be5e2bab00328": {
+      "file": "использованные/polaroid_part_020_eed3fd4b.png",
+      "device": "polaroid",
+      "size": [
+        620,
+        405
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_020.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "front_shell",
+      "type": "housing_front"
+    },
+    "4aeabe5406af6e67666bbe2e4a5a37da941e3cb0": {
+      "file": "использованные/polaroid_part_021_4aeabe54.png",
+      "device": "polaroid",
+      "size": [
+        123,
+        124
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_021.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "shutter_button",
+      "type": "button"
+    },
+    "d237712cae611a56deb7dff1ce45523889eb4a4c": {
+      "file": "неиспользованные/polaroid_part_022_d237712c.png",
+      "device": "polaroid",
+      "size": [
+        46,
+        93
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_022.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a285e0f3bb10b4ed0aed60df9e8efd45491661c9": {
+      "file": "неиспользованные/polaroid_part_023_a285e0f3.png",
+      "device": "polaroid",
+      "size": [
+        46,
+        93
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_023.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "3ea067e112254f5723af7172f18572cdf8a3fcf4": {
+      "file": "неиспользованные/polaroid_part_024_3ea067e1.png",
+      "device": "polaroid",
+      "size": [
+        46,
+        97
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_024.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "fb619417514f2f4540c6a91451b76a4c70ab661b": {
+      "file": "неиспользованные/polaroid_part_025_fb619417.png",
+      "device": "polaroid",
+      "size": [
+        31,
+        107
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_025.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "c1cb4de7d0b09c3e8150d63761849939510e9c13": {
+      "file": "неиспользованные/polaroid_part_026_c1cb4de7.png",
+      "device": "polaroid",
+      "size": [
+        48,
+        100
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_026.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "3fee6c874f91a103190c3ecc67ae70db46712451": {
+      "file": "неиспользованные/polaroid_part_027_3fee6c87.png",
+      "device": "polaroid",
+      "size": [
+        47,
+        98
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_027.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "debc655ac285850c87377a361781359f1a1129e3": {
+      "file": "неиспользованные/polaroid_part_028_debc655a.png",
+      "device": "polaroid",
+      "size": [
+        43,
+        75
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_028.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e36fed69c988731acbb41c465c25fb1a65451b3e": {
+      "file": "неиспользованные/polaroid_part_029_e36fed69.png",
+      "device": "polaroid",
+      "size": [
+        45,
+        135
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_029.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "06af97ca33c29c554883351753eb218984a662f7": {
+      "file": "неиспользованные/polaroid_part_030_06af97ca.png",
+      "device": "polaroid",
+      "size": [
+        47,
+        134
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_030.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "2832a1d47d92990840f21fddbf89827c916672cf": {
+      "file": "неиспользованные/polaroid_part_031_2832a1d4.png",
+      "device": "polaroid",
+      "size": [
+        46,
+        134
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_031.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "bbc8cae72cda99f69ef22c9c934228b958565890": {
+      "file": "неиспользованные/polaroid_part_032_bbc8cae7.png",
+      "device": "polaroid",
+      "size": [
+        42,
+        98
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_032.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "57bf8f4b5935119eaf84c307fad955c8e849e4b7": {
+      "file": "неиспользованные/polaroid_part_033_57bf8f4b.png",
+      "device": "polaroid",
+      "size": [
+        42,
+        98
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_033.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a8c512157adee5a0c54aa58402c3f9f0a8489587": {
+      "file": "неиспользованные/polaroid_part_034_a8c51215.png",
+      "device": "polaroid",
+      "size": [
+        83,
+        83
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_034.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "5a1eeda532e225146f1cafcd6bab33c0027c7c30": {
+      "file": "неиспользованные/polaroid_part_035_5a1eeda5.png",
+      "device": "polaroid",
+      "size": [
+        615,
+        212
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_035.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9b1ec121f4b323418570d38b75bcdb803ef8c5d9": {
+      "file": "неиспользованные/polaroid_part_036_9b1ec121.png",
+      "device": "polaroid",
+      "size": [
+        52,
+        137
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_036.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a6e31f97beabe125fb4b30618bf297551ceb15dd": {
+      "file": "неиспользованные/polaroid_part_037_a6e31f97.png",
+      "device": "polaroid",
+      "size": [
+        68,
+        131
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_037.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ae89742c3e586b0718521c7e9009fbe71b0d7a32": {
+      "file": "неиспользованные/polaroid_part_038_ae89742c.png",
+      "device": "polaroid",
+      "size": [
+        46,
+        120
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_038.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "7edc9699be5a230862fbfae3905b2afb59a04893": {
+      "file": "неиспользованные/polaroid_part_039_7edc9699.png",
+      "device": "polaroid",
+      "size": [
+        47,
+        112
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_039.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "cf0833c34e70bd8d0b1089912faba4a1087c9fb5": {
+      "file": "неиспользованные/polaroid_part_040_cf0833c3.png",
+      "device": "polaroid",
+      "size": [
+        47,
+        111
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_040.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "bd87ac4dd6fa5fdc7e3c1aac87126f8eec39f2b9": {
+      "file": "неиспользованные/polaroid_part_041_bd87ac4d.png",
+      "device": "polaroid",
+      "size": [
+        48,
+        90
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_041.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "d1448ad35ea1d119201642b6cd50b6fcb9a47b50": {
+      "file": "неиспользованные/polaroid_part_042_d1448ad3.png",
+      "device": "polaroid",
+      "size": [
+        44,
+        82
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_042.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "bad8338de6019f851112b75fadb1ce1cba807702": {
+      "file": "неиспользованные/polaroid_part_043_bad8338d.png",
+      "device": "polaroid",
+      "size": [
+        43,
+        82
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_043.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "58a61ef857dbba76ee6f26181a919ad6afc0be55": {
+      "file": "неиспользованные/polaroid_part_044_58a61ef8.png",
+      "device": "polaroid",
+      "size": [
+        43,
+        82
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_044.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a519685d084b9c08ae98ed16917e8ef70a4e2c78": {
+      "file": "неиспользованные/polaroid_part_045_a519685d.png",
+      "device": "polaroid",
+      "size": [
+        304,
+        232
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_045.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "41997d7b45504337009769d2e1475ac20e2aaa0a": {
+      "file": "неиспользованные/polaroid_part_046_41997d7b.png",
+      "device": "polaroid",
+      "size": [
+        577,
+        386
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_046.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9c25778a562d6dbfedbb54abf03cff43cc0c7456": {
+      "file": "неиспользованные/polaroid_part_047_9c25778a.png",
+      "device": "polaroid",
+      "size": [
+        711,
+        314
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_047.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "b929cdec3a7ea3b3c52843f95bc34a75bfaddd44": {
+      "file": "неиспользованные/polaroid_part_048_b929cdec.png",
+      "device": "polaroid",
+      "size": [
+        90,
+        72
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_048.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "2d90a65cddaea50b1ab8be97823273280482de88": {
+      "file": "неиспользованные/polaroid_part_049_2d90a65c.png",
+      "device": "polaroid",
+      "size": [
+        129,
+        116
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_049.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "7674ff5d875670ad9dcf2e4c2cbb5f8934929b53": {
+      "file": "неиспользованные/polaroid_part_050_7674ff5d.png",
+      "device": "polaroid",
+      "size": [
+        210,
+        217
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_050.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "1fd8f32ea69afa2b6ba4fef63f73bd4b75a97e35": {
+      "file": "неиспользованные/polaroid_part_051_1fd8f32e.png",
+      "device": "polaroid",
+      "size": [
+        400,
+        333
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_051.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9e0859d997fee4042ba9fa77836f97dc936276d7": {
+      "file": "неиспользованные/polaroid_part_052_9e0859d9.png",
+      "device": "polaroid",
+      "size": [
+        300,
+        131
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_052.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "cc11c3c50376faee93e6b03774bc27f689facdc0": {
+      "file": "неиспользованные/polaroid_part_053_cc11c3c5.png",
+      "device": "polaroid",
+      "size": [
+        810,
+        823
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_053.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "76cfd44914a8bd2cc392696c0119e6568c541d57": {
+      "file": "использованные/polaroid_part_054_76cfd449.png",
+      "device": "polaroid",
+      "size": [
+        577,
+        312
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_054.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "film_chamber",
+      "type": "housing_part"
+    },
+    "cb1c15ae6c14446d449043fe8ceb6faa63c85534": {
+      "file": "неиспользованные/polaroid_part_055_cb1c15ae.png",
+      "device": "polaroid",
+      "size": [
+        52,
+        100
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_055.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e3d08ec036f7cfd59e6b8842b95078ba23f91854": {
+      "file": "неиспользованные/polaroid_part_056_e3d08ec0.png",
+      "device": "polaroid",
+      "size": [
+        418,
+        636
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_056.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "679715d5e44f7715c417f932b245e7784f905e2a": {
+      "file": "неиспользованные/polaroid_part_057_679715d5.png",
+      "device": "polaroid",
+      "size": [
+        56,
+        134
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_057.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "3b467b20f8d6623f791a659fd135a667d9f82f93": {
+      "file": "неиспользованные/polaroid_part_058_3b467b20.png",
+      "device": "polaroid",
+      "size": [
+        216,
+        265
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_058.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "c3881664e85dba8e9bdd28a1e64583a478ba355e": {
+      "file": "неиспользованные/polaroid_part_059_c3881664.png",
+      "device": "polaroid",
+      "size": [
+        145,
+        102
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_059.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "0f7ed89588be261abb6386797d5c62871ee29cc1": {
+      "file": "неиспользованные/polaroid_part_060_0f7ed895.png",
+      "device": "polaroid",
+      "size": [
+        110,
+        99
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_060.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "e1da1670bf2122b50b7984fd69823bd29c025aec": {
+      "file": "неиспользованные/polaroid_part_061_e1da1670.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        96
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_061.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "f53240a6c54c449bb998a6d886f5a79612e18b89": {
+      "file": "неиспользованные/polaroid_part_062_f53240a6.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        96
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_062.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "0506ccab27eb9d35e7ad3ccef2fc2fce3fc61fc8": {
+      "file": "неиспользованные/polaroid_part_063_0506ccab.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        96
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_063.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ab7aa30baff86cabaabf249ce8d2bf8a4b9d5eda": {
+      "file": "неиспользованные/polaroid_part_064_ab7aa30b.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_064.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "776cab3b6203bb26d0ac2de2214f3fb4d24cd07d": {
+      "file": "неиспользованные/polaroid_part_065_776cab3b.png",
+      "device": "polaroid",
+      "size": [
+        40,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_065.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "98b3bc7b46fc8d721edbf3ed3ba1658235038c77": {
+      "file": "неиспользованные/polaroid_part_066_98b3bc7b.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_066.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "eafc2870a31e244f242299fcb5c35c91313be122": {
+      "file": "неиспользованные/polaroid_part_067_eafc2870.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_067.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "b1ac5d9cdd010ce085028c7de30a13d5a98fb2e2": {
+      "file": "неиспользованные/polaroid_part_068_b1ac5d9c.png",
+      "device": "polaroid",
+      "size": [
+        40,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_068.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "6876d2a5a03e139932830cb9807667129c2cee7c": {
+      "file": "неиспользованные/polaroid_part_069_6876d2a5.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_069.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "44c5295745c55973a0ee5713ebef3cb1099dafaf": {
+      "file": "неиспользованные/polaroid_part_070_44c52957.png",
+      "device": "polaroid",
+      "size": [
+        47,
+        128
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_070.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "63241e59538a167a88fc7a8b4a34eda174bb0f9f": {
+      "file": "неиспользованные/polaroid_part_071_63241e59.png",
+      "device": "polaroid",
+      "size": [
+        38,
+        127
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_071.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "3985da1750c0e9d61e80a7c2e19ac37cc5c041ca": {
+      "file": "неиспользованные/polaroid_part_072_3985da17.png",
+      "device": "polaroid",
+      "size": [
+        100,
+        117
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_072.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "5b013c199496eb0b8af3a341fc653c0efbdaf966": {
+      "file": "неиспользованные/polaroid_part_073_5b013c19.png",
+      "device": "polaroid",
+      "size": [
+        105,
+        160
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_073.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "485d3e2d69eb594e9e46a82a169a81209fd33d95": {
+      "file": "неиспользованные/polaroid_part_074_485d3e2d.png",
+      "device": "polaroid",
+      "size": [
+        42,
+        94
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_074.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "44cbef05894bde25c2960ce229c3c1c0e5378fc8": {
+      "file": "неиспользованные/polaroid_part_075_44cbef05.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        94
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_075.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "23555bc7ce5f32fe0e5db19aa80834be5e6ab4fd": {
+      "file": "неиспользованные/polaroid_part_076_23555bc7.png",
+      "device": "polaroid",
+      "size": [
+        41,
+        94
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_076.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "86702f594db5502168b4e0d23b57d4bf9c4656d5": {
+      "file": "неиспользованные/polaroid_part_077_86702f59.png",
+      "device": "polaroid",
+      "size": [
+        81,
+        54
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_077.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "59dc081c0535305918f1bf61696c1729930ac6c8": {
+      "file": "неиспользованные/polaroid_part_078_59dc081c.png",
+      "device": "polaroid",
+      "size": [
+        226,
+        242
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_078.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "73e191472f2966e9409a4bdcea5497b9d5c01b27": {
+      "file": "неиспользованные/polaroid_part_079_73e19147.png",
+      "device": "polaroid",
+      "size": [
+        510,
+        378
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_079.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "bf33f9e8a46c62f09bbd0c9a8c7545ceb047392e": {
+      "file": "неиспользованные/polaroid_part_080_bf33f9e8.png",
+      "device": "polaroid",
+      "size": [
+        140,
+        178
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_080.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "2f4441bb6156b8b6bb4ff697545b4a61c5965ac5": {
+      "file": "неиспользованные/polaroid_part_081_2f4441bb.png",
+      "device": "polaroid",
+      "size": [
+        577,
+        288
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_081.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a2c11c9e09b8c845a8e2c05bf66490f2c84dabdc": {
+      "file": "использованные/polaroid_part_082_a2c11c9e.png",
+      "device": "polaroid",
+      "size": [
+        109,
+        107
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_082.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\polaroid\\device.json"
+      ],
+      "id": "viewfinder",
+      "type": "optics"
+    },
+    "ac28b297fce6ec864419cda143e2ad473b842258": {
+      "file": "неиспользованные/polaroid_part_083_ac28b297.png",
+      "device": "polaroid",
+      "size": [
+        127,
+        130
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_083.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "30e8d8647e2805185e9279281de21ee5701b5bf0": {
+      "file": "неиспользованные/polaroid_part_084_30e8d864.png",
+      "device": "polaroid",
+      "size": [
+        151,
+        218
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_084.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "26b146ec28c2f696b330fdc2150b1fb8fbc71c9a": {
+      "file": "неиспользованные/polaroid_part_085_26b146ec.png",
+      "device": "polaroid",
+      "size": [
+        259,
+        134
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_085.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "490e931bbff8a61ccbdb1c6d10b14ab2db3336a0": {
+      "file": "неиспользованные/polaroid_part_086_490e931b.png",
+      "device": "polaroid",
+      "size": [
+        74,
+        131
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_086.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "4b3adc1e47061472b0e665002b74bb90b74dacfb": {
+      "file": "неиспользованные/polaroid_part_087_4b3adc1e.png",
+      "device": "polaroid",
+      "size": [
+        155,
+        91
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_087.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9c28e13ce9ede75f14300569a316f9454561d398": {
+      "file": "неиспользованные/polaroid_part_088_9c28e13c.png",
+      "device": "polaroid",
+      "size": [
+        101,
+        67
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_088.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "486462e4a9bdade96df5a4e3a0523ad53c31a8dc": {
+      "file": "неиспользованные/polaroid_part_089_486462e4.png",
+      "device": "polaroid",
+      "size": [
+        543,
+        558
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_089.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "cfb0ff5ec4f802879c5d683c58a0189f193ae7b5": {
+      "file": "неиспользованные/polaroid_part_090_cfb0ff5e.png",
+      "device": "polaroid",
+      "size": [
+        439,
+        679
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_090.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a6744685ba90236f3f982ec7e5c51f4021d489b5": {
+      "file": "неиспользованные/polaroid_part_091_a6744685.png",
+      "device": "polaroid",
+      "size": [
+        32,
+        88
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_091.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "1c8d06779c15658a4f2e724876fe8e38d906b4be": {
+      "file": "неиспользованные/polaroid_part_092_1c8d0677.png",
+      "device": "polaroid",
+      "size": [
+        32,
+        87
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_092.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ba42cd9e89907a764d2f2ff33f2c594c9131e114": {
+      "file": "неиспользованные/polaroid_part_093_ba42cd9e.png",
+      "device": "polaroid",
+      "size": [
+        52,
+        99
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_093.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a9af7b008a9c621f86e7a862c7afa7c1fb422b6e": {
+      "file": "неиспользованные/polaroid_part_094_a9af7b00.png",
+      "device": "polaroid",
+      "size": [
+        616,
+        348
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_094.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "8463400229bd217d8369f440996b54232b6644ad": {
+      "file": "неиспользованные/polaroid_part_095_84634002.png",
+      "device": "polaroid",
+      "size": [
+        220,
+        283
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_095.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "c13dcd2e2bab915745827c6fb2cc9dfa4d18a55a": {
+      "file": "неиспользованные/polaroid_part_096_c13dcd2e.png",
+      "device": "polaroid",
+      "size": [
+        400,
+        333
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_096.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "c5b0fec94e187a5bbfe41b05210d9ecc2efbb23f": {
+      "file": "неиспользованные/polaroid_part_097_c5b0fec9.png",
+      "device": "polaroid",
+      "size": [
+        809,
+        823
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_097.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "7b97568c9b31db531befb5ebdbdb94f4890dc1f9": {
+      "file": "неиспользованные/polaroid_part_098_7b97568c.png",
+      "device": "polaroid",
+      "size": [
+        53,
+        100
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_098.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "90297bce21b1a5719e4ac5aad06980cbda2146f3": {
+      "file": "неиспользованные/polaroid_part_099_90297bce.png",
+      "device": "polaroid",
+      "size": [
+        369,
+        413
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_099.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "9493ef8b67d78683da20f0a0945bbe2dedd12b4d": {
+      "file": "неиспользованные/polaroid_part_100_9493ef8b.png",
+      "device": "polaroid",
+      "size": [
+        936,
+        837
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_100.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "b1ba7525561687a6b8411a9f57e15e542dff21ac": {
+      "file": "неиспользованные/polaroid_part_101_b1ba7525.png",
+      "device": "polaroid",
+      "size": [
+        56,
+        134
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_101.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "d54baecc7981766895ed494b3be1a1925333902e": {
+      "file": "неиспользованные/polaroid_part_102_d54baecc.png",
+      "device": "polaroid",
+      "size": [
+        208,
+        216
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_102.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "a211906ebf91d9f3cbd6d1a6872506661f9c5278": {
+      "file": "неиспользованные/polaroid_part_103_a211906e.png",
+      "device": "polaroid",
+      "size": [
+        145,
+        102
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_103.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ec5f6f7ff3c736582151fad349f2a933fc634dd0": {
+      "file": "неиспользованные/polaroid_part_104_ec5f6f7f.png",
+      "device": "polaroid",
+      "size": [
+        76,
+        57
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_104.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "693c3397f6bc42becbe9e0eb5797b0bcea39c89e": {
+      "file": "неиспользованные/polaroid_part_105_693c3397.png",
+      "device": "polaroid",
+      "size": [
+        110,
+        98
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_105.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "8227282254ae9ab57b1df94a729892aa8c27f403": {
+      "file": "неиспользованные/polaroid_part_106_82272822.png",
+      "device": "polaroid",
+      "size": [
+        105,
+        160
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_106.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ed65aa22a7a54b49711db01238e46210a7cf3e62": {
+      "file": "неиспользованные/polaroid_part_107_ed65aa22.png",
+      "device": "polaroid",
+      "size": [
+        214,
+        253
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_107.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "ee58a7b73ba28ff5a61f5579660fcedce7c26b22": {
+      "file": "неиспользованные/polaroid_part_108_ee58a7b7.png",
+      "device": "polaroid",
+      "size": [
+        81,
+        53
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_108.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "681c0ba0f9bdcaff37865d8e701fb29af253b098": {
+      "file": "неиспользованные/polaroid_part_109_681c0ba0.png",
+      "device": "polaroid",
+      "size": [
+        107,
+        150
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_109.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "d12dd10e5e29e2c7754693a0cf1db8e17f7f8a74": {
+      "file": "неиспользованные/polaroid_part_110_d12dd10e.png",
+      "device": "polaroid",
+      "size": [
+        510,
+        379
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_110.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "791ea95dc7d37eb1e39aaa07e771cb4723ceb8ab": {
+      "file": "неиспользованные/polaroid_part_111_791ea95d.png",
+      "device": "polaroid",
+      "size": [
+        197,
+        282
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_111.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "eea9a37a923b675fa2524d96f25fa87064a0c9a9": {
+      "file": "неиспользованные/polaroid_part_112_eea9a37a.png",
+      "device": "polaroid",
+      "size": [
+        208,
+        218
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_112.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "b2b07baf5c021c614f9cab9d0a6bf8fb20a813c4": {
+      "file": "неиспользованные/polaroid_part_113_b2b07baf.png",
+      "device": "polaroid",
+      "size": [
+        174,
+        207
+      ],
+      "origins": [
+        "work\\polaroid\\parts\\part_113.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": false,
+      "used_in": [],
+      "id": null,
+      "type": null
+    },
+    "5b7ad4ec75fde705594c767d793bf151e90db2df": {
+      "file": "использованные/sony_ericsson_w810_front_panel_rot_5b7ad4ec.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        442,
+        851
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\front_panel_rot.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "front_panel",
+      "type": "housing_front"
+    },
+    "b22c1b1125d76899584e981a05a4ba4c47d77dc0": {
+      "file": "использованные/sony_ericsson_w810_part_007_b22c1b11.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        136,
+        82
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_007.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "speaker",
+      "type": "speaker"
+    },
+    "54aacfa6d0ba4a9c7fc833927100d011fcdd7f4d": {
+      "file": "использованные/sony_ericsson_w810_part_009_54aacfa6.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        367,
+        749
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_009.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "main_pcb",
+      "type": "circuit_board"
+    },
+    "5b7de691b2bd30c4196091bab9d6f6a319e6f9ac": {
+      "file": "использованные/sony_ericsson_w810_part_011_5b7de691.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        100,
+        103
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_011.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "btn_call",
+      "type": "button"
+    },
+    "53c604929ea6afc3f56abbf48123ccb9b689fb73": {
+      "file": "использованные/sony_ericsson_w810_part_013_53c60492.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        97,
+        101
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_013.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "btn_end",
+      "type": "button"
+    },
+    "cbab2f7e25cbc6ee5fa4465c0cc00f36fcaa6311": {
+      "file": "использованные/sony_ericsson_w810_part_015_cbab2f7e.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        293,
+        297
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_015.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "nav_ring",
+      "type": "button_pad"
+    },
+    "37b5facae217b9dfc997c06a4e7e3e9636cf4e3c": {
+      "file": "использованные/sony_ericsson_w810_part_018_37b5faca.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        347,
+        311
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_018.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "keypad",
+      "type": "button_pad"
+    },
+    "36f8cedf5bec9e61fa8c7082548c8443b89e7118": {
+      "file": "использованные/sony_ericsson_w810_part_019_36f8cedf.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        389,
+        752
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_019.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "chassis",
+      "type": "chassis"
+    },
+    "fec9e1ae6563eadfdc2f76eeb6d6f65fc3c393fb": {
+      "file": "использованные/sony_ericsson_w810_part_020_fec9e1ae.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        359,
+        752
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_020.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "back_cover",
+      "type": "housing_rear"
+    },
+    "cb9a6c5846fd73ba2217e12a3ac526129db88710": {
+      "file": "использованные/sony_ericsson_w810_part_024_cb9a6c58.png",
+      "device": "sony_ericsson_w810",
+      "size": [
+        270,
+        391
+      ],
+      "origins": [
+        "work\\sony_ericsson_w810\\parts\\part_024.png"
+      ],
+      "added": "2026-08-14T18:03:54",
+      "used": true,
+      "used_in": [
+        "assets\\sony_ericsson_w810\\device.json"
+      ],
+      "id": "battery",
+      "type": "battery"
     }
   }
 }
