@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/media/nokia_3310.gif" width="700" alt="Nokia 3310 asset coming apart layer by layer, each part labelled with its type">
+  <img src="docs/media/nokia_3210.gif" width="820" alt="Nokia 3210 asset coming apart layer by layer, each part labelled with its type">
 </p>
 
 <p align="center">
@@ -78,7 +78,7 @@ game can treat every battery in every device the same way. The 22 types live in
 </p>
 
 <p align="center">
-  <img src="docs/media/gameboy_advance.gif" width="520" alt="Game Boy Advance asset separating into 14 layers and reassembling">
+  <img src="docs/media/gameboy_advance.gif" width="600" alt="Game Boy Advance asset separating into 14 layers and reassembling">
 </p>
 
 ---
@@ -257,8 +257,8 @@ here can never drift from what the tool actually renders.
 
 ```bash
 # animated teardown loops
-py "Asset Builder MCP/make_gif.py" nokia_3310
-py "Asset Builder MCP/make_gif.py" gameboy_advance --no-schema --colors 64 --frames 40 --delay 90 --width 560 --height 420
+py "Asset Builder MCP/make_gif.py" nokia_3210 --width 840 --height 560 --margin-w 0.34 --margin-h 0.66 --colors 80
+py "Asset Builder MCP/make_gif.py" gameboy_advance --no-schema --colors 64 --frames 40 --delay 90 --width 640 --height 460
 
 # the device gallery, and the animated wall at the bottom of this page
 py "Asset Builder MCP/make_gif.py" --all --grid
