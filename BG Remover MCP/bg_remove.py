@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 """
-Удаление фона с картинки локально: на выходе PNG с прозрачностью.
+Removing the background from a picture locally: the output is a PNG with transparency.
 
-Два движка:
-  white — белый фон вырезается алгоритмически (numpy+scipy, ничего не качает).
-          Заливка от краёв кадра ищет связный белый фон, поэтому белые детали
-          ВНУТРИ объекта остаются непрозрачными. Полупрозрачность на кромке
-          берётся из «белизны» пикселя, затем цвет распремножается —
-          белая кайма по контуру не остаётся.
-  ai    — локальная нейросеть (rembg / U^2-Net, ONNX на CPU). Работает с любым
-          фоном, не только белым. Модель качается один раз в ~/.u2net.
+Two engines:
+  white — a white background is cut algorithmically (numpy+scipy, nothing downloaded).
+          A fill from the frame edges looks for connected white background, so white
+          parts INSIDE the object stay opaque. Semi-transparency along the edge is
+          taken from the "whiteness" of the pixel, then the colour is unpremultiplied —
+          no white fringe is left along the contour.
+  ai    — a local neural net (rembg / U^2-Net, ONNX on CPU). Handles any
+          background, not only white. The model is downloaded once into ~/.u2net.
 
-  auto  — по краям кадра смотрит, белый ли фон: белый -> white, иначе -> ai.
+  auto  — looks at the frame edges to see whether the background is white: white -> white, otherwise -> ai.
 
-Запуск:
+Usage:
   python bg_remove.py in.jpg
   python bg_remove.py in.jpg --out C:\\cut --method ai --trim
   python bg_remove.py "C:\\images\\*.jpeg" --method white --tol-bg 14
-  python bg_remove.py --check           # что доступно в системе
+  python bg_remove.py --check           # what is available on the system
 
-Установка:
-  pip install pillow numpy scipy          # движок white
-  pip install rembg onnxruntime           # движок ai (плюс ~180 МБ модель)
+Installation:
+  pip install pillow numpy scipy          # the white engine
+  pip install rembg onnxruntime           # the ai engine (plus a ~180 MB model)
 """
 
 from __future__ import annotations
@@ -39,11 +39,11 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 
-Image.MAX_IMAGE_PIXELS = None  # апскейлы 4K+ не должны падать на защите от бомб
+Image.MAX_IMAGE_PIXELS = None  # 4K+ upscales must not trip the decompression-bomb guard
 
 SUPPORTED_EXT = (".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tif", ".tiff")
 
-# Модели rembg: general — универсальная, human — люди, anime — рисовка.
+# rembg models: general — universal, human — people, anime — drawings.
 AI_MODELS = {
     "general": "isnet-general-use",
     "u2net": "u2net",
@@ -54,7 +54,7 @@ AI_MODELS = {
 
 
 def _init_stream(stream):
-    """UTF-8 на выводе: консоль Windows иначе падает на кириллице."""
+    """UTF-8 on output: the Windows console otherwise chokes on non-ASCII."""
     try:
         stream.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
@@ -67,17 +67,17 @@ _init_stream(sys.stdout)
 
 
 def log(msg: str) -> None:
-    """Лог в stderr: stdout занят протоколом MCP."""
+    """Log to stderr: stdout is taken by the MCP protocol."""
     print(f"[{datetime.now():%H:%M:%S}] {msg}", file=sys.stderr, flush=True)
 
 
 # ---------------------------------------------------------------------------
-# Движок 1: вырезание белого фона (numpy + scipy, без нейросети)
+# Engine 1: cutting out a white background (numpy + scipy, no neural net)
 # ---------------------------------------------------------------------------
 
 
 def load_rgb(path: Path) -> tuple[np.ndarray, np.ndarray | None]:
-    """Прочитать картинку как RGB float32 0..255 и её альфу, если была."""
+    """Read a picture as RGB float32 0..255 and its alpha, if there was one."""
     img = Image.open(path)
     if img.mode in ("RGBA", "LA") or (img.mode == "P" and "transparency" in img.info):
         rgba = img.convert("RGBA")
@@ -87,16 +87,16 @@ def load_rgb(path: Path) -> tuple[np.ndarray, np.ndarray | None]:
 
 
 def whiteness_distance(rgb: np.ndarray) -> np.ndarray:
-    """Насколько пиксель далёк от чистого белого, 0..255.
+    """How far a pixel is from pure white, 0..255.
 
-    Берём максимум по каналам от (255 - c): такой критерий одинаково ловит
-    и серый, и цветной пиксель, а к лёгкой желтизне фона устойчив.
+    We take the maximum over channels of (255 - c): such a criterion catches grey
+    and coloured pixels alike and stands up to a slightly yellowish background.
     """
     return (255.0 - rgb).max(axis=2)
 
 
 def border_is_white(rgb: np.ndarray, tol: float, share: float = 0.9) -> bool:
-    """Белый ли фон по рамке кадра (для method=auto)."""
+    """Is the background white judging by the frame border (for method=auto)."""
     d = whiteness_distance(rgb)
     band = max(2, min(d.shape[0], d.shape[1]) // 100)
     edges = np.concatenate(
@@ -113,19 +113,19 @@ def remove_white_bg(
     feather: float = 0.0,
     keep_holes: bool = True,
 ) -> np.ndarray:
-    """Альфа-канал 0..1 для картинки на белом фоне.
+    """An alpha channel 0..1 for a picture on a white background.
 
-    tol_bg — что считаем чистым фоном (расстояние до белого);
-    tol_fg — с какого расстояния пиксель полностью непрозрачен;
-    edge   — ширина полосы полупрозрачности вдоль контура, px;
-    keep_holes — не выбивать белые области, не связанные с краем кадра
-                 (блики, белые детали объекта, «дырки» внутри контура).
+    tol_bg — what we count as pure background (the distance to white);
+    tol_fg — from what distance a pixel is fully opaque;
+    edge   — the width of the semi-transparent band along the contour, px;
+    keep_holes — do not knock out white areas unconnected to the frame border
+                 (highlights, white parts of the object, "holes" inside the contour).
     """
     dist = whiteness_distance(rgb)
     near_white = dist <= tol_bg
 
     if keep_holes:
-        # Фон = только те белые области, что дотягиваются до рамки кадра.
+        # Background = only those white areas that reach the frame border.
         labels, n = ndimage.label(near_white)
         if n:
             border_ids = np.unique(
@@ -133,8 +133,8 @@ def remove_white_bg(
                     [labels[0], labels[-1], labels[:, 0], labels[:, -1]]
                 )
             )
-            # Таблица «номер компоненты -> это фон»: дешевле, чем np.isin
-            # по нескольким тысячам меток на 4-мегапиксельном кадре.
+            # A "component number -> is background" table: cheaper than np.isin
+            # over several thousand labels on a 4-megapixel frame.
             keep = np.zeros(n + 1, dtype=bool)
             keep[border_ids[border_ids != 0]] = True
             background = keep[labels]
@@ -143,7 +143,7 @@ def remove_white_bg(
     else:
         background = near_white
 
-    # Полоса вдоль контура: там альфа плавная, а не 0/1 — иначе «лесенка».
+    # The band along the contour: alpha is gradual there, not 0/1 — otherwise it stairsteps.
     if edge > 0:
         band = ndimage.binary_dilation(background, iterations=int(edge)) & ~background
     else:
@@ -162,7 +162,7 @@ def remove_white_bg(
 
 
 def disk(radius: int) -> np.ndarray:
-    """Круглый структурный элемент: диагонали съедаются так же, как прямые."""
+    """A round structuring element: diagonals get eaten the same as straights."""
     r = int(max(radius, 1))
     y, x = np.ogrid[-r : r + 1, -r : r + 1]
     return (x * x + y * y) <= r * r + 0.5
@@ -175,19 +175,19 @@ def shrink_alpha(
     soft: float = 0.5,
     min_island: int = 6,
 ) -> tuple[np.ndarray, dict]:
-    """Срезать `px` пикселей вглубь по всей границе с прозрачностью.
+    """Cut `px` pixels inward along every boundary with transparency.
 
-    Вырезание всегда оставляет по контуру тонкую светлую кайму от фона:
-    пиксель на границе наполовину фоновый, и никакой defringe его не спасёт.
-    Дешевле не угадывать цвет, а просто выбросить эти пиксели — эрозия идёт
-    и по внешнему контуру, и вокруг дыр, то есть везде, где непрозрачное
-    касается прозрачного.
+    A cutout always leaves a thin light fringe of background along the contour:
+    a pixel on the boundary is half background, and no defringe will save it.
+    It is cheaper not to guess the colour but simply to throw those pixels away —
+    the erosion runs along the outer contour and around the holes alike, that is
+    everywhere opaque touches transparent.
 
-    За кадром считаем «непрозрачно» (border_value=1): деталь, упирающаяся
-    в рамку кадра, не должна там обрезаться.
+    Outside the frame counts as "opaque" (border_value=1): a part butting against
+    the frame border must not be trimmed there.
 
-    min_island — выкинуть оставшиеся после эрозии крошки меньше N пикселей.
-    Возвращает (новая альфа, статистика).
+    min_island — throw away crumbs smaller than N pixels left after the erosion.
+    Returns (the new alpha, statistics).
     """
     px = int(px)
     if px <= 0:
@@ -207,8 +207,8 @@ def shrink_alpha(
 
     mask = eroded.astype(np.float32)
     if soft > 0:
-        # Лёгкое размытие маски возвращает единственный полупрозрачный пиксель
-        # на кромке — без него после эрозии край становится «лесенкой».
+        # A light blur of the mask brings back the single semi-transparent pixel
+        # on the edge — without it the edge stairsteps after the erosion.
         mask = ndimage.gaussian_filter(mask, sigma=float(soft))
 
     out = np.minimum(alpha, mask)
@@ -221,15 +221,15 @@ def shrink_alpha(
         "removed_share": round((before - after) / before, 4) if before else 0.0,
     }
     if before and (before - after) / before > 0.35:
-        stats["warning"] = "срезано больше трети объекта — px слишком большой для этой детали"
+        stats["warning"] = "more than a third of the object was cut — px is too large for this part"
     return out, stats
 
 
 def defringe(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
-    """Убрать белую кайму: распремножить цвет, снятый с белого фона.
+    """Remove the white fringe: unpremultiply the colour picked up off the white background.
 
-    Полупрозрачный пиксель = цвет объекта поверх белого. Возвращаем чистый
-    цвет объекта, иначе по контуру останется светлый ореол.
+    A semi-transparent pixel = the object's colour over white. We return the clean
+    object colour, otherwise a light halo stays along the contour.
     """
     a = np.clip(alpha, 0.0, 1.0)[..., None]
     mask = (a > 0.02) & (a < 0.999)
@@ -238,7 +238,7 @@ def defringe(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
 
 
 # ---------------------------------------------------------------------------
-# Движок 2: локальная нейросеть (rembg / U^2-Net)
+# Engine 2: a local neural net (rembg / U^2-Net)
 # ---------------------------------------------------------------------------
 
 _AI_SESSIONS: dict[str, object] = {}
@@ -248,21 +248,21 @@ def ai_available() -> tuple[bool, str]:
     try:
         import rembg  # noqa: F401
     except ImportError:
-        return False, "не установлен rembg (pip install rembg onnxruntime)"
+        return False, "rembg is not installed (pip install rembg onnxruntime)"
     try:
         import onnxruntime  # noqa: F401
     except ImportError:
-        return False, "не установлен onnxruntime (pip install onnxruntime)"
+        return False, "onnxruntime is not installed (pip install onnxruntime)"
     return True, "ok"
 
 
 def ai_session(model: str):
-    """Сессия rembg. Модель качается один раз в ~/.u2net и кешируется."""
+    """A rembg session. The model is downloaded once into ~/.u2net and cached."""
     name = AI_MODELS.get(model, model)
     if name not in _AI_SESSIONS:
         from rembg import new_session
 
-        log(f"Гружу модель {name} (первый раз — скачивание ~180 МБ)")
+        log(f"Loading model {name} (first time — a ~180 MB download)")
         _AI_SESSIONS[name] = new_session(name)
     return _AI_SESSIONS[name]
 
@@ -273,7 +273,7 @@ def remove_bg_ai(
     alpha_matting: bool = False,
     post_process: bool = True,
 ) -> np.ndarray:
-    """Альфа 0..1 от нейросети."""
+    """Alpha 0..1 from the neural net."""
     from rembg import remove
 
     src = Image.open(path).convert("RGB")
@@ -290,12 +290,12 @@ def remove_bg_ai(
 
 
 # ---------------------------------------------------------------------------
-# Общая обвязка
+# Shared plumbing
 # ---------------------------------------------------------------------------
 
 
 def trim_to_content(rgb: np.ndarray, alpha: np.ndarray, pad: int = 0, thr: float = 0.02):
-    """Обрезать прозрачные поля по краям."""
+    """Crop the transparent margins at the edges."""
     ys, xs = np.where(alpha > thr)
     if not len(ys):
         return rgb, alpha, None
@@ -305,7 +305,7 @@ def trim_to_content(rgb: np.ndarray, alpha: np.ndarray, pad: int = 0, thr: float
 
 
 def save_rgba(rgb: np.ndarray, alpha: np.ndarray, path: Path, compress: int = 6) -> None:
-    """PNG RGBA. compress=9/optimize даёт всего ~5% размера, но в 8 раз дольше."""
+    """PNG RGBA. compress=9/optimize gains only ~5% of the size but takes 8x longer."""
     rgba = np.dstack(
         [np.clip(rgb, 0, 255), np.clip(alpha * 255.0, 0, 255)]
     ).astype(np.uint8)
@@ -340,15 +340,15 @@ def remove_background(
     overwrite: bool = True,
     compress: int = 6,
 ) -> dict:
-    """Убрать фон у одной картинки. Возвращает словарь с результатом.
+    """Remove the background from one picture. Returns a dict with the result.
 
-    `out` — папка ИЛИ конкретный путь .png. Если не задан, файл ляжет рядом
-    с исходником как <имя>_nobg.png.
+    `out` — a folder OR a concrete .png path. If unset, the file lands next to the
+    source as <name>_nobg.png.
     """
     started = time.time()
     src = Path(image)
     if not src.is_file():
-        return {"ok": False, "error": "not_found", "message": f"Нет файла: {src}", "src": str(src)}
+        return {"ok": False, "error": "not_found", "message": f"No file: {src}", "src": str(src)}
 
     try:
         rgb, src_alpha = load_rgb(src)
@@ -366,7 +366,7 @@ def remove_background(
             ok, why = ai_available()
             chosen = "ai" if ok else "white"
             if not ok:
-                notes.append(f"фон не белый, но ИИ недоступен ({why}) — режу как белый")
+                notes.append(f"the background is not white, but the AI is unavailable ({why}) — cutting as white")
 
     if chosen == "ai":
         ok, why = ai_available()
@@ -383,7 +383,7 @@ def remove_background(
             }
         if feather > 0:
             alpha = ndimage.gaussian_filter(alpha, sigma=float(feather))
-        # ИИ иногда оставляет светлую кайму от белого фона — подчищаем ею же.
+        # the AI sometimes leaves a light fringe of white background — cleaned with the same call.
         rgb = defringe(rgb, alpha)
     elif chosen == "white":
         alpha = remove_white_bg(rgb, tol_bg, tol_fg, edge, feather, keep_holes)
@@ -392,13 +392,13 @@ def remove_background(
         return {
             "ok": False,
             "error": "bad_method",
-            "message": f"method должен быть auto/white/ai, а не {method!r}",
+            "message": f"method must be auto/white/ai, not {method!r}",
             "src": str(src),
         }
 
     if src_alpha is not None:
-        alpha = alpha * src_alpha  # уважаем прозрачность исходника
-        notes.append("у исходника уже была альфа — перемножил")
+        alpha = alpha * src_alpha  # respect the source's own transparency
+        notes.append("the source already had alpha — multiplied it in")
 
     shrink_stats = None
     if shrink > 0:
@@ -408,9 +408,9 @@ def remove_background(
 
     coverage = float((alpha > 0.5).mean())
     if coverage >= 0.999:
-        notes.append("фон не найден: почти всё осталось непрозрачным")
+        notes.append("background not found: almost everything stayed opaque")
     elif coverage <= 0.001:
-        notes.append("вырезалось почти всё — проверь tol_bg/метод")
+        notes.append("almost everything was cut away — check tol_bg/method")
 
     box = None
     if trim:
@@ -418,7 +418,7 @@ def remove_background(
 
     dst = Path(out) if out and str(out).lower().endswith(".png") else out_path_for(src, out, suffix)
     if dst.exists() and not overwrite:
-        return {"ok": False, "error": "exists", "message": f"Файл уже есть: {dst}", "src": str(src)}
+        return {"ok": False, "error": "exists", "message": f"The file already exists: {dst}", "src": str(src)}
 
     try:
         save_rgba(rgb, alpha, dst, compress)
@@ -445,7 +445,7 @@ def remove_background(
 
 
 def expand_inputs(items: Iterable[str | Path], recursive: bool = False) -> list[Path]:
-    """Разложить пути/маски/папки в список файлов картинок."""
+    """Expand paths/masks/folders into a list of image files."""
     found: list[Path] = []
     for item in items:
         text = str(item).strip().strip('"')
@@ -461,7 +461,7 @@ def expand_inputs(items: Iterable[str | Path], recursive: bool = False) -> list[
             ]
         else:
             found.append(p)
-    # дубликаты убираем, порядок сохраняем
+    # duplicates are removed, the order is kept
     return list(dict.fromkeys(found))
 
 
@@ -471,7 +471,7 @@ def remove_background_batch(
     recursive: bool = False,
     **kwargs,
 ) -> dict:
-    """Пачкой. Пропускает уже готовые _nobg.png, чтобы не жевать свой вывод."""
+    """In a batch. Skips ready _nobg.png files so we do not chew our own output."""
     suffix = kwargs.get("suffix", "_nobg")
     files = [f for f in expand_inputs(images, recursive) if not f.stem.endswith(suffix)]
     started = time.time()
@@ -481,9 +481,9 @@ def remove_background_batch(
         res = remove_background(f, out=out_dir, **kwargs)
         if res["ok"]:
             log(f"    -> {res['filename']} ({res['method']}, "
-                f"объект {res['opaque_share'] * 100:.1f}% кадра, {res['elapsed_sec']} с)")
+                f"object {res['opaque_share'] * 100:.1f}% of the frame, {res['elapsed_sec']} s)")
         else:
-            log(f"    ОШИБКА {res['error']}: {res['message']}")
+            log(f"    ERROR {res['error']}: {res['message']}")
         results.append(res)
 
     done = [r for r in results if r["ok"]]
@@ -499,7 +499,7 @@ def remove_background_batch(
 
 
 def check_environment() -> dict:
-    """Что доступно: библиотеки, движок ИИ, кеш моделей."""
+    """What is available: libraries, the AI engine, the model cache."""
     import importlib.metadata as md
 
     def ver(name: str) -> str | None:
@@ -513,7 +513,7 @@ def check_environment() -> dict:
     models = sorted(f.name for f in cache.glob("*.onnx")) if cache.exists() else []
 
     return {
-        "ready": True,  # движок white работает всегда: pillow+numpy+scipy обязательны
+        "ready": True,  # the white engine always works: pillow+numpy+scipy are mandatory
         "pillow": ver("pillow"),
         "numpy": ver("numpy"),
         "scipy": ver("scipy"),
@@ -525,15 +525,15 @@ def check_environment() -> dict:
         "ai_models_cache_dir": str(cache),
         "methods": ["white", "ai"] if ok_ai else ["white"],
         "message": (
-            "Оба движка готовы"
+            "Both engines ready"
             if ok_ai
-            else f"Работает только white (белый фон). ИИ: {why}"
+            else f"Only white works (white background). AI: {why}"
         ),
     }
 
 
 def install_ai(gpu: bool = False) -> dict:
-    """Поставить rembg+onnxruntime в текущий Python. Качает ~100 МБ колёс."""
+    """Install rembg+onnxruntime into the current Python. Downloads ~100 MB of wheels."""
     import subprocess
 
     pkgs = ["rembg", "onnxruntime-gpu" if gpu else "onnxruntime"]
@@ -561,51 +561,51 @@ def install_ai(gpu: bool = False) -> dict:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Локальное удаление фона: на выходе PNG с прозрачностью"
+        description="Local background removal: the output is a PNG with transparency"
     )
-    p.add_argument("images", nargs="*", help="Файлы, папки или маски (*.jpeg)")
-    p.add_argument("--out", help="Папка вывода (по умолчанию рядом с исходником)")
+    p.add_argument("images", nargs="*", help="Files, folders or masks (*.jpeg)")
+    p.add_argument("--out", help="Output folder (next to the source by default)")
     p.add_argument(
         "--method",
         choices=["auto", "white", "ai"],
         default="auto",
-        help="auto (по краям кадра), white (белый фон, без сети), ai (нейросеть)",
+        help="auto (by the frame edges), white (white background, offline), ai (neural net)",
     )
     p.add_argument(
         "--ai-model",
         choices=list(AI_MODELS),
         default="general",
-        help="Модель для --method ai",
+        help="Model for --method ai",
     )
-    p.add_argument("--alpha-matting", action="store_true", help="Мягкая кромка у ИИ (медленнее)")
-    p.add_argument("--tol-bg", type=float, default=12.0, help="Порог «это фон», 0..255 (12)")
-    p.add_argument("--tol-fg", type=float, default=45.0, help="Порог полной непрозрачности (45)")
-    p.add_argument("--edge", type=int, default=2, help="Ширина мягкой кромки, px (2)")
-    p.add_argument("--feather", type=float, default=0.0, help="Размытие альфы, sigma (0)")
-    p.add_argument("--trim", action="store_true", help="Обрезать прозрачные поля")
-    p.add_argument("--pad", type=int, default=0, help="Отступ при --trim, px")
+    p.add_argument("--alpha-matting", action="store_true", help="Soft edge from the AI (slower)")
+    p.add_argument("--tol-bg", type=float, default=12.0, help="The 'this is background' threshold, 0..255 (12)")
+    p.add_argument("--tol-fg", type=float, default=45.0, help="Full-opacity threshold (45)")
+    p.add_argument("--edge", type=int, default=2, help="Width of the soft edge, px (2)")
+    p.add_argument("--feather", type=float, default=0.0, help="Alpha blur, sigma (0)")
+    p.add_argument("--trim", action="store_true", help="Crop the transparent margins")
+    p.add_argument("--pad", type=int, default=0, help="Padding when using --trim, px")
     p.add_argument(
         "--no-keep-holes",
         action="store_true",
-        help="Выбивать ВСЕ белые пиксели, включая внутренние (по умолчанию они остаются)",
+        help="Knock out ALL white pixels, including inner ones (they stay by default)",
     )
     p.add_argument(
         "--shrink",
         type=int,
         default=0,
-        help="Срезать N px вглубь по всей границе с прозрачностью — убирает белую кайму (0)",
+        help="Cut N px inward along every boundary with transparency — removes the white fringe (0)",
     )
-    p.add_argument("--shrink-soft", type=float, default=0.5, help="Сглаживание кромки после среза")
-    p.add_argument("--min-island", type=int, default=6, help="Выкидывать куски мельче N px (6)")
-    p.add_argument("--suffix", default="_nobg", help="Суффикс имени выходного файла")
+    p.add_argument("--shrink-soft", type=float, default=0.5, help="Edge smoothing after the cut")
+    p.add_argument("--min-island", type=int, default=6, help="Throw away pieces smaller than N px (6)")
+    p.add_argument("--suffix", default="_nobg", help="Suffix of the output file name")
     p.add_argument(
-        "--compress", type=int, default=6, help="Сжатие PNG 0-9 (6). 9 медленнее в 8 раз"
+        "--compress", type=int, default=6, help="PNG compression 0-9 (6). 9 is 8x slower"
     )
-    p.add_argument("--recursive", action="store_true", help="Обходить папки рекурсивно")
-    p.add_argument("--no-overwrite", action="store_true", help="Не перезаписывать готовые файлы")
-    p.add_argument("--check", action="store_true", help="Показать окружение и выйти")
-    p.add_argument("--install-ai", action="store_true", help="Поставить rembg+onnxruntime")
-    p.add_argument("--json", action="store_true", help="Печатать результат JSON в stdout")
+    p.add_argument("--recursive", action="store_true", help="Walk folders recursively")
+    p.add_argument("--no-overwrite", action="store_true", help="Do not overwrite finished files")
+    p.add_argument("--check", action="store_true", help="Show the environment and exit")
+    p.add_argument("--install-ai", action="store_true", help="Install rembg+onnxruntime")
+    p.add_argument("--json", action="store_true", help="Print the result as JSON to stdout")
     return p.parse_args()
 
 
@@ -622,7 +622,7 @@ def main() -> int:
         return 0 if res["ok"] else 1
 
     if not args.images:
-        log("Нечего резать: передай файлы, папку или маску. Помощь: --help")
+        log("Nothing to cut: pass files, a folder or a mask. Help: --help")
         return 2
 
     res = remove_background_batch(
@@ -649,7 +649,7 @@ def main() -> int:
 
     if args.json:
         print(json.dumps(res, ensure_ascii=False, indent=2))
-    log(f"ИТОГО: {res['done']} из {res['total']} за {res['elapsed_sec']} с")
+    log(f"TOTAL: {res['done']} of {res['total']} in {res['elapsed_sec']} s")
     return 0 if res["ok"] else 1
 
 

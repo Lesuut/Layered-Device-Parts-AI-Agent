@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Приёмник хуков Claude Code: пишет ленту событий для панели конвейера.
+"""Claude Code hook sink: writes the event feed for the pipeline dashboard.
 
-Вызывается из .claude/settings.json:
+Invoked from .claude/settings.json:
 
-  session-start  — новая сессия: лента обнуляется, сервер поднимается, окно открывается
-  pre            — PreToolUse: инструмент только начал работу (панель показывает «сейчас»)
-  post           — PostToolUse: инструмент отработал, в ответе есть пути к файлам
-  stop           — Stop: агент отдал ход пользователю, работающих инструментов не осталось
+  session-start  — new session: feed cleared, server started, window opened
+  pre            — PreToolUse: a tool just started (the dashboard shows it as "now")
+  post           — PostToolUse: a tool finished, its response carries file paths
+  stop           — Stop: the agent handed the turn back, nothing is running
 
-Хук обязан быть незаметным: любая ошибка глушится и код возврата всегда 0 —
-сломанная панель не должна мешать работе агента.
+The hook must stay invisible: every error is swallowed and the exit code is
+always 0 — a broken dashboard must not get in the agent's way.
 """
 
 from __future__ import annotations
@@ -25,24 +25,24 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 STATE_DIR = HERE / "state"
 EVENTS = STATE_DIR / "events.jsonl"
-# Каждое событие — отдельный файл. Хуки помечены async и запускаются
-# параллельно: при дописывании в один общий файл записи в десятки килобайт
-# (ответы asset_pack, asset_render) перемешивались между процессами, строка
-# переставала быть валидным JSON и молча пропадала — шаг навсегда оставался
-# «в работе». Отдельный файл на событие исключает саму гонку.
+# One file per event. The hooks are marked async and run in parallel: appending
+# to one shared file let records tens of kilobytes long (asset_pack and
+# asset_render responses) interleave between processes — the line stopped being
+# valid JSON and vanished silently, leaving a step stuck "in progress" forever.
+# A file per event removes the race entirely.
 EVENT_DIR = STATE_DIR / "events.d"
-# id текущей сессии. Нужен, потому что сессий может быть открыто несколько:
-# старая продолжает писать события в ту же папку и без метки замусоривала бы
-# панель новой. Каждое событие помечается своей сессией, сервер показывает
-# только последнюю.
+# Current session id. Needed because several sessions can be open at once: the
+# old one keeps writing events into the same folder and, unlabelled, would
+# clutter the new one's dashboard. Every event carries its session, the server
+# shows only the latest.
 SESSION_FILE = STATE_DIR / "session.json"
 
-# Ответы MCP бывают по сотне килобайт (asset_extract) — панели из них нужны
-# только пути и пара чисел, поэтому режем.
+# MCP responses run to a hundred kilobytes (asset_extract) — the dashboard only
+# needs the paths and a couple of numbers, so they get clipped.
 MAX_RESPONSE = 24000
 MAX_INPUT = 6000
 
-# Инструменты, которые панель вообще не интересуют.
+# Tools the dashboard has no interest in at all.
 SKIP_PREFIX = ("TodoWrite", "Task", "Glob", "Grep", "WebFetch", "WebSearch", "Skill")
 
 
@@ -66,7 +66,7 @@ def clip(value, limit: int) -> str:
 
 
 def trim_input(value) -> dict:
-    """Оставить вход инструмента, но без гигантских полей (промты, списки деталей)."""
+    """Keep the tool input, minus the huge fields (prompts, part lists)."""
     if not isinstance(value, dict):
         return {}
     out = {}
@@ -76,16 +76,16 @@ def trim_input(value) -> dict:
         elif isinstance(v, (int, float, bool)) or v is None:
             out[k] = v
         else:
-            # список деталей у asset_pack бывает на десятки килобайт: если не
-            # влезает — кладём обрезанный текст, пути из него всё равно достанутся
+            # asset_pack's part list runs to tens of kilobytes: if it does not
+            # fit, store clipped text — the paths are still recoverable from it
             text = json.dumps(v, ensure_ascii=False)
             out[k] = v if len(text) <= MAX_INPUT else text[:MAX_INPUT]
     return out
 
 
 def session_id(data: dict) -> str:
-    """Чья это сессия. Claude Code кладёт session_id в payload любого хука;
-    файл — запасной вариант для событий, где его вдруг не оказалось."""
+    """Whose session this is. Claude Code puts session_id in every hook payload;
+    the file is the fallback for events that somehow arrived without one."""
     sid = data.get("session_id")
     if sid:
         return str(sid)
@@ -99,11 +99,11 @@ def append(record: dict, session: str = "") -> None:
     EVENT_DIR.mkdir(parents=True, exist_ok=True)
     record["ts"] = time.time()
     record["session"] = session
-    # имя задаёт порядок при равных ts; pid разводит одновременные хуки
+    # the name orders events with equal ts; pid separates concurrent hooks
     name = f"{time.time_ns():020d}-{os.getpid()}.json"
     tmp = EVENT_DIR / (name + ".part")
     tmp.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
-    tmp.replace(EVENT_DIR / name)  # сервер увидит файл только целиком
+    tmp.replace(EVENT_DIR / name)  # the server only ever sees a complete file
 
 
 def start_server(open_browser: bool) -> None:
@@ -123,7 +123,7 @@ def main() -> int:
 
     if mode == "session-start":
         STATE_DIR.mkdir(parents=True, exist_ok=True)
-        shutil.rmtree(EVENT_DIR, ignore_errors=True)  # каждая сессия — своя лента
+        shutil.rmtree(EVENT_DIR, ignore_errors=True)  # every session gets its own feed
         EVENTS.unlink(missing_ok=True)
         sid = str(data.get("session_id") or time.time_ns())
         SESSION_FILE.write_text(json.dumps({"id": sid, "ts": time.time()}),
@@ -134,7 +134,7 @@ def main() -> int:
         return 0
 
     if mode == "stop":
-        # ход закончен: что бы ни осталось «в работе», оно уже отработало
+        # turn is over: whatever is still marked "running" has already finished
         append({"event": "Stop", "phase": "stop"}, session_id(data))
         return 0
 
@@ -158,5 +158,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except Exception:
-        # панель не стоит того, чтобы из-за неё падал хук
+        # the dashboard is not worth crashing a hook over
         sys.exit(0)

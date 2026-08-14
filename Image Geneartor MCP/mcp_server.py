@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-MCP-сервер над Google Flow: генерация картинок в 2K из уже открытого Chrome.
+MCP server over Google Flow: generating 2K pictures from an already open Chrome.
 
-Инструменты:
-  flow_check           - проверить готовность (порт отладки, вкладка Flow, логин)
-  flow_setup           - поднять отладочный Chrome, если он не запущен
-  flow_generate        - промт (+референсы) -> генерация -> ДОЖДАТЬСЯ -> скачать 2K
-  flow_paste_reference - только вставить референс в композер, без генерации
-  flow_list_files      - показать, что уже нагенерировано в папке вывода
+Tools:
+  flow_check           - check readiness (debug port, Flow tab, login)
+  flow_setup           - bring up debug Chrome if it is not running
+  flow_generate        - prompt (+references) -> generation -> WAIT -> download 2K
+  flow_paste_reference - only paste a reference into the composer, no generation
+  flow_list_files      - show what has already been generated in the output folder
 
-Запуск как MCP (stdio):
+Run as MCP (stdio):
   python mcp_server.py
 
-Регистрация в Claude Code:
-  claude mcp add flow-images -- python "<путь>/mcp_server.py"
+Registering in Claude Code:
+  claude mcp add flow-images -- python "<path>/mcp_server.py"
 """
 
 from __future__ import annotations
@@ -41,34 +41,34 @@ DEFAULT_OUT = HERE / "output"
 mcp = _Server(
     "flow-images",
     instructions=(
-        "Генерация изображений в Google Flow (labs.google) через уже открытый Chrome. "
-        "Перед первой генерацией вызови flow_check; если не готово — flow_setup. "
-        "flow_generate блокируется до конца: возвращает управление только когда все "
-        "картинки (по умолчанию 4) сгенерированы и скачаны в 2K на диск. "
-        "Есть работа по референсу: передай reference_images в flow_generate — "
-        "картинки вставятся в композер, дождутся загрузки, и только потом "
-        "запустится генерация."
+        "Image generation in Google Flow (labs.google) through an already open Chrome. "
+        "Call flow_check before the first generation; if it is not ready — flow_setup. "
+        "flow_generate blocks to the end: it returns control only when every "
+        "picture (4 by default) has been generated and downloaded in 2K to disk. "
+        "Working from a reference is supported: pass reference_images to flow_generate — "
+        "the pictures get pasted into the composer, the upload is waited for, and only "
+        "then does generation start."
     ),
 )
 
 
 @mcp.tool()
 def flow_check() -> str:
-    """Проверить готовность окружения Flow.
+    """Check that the Flow environment is ready.
 
-    Смотрит: запущен ли Chrome с портом отладки 9222, открыта ли вкладка проекта
-    Flow, не висит ли страница входа Google. Вызывать перед flow_generate.
+    Looks at: whether Chrome is running with debug port 9222, whether a Flow project
+    tab is open, whether a Google sign-in page is in the way. Call it before flow_generate.
     """
     return json.dumps(fg.check_environment(), ensure_ascii=False, indent=2)
 
 
 @mcp.tool()
 def flow_setup() -> str:
-    """Поднять отладочный Chrome для автоматизации Flow, если он ещё не запущен.
+    """Bring up debug Chrome for Flow automation if it is not running yet.
 
-    Обычный Chrome пользователя закрывать не нужно — запускается отдельный процесс
-    с профилем ChromeDebugProfile. Если профиль новый, пользователю нужно вручную
-    войти в Google и открыть проект Flow.
+    The user's normal Chrome does not have to be closed — a separate process starts
+    with the ChromeDebugProfile profile. If the profile is new, the user has to sign
+    in to Google and open the Flow project by hand.
     """
     info = launcher.cdp_version()
     if info:
@@ -81,8 +81,8 @@ def flow_setup() -> str:
     return json.dumps(
         {
             "started": True,
-            "next_step": "Если вкладки Flow нет — войти в Google и открыть проект, "
-            "затем вызвать flow_check",
+            "next_step": "If there is no Flow tab — sign in to Google and open the project, "
+            "then call flow_check",
         },
         ensure_ascii=False,
     )
@@ -90,47 +90,47 @@ def flow_setup() -> str:
 
 @mcp.tool()
 def flow_generate(
-    prompt: Annotated[str, Field(description="Текст промта для генерации")],
-    count: Annotated[int, Field(description="Сколько картинок ждать", ge=1, le=8)] = 4,
+    prompt: Annotated[str, Field(description="The prompt text for generation")],
+    count: Annotated[int, Field(description="How many pictures to wait for", ge=1, le=8)] = 4,
     out_dir: Annotated[
-        str | None, Field(description="Куда сохранить; по умолчанию папка output рядом с сервером")
+        str | None, Field(description="Where to save; by default the output folder next to the server")
     ] = None,
     quality: Annotated[
-        str, Field(description="2k (по умолчанию, 2400x1792), 1k, 4k (нужен тариф), src")
+        str, Field(description="2k (default, 2400x1792), 1k, 4k (needs a paid plan), src")
     ] = "2k",
-    gen_timeout: Annotated[int, Field(description="Ожидание генерации, сек")] = 600,
-    ui_timeout: Annotated[int, Field(description="Ожидание апскейла и загрузки, сек")] = 180,
+    gen_timeout: Annotated[int, Field(description="Waiting for generation, sec")] = 600,
+    ui_timeout: Annotated[int, Field(description="Waiting for upscaling and download, sec")] = 180,
     reference_images: Annotated[
         list[str] | None,
         Field(
-            description="Картинки-референсы: абсолютные пути к файлам, data:-URI "
-            "или http(s)-ссылки. Вставляются в композер Flow (как Ctrl+V) ДО "
-            "генерации; кнопка жмётся только после того, как они догрузились"
+            description="Reference pictures: absolute paths to files, data: URIs "
+            "or http(s) links. They are pasted into the Flow composer (like Ctrl+V) BEFORE "
+            "generation; the button is pressed only once they have finished uploading"
         ),
     ] = None,
     ref_method: Annotated[
         str,
         Field(
-            description="Способ вставки: auto (перебор, по умолчанию), paste, "
-            "clipboard (настоящий Ctrl+V через буфер Windows), drop, upload"
+            description="Paste method: auto (tries each in turn, the default), paste, "
+            "clipboard (a genuine Ctrl+V through the Windows clipboard), drop, upload"
         ),
     ] = "auto",
-    ref_timeout: Annotated[int, Field(description="Ожидание загрузки референса, сек")] = 90,
+    ref_timeout: Annotated[int, Field(description="Waiting for the reference to upload, sec")] = 90,
 ) -> str:
-    """Сгенерировать картинки в Google Flow и скачать их на диск.
+    """Generate pictures in Google Flow and download them to disk.
 
-    ВАЖНО: вызов блокирующий и возвращается ТОЛЬКО после того, как все `count`
-    картинок сгенерированы и файлы сохранены на диск. Типичное время — 1.5-3 минуты
-    на 4 картинки в 2K. Не вызывай повторно, пока предыдущий вызов не вернулся.
+    IMPORTANT: the call blocks and returns ONLY after all `count` pictures have been
+    generated and the files saved to disk. The typical time is 1.5-3 minutes for 4
+    pictures in 2K. Do not call it again while the previous call has not returned.
 
-    Референсы (`reference_images`) — картинки-образцы: они вставляются в поле
-    ввода Flow, скрипт ждёт окончания их загрузки на сайт и только потом жмёт
-    «генерировать». Если референс вставить не удалось, генерация НЕ запускается
-    и возвращается error=reference_upload_failed (квота не тратится).
+    References (`reference_images`) are sample pictures: they get pasted into the Flow
+    input field, the script waits for them to finish uploading to the site and only
+    then presses "generate". If a reference could not be pasted, generation does NOT
+    start and error=reference_upload_failed comes back (no quota is spent).
 
-    Возвращает JSON: ok, downloaded, folder, elapsed_sec, references и список
-    images с полями path, filename, width, height, bytes, upscaled_2k.
-    Если ok=false — смотри поля error и message.
+    Returns JSON: ok, downloaded, folder, elapsed_sec, references and a list of
+    images with the fields path, filename, width, height, bytes, upscaled_2k.
+    If ok=false — look at the error and message fields.
     """
     result = fg.generate_images(
         prompt=prompt,
@@ -150,18 +150,18 @@ def flow_generate(
 def flow_paste_reference(
     reference_images: Annotated[
         list[str],
-        Field(description="Пути к файлам, data:-URI или ссылки на картинки-референсы"),
+        Field(description="Paths to files, data: URIs or links to reference pictures"),
     ],
     ref_method: Annotated[
         str, Field(description="auto | paste | clipboard | drop | upload")
     ] = "auto",
-    ref_timeout: Annotated[int, Field(description="Ожидание загрузки, сек")] = 90,
+    ref_timeout: Annotated[int, Field(description="Waiting for the upload, sec")] = 90,
 ) -> str:
-    """Вставить референсы в композер Flow БЕЗ генерации.
+    """Paste references into the Flow composer WITHOUT generating.
 
-    Нужно, чтобы проверить, что вставка работает, не тратя квоту генераций,
-    либо чтобы подготовить композер, а генерацию запустить отдельно.
-    Возвращает JSON с ok и списком references (метод вставки, ошибки).
+    Useful for checking that pasting works without spending generation quota, or
+    for preparing the composer and starting the generation separately.
+    Returns JSON with ok and a references list (paste method, errors).
     """
     return json.dumps(
         fg.paste_references(
@@ -174,10 +174,10 @@ def flow_paste_reference(
 
 @mcp.tool()
 def flow_list_files(
-    out_dir: Annotated[str | None, Field(description="Папка вывода")] = None,
-    limit: Annotated[int, Field(description="Сколько последних папок показать", ge=1, le=50)] = 10,
+    out_dir: Annotated[str | None, Field(description="Output folder")] = None,
+    limit: Annotated[int, Field(description="How many recent folders to show", ge=1, le=50)] = 10,
 ) -> str:
-    """Показать последние сгенерированные партии картинок и пути к файлам."""
+    """Show the most recent generated batches of pictures and the file paths."""
     root = Path(out_dir) if out_dir else DEFAULT_OUT
     if not root.exists():
         return json.dumps({"folder": str(root), "batches": []}, ensure_ascii=False)

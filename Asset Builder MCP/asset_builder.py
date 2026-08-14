@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 """
-Сборка 2D-ассета устройства: россыпь деталей -> атлас + JSON сборки.
+Building a 2D device asset: a scatter of parts -> atlas + assembly JSON.
 
-Конвейер (шаги 4-7 общего пайплайна):
-  1. extract_parts  — разрезать PNG с прозрачным фоном на отдельные детали
-                      (связные области альфы) и собрать лист-контактку
-                      с НОМЕРАМИ, чтобы агент глазами выбрал нужные.
-  2. pack_atlas     — выбранные детали упаковать в одну текстуру без наложений
-                      и записать device.json с кадрами (frames).
-  3. render_assembly— отрисовать сборку по device.json в PNG, чтобы агент
-                      глазами проверил, ровно ли всё легло, и подвинул.
-  4. package_asset  — сложить готовое: texture.png + device.json + preview.png
-                      + viewer.html в одну папку.
+The pipeline (steps 4-7 of the overall one):
+  1. extract_parts  - cut a PNG with a transparent background into separate
+                      parts (connected alpha areas) and build a contact sheet
+                      with NUMBERS so the agent can pick them out by eye.
+  2. pack_atlas     - pack the chosen parts into one texture without overlaps
+                      and write device.json with the frames.
+  3. render_assembly- render the assembly from device.json into a PNG so the
+                      agent can check by eye how it sits and nudge it.
+  4. package_asset  - put the result together: texture.png + device.json +
+                      preview.png + viewer.html in one folder.
 
-Система координат сборки:
-  canvas [W,H] — холст устройства в пикселях;
-  position [x,y] — ЦЕНТР детали на холсте;
-  size [w,h] — размер отрисовки (можно менять, ассет тянется);
-  rotation — градусы, по часовой;
-  layer — порядок отрисовки, меньше = ниже (0 — самый нижний слой).
+The assembly coordinate system:
+  canvas [W,H] - the device canvas in pixels;
+  position [x,y] - the CENTRE of the part on the canvas;
+  size [w,h] - the drawn size (can be changed, the asset stretches);
+  rotation - degrees, clockwise;
+  layer - draw order, smaller = lower (0 is the bottom layer).
 
-Запуск CLI:
+CLI usage:
   python asset_builder.py extract cut/*.png --out work/parts
   python asset_builder.py pack work/parts/sel.json --out work/atlas --name nokia_3310
   python asset_builder.py render work/atlas/device.json
@@ -61,7 +61,7 @@ _init_stream(sys.stdout)
 
 
 def log(msg: str) -> None:
-    """Лог в stderr: stdout занят протоколом MCP."""
+    """Log to stderr: stdout is taken by the MCP protocol."""
     print(f"[{datetime.now():%H:%M:%S}] {msg}", file=sys.stderr, flush=True)
 
 
@@ -89,7 +89,7 @@ def expand_inputs(items: Iterable[str | Path]) -> list[Path]:
 
 
 # ---------------------------------------------------------------------------
-# Шаг 1: нарезка деталей из картинки с прозрачным фоном
+# Step 1: cutting parts out of a picture with a transparent background
 # ---------------------------------------------------------------------------
 
 
@@ -105,34 +105,34 @@ def extract_parts(
     sheet_cols: int = 8,
     sheet_cell: int = 220,
 ) -> dict:
-    """Разрезать PNG с альфой на отдельные детали.
+    """Cut a PNG with alpha into separate parts.
 
-    Деталь = связная область непрозрачных пикселей. Мелкий мусор отсекается
-    по площади и стороне. Возвращает список деталей и путь к контактке,
-    на которой у каждой детали подписан её индекс — по нему агент выбирает.
+    A part = a connected area of opaque pixels. Small rubbish is filtered out
+    by area and side. Returns the list of parts and the path to the contact
+    sheet, where every part is labelled with its index — the agent picks by it.
 
-    close_gaps — морфологическое замыкание в px: склеивает деталь, которую
-    антиалиасинг разорвал на куски (тонкие шлейфы, пружины).
+    close_gaps — morphological closing in px: glues back a part that
+    antialiasing tore into pieces (thin ribbon cables, springs).
     """
     started = time.time()
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     files = expand_inputs(images)
     if not files:
-        return {"ok": False, "error": "no_input", "message": "Не нашёл входных PNG"}
+        return {"ok": False, "error": "no_input", "message": "No input PNGs found"}
 
     parts: list[dict] = []
     idx = 0
 
     for src in files:
         if not src.is_file():
-            log(f"пропускаю (нет файла): {src}")
+            log(f"skipping (no file): {src}")
             continue
         img = Image.open(src).convert("RGBA")
         arr = np.asarray(img)
         alpha = arr[..., 3]
         if (alpha > alpha_thr).mean() > 0.98:
-            log(f"ВНИМАНИЕ: {src.name} почти непрозрачный — фон не удалён?")
+            log(f"WARNING: {src.name} is almost fully opaque — background not removed?")
 
         mask = alpha > alpha_thr
         if close_gaps > 0:
@@ -142,7 +142,7 @@ def extract_parts(
 
         labels, n = ndimage.label(mask_lbl, structure=np.ones((3, 3), dtype=int))
         if not n:
-            log(f"{src.name}: деталей не нашёл")
+            log(f"{src.name}: no parts found")
             continue
 
         min_area = max(int(min_area_frac * mask.size), 64)
@@ -165,7 +165,7 @@ def extract_parts(
             x1 = min(xs.stop + pad, arr.shape[1])
 
             piece = arr[y0:y1, x0:x1].copy()
-            # чужие детали, попавшие в прямоугольник, гасим по метке
+            # foreign parts that fell inside the rectangle are masked out by label
             own = labels[y0:y1, x0:x1] == i
             piece[..., 3] = np.where(own, piece[..., 3], 0)
 
@@ -187,9 +187,9 @@ def extract_parts(
             )
             found += 1
             if idx >= max_parts:
-                log(f"Достигнут потолок {max_parts} деталей — останавливаюсь")
+                log(f"Hit the ceiling of {max_parts} parts — stopping")
                 break
-        log(f"{src.name}: деталей {found}")
+        log(f"{src.name}: {found} parts")
         if idx >= max_parts:
             break
 
@@ -197,7 +197,7 @@ def extract_parts(
         return {
             "ok": False,
             "error": "no_parts",
-            "message": "Ни одной детали. Фон точно удалён? Понизь min_area_frac/min_side",
+            "message": "Not a single part. Is the background really removed? Lower min_area_frac/min_side",
         }
 
     sheet = out / "contact_sheet.png"
@@ -218,14 +218,14 @@ def extract_parts(
         "elapsed_sec": round(time.time() - started, 2),
         "parts": parts,
         "message": (
-            f"Нарезано {len(parts)} деталей. Посмотри контактку {sheet} — "
-            "на ней у каждой детали подписан индекс, выбирай по индексам."
+            f"Cut {len(parts)} parts. Look at the contact sheet {sheet} — "
+            "every part on it is labelled with an index, pick by index."
         ),
     }
 
 
 def make_contact_sheet(parts: list[dict], path: Path, cols: int = 8, cell: int = 220) -> Path:
-    """Лист с пронумерованными деталями — для выбора глазами."""
+    """A sheet of numbered parts — for picking by eye."""
     rows = (len(parts) + cols - 1) // cols
     label_h = max(22, cell // 8)
     W, H = cols * cell, rows * (cell + label_h)
@@ -235,7 +235,7 @@ def make_contact_sheet(parts: list[dict], path: Path, cols: int = 8, cell: int =
 
     for i, p in enumerate(parts):
         cx, cy = (i % cols) * cell, (i // cols) * (cell + label_h)
-        # шахматка под прозрачностью, чтобы отличать дырки от белого
+        # a checkerboard under the transparency, to tell holes from white
         for by in range(cy, cy + cell, 16):
             for bx in range(cx, cx + cell, 16):
                 if ((bx - cx) // 16 + (by - cy) // 16) % 2 == 0:
@@ -262,29 +262,29 @@ def punch_holes(
     suffix: str = "",
     out_dir: str | Path | None = None,
 ) -> dict:
-    """Пробить сквозные отверстия в детали: белое внутри -> прозрачное.
+    """Punch see-through holes in a part: white inside -> transparent.
 
-    Нужно для корпусов и рамок: вырез под экран, дырки под клавиши, отверстия
-    винтов после удаления фона остаются БЕЛЫМИ (их спасает keep_holes), а в
-    игровом ассете сквозь них должен просвечивать нижний слой.
+    Needed for shells and bezels: the screen cutout, the key holes and the screw
+    holes stay WHITE after background removal (keep_holes saves them), while in
+    a game asset the layer below has to show through them.
 
-    Применять выборочно: у детали вроде белой мембраны или наклейки батареи
-    светлые области — это сама деталь, а не отверстия.
+    Apply selectively: on a part like a white membrane or a battery label the
+    light areas are the part itself, not holes.
 
-    suffix пустой = переписать файл на месте.
+    An empty suffix = overwrite the file in place.
     """
     started = time.time()
     done, skipped = [], []
     for f in expand_inputs(files):
         if not f.is_file():
-            skipped.append({"file": str(f), "why": "нет файла"})
+            skipped.append({"file": str(f), "why": "no file"})
             continue
         arr = np.asarray(Image.open(f).convert("RGBA")).astype(np.float32)
         rgb, alpha = arr[..., :3], arr[..., 3]
         solid = alpha > 8
         white = ((255.0 - rgb).max(axis=2) <= tol) & solid
         if not white.any():
-            skipped.append({"file": str(f), "why": "белых областей внутри нет"})
+            skipped.append({"file": str(f), "why": "no white areas inside"})
             continue
 
         labels, n = ndimage.label(white, structure=np.ones((3, 3), dtype=int))
@@ -292,7 +292,7 @@ def punch_holes(
         keep = np.zeros(n + 1, dtype=bool)
         keep[1:] = sizes >= min_hole_px
         holes = keep[labels]
-        if edge > 0:  # чуть расширяем, чтобы не осталась светлая кайма
+        if edge > 0:  # widen slightly so no light fringe is left
             holes = ndimage.binary_dilation(holes, iterations=int(edge)) & solid
 
         new_alpha = np.where(holes, 0.0, alpha)
@@ -319,27 +319,27 @@ def punch_holes(
         "skipped": skipped,
         "elapsed_sec": round(time.time() - started, 2),
         "message": (
-            f"Отверстия пробиты в {len(done)} деталях"
-            + (f", пропущено {len(skipped)}" if skipped else "")
-            + ". Проверь глазами: не съело ли светлые части самой детали."
+            f"Holes punched in {len(done)} parts"
+            + (f", {len(skipped)} skipped" if skipped else "")
+            + ". Check by eye: make sure light parts of the part itself were not eaten."
         ),
     }
 
 
 # ---------------------------------------------------------------------------
-# Шаг 2: упаковка выбранных деталей в атлас
+# Step 2: packing the chosen parts into an atlas
 # ---------------------------------------------------------------------------
 
 
 def shelf_pack(sizes: list[tuple[int, int]], padding: int, max_width: int) -> tuple[list[tuple[int, int]], int, int]:
-    """Полочная упаковка: детали по убыванию высоты кладутся рядами.
+    """Shelf packing: parts are laid in rows by decreasing height.
 
-    Простая и предсказуемая: коллайдеры-прямоугольники гарантированно
-    не пересекаются, между ними всегда `padding` пустых пикселей.
+    Simple and predictable: the rectangle colliders are guaranteed not to
+    overlap, and there are always `padding` empty pixels between them.
     """
     order = sorted(range(len(sizes)), key=lambda i: -sizes[i][1])
-    # Ширину подбираем под суммарную площадь, чтобы атлас вышел примерно
-    # квадратным, а не полосой в одну деталь.
+    # The width is chosen from the total area so the atlas comes out roughly
+    # square rather than a strip one part wide.
     total_area = sum(w * h for w, h in sizes)
     target = int((total_area ** 0.5) * 1.15) + padding * 2
     width = min(max(max((w for w, _ in sizes), default=1) + padding * 2, target), max_width)
@@ -377,13 +377,13 @@ def pack_atlas(
     canvas: list[int] | None = None,
     texture_name: str = "texture.png",
 ) -> dict:
-    """Упаковать детали в одну текстуру и создать device.json.
+    """Pack the parts into one texture and create device.json.
 
-    `parts` — список либо путей к PNG, либо словарей:
+    `parts` — a list of either PNG paths or dicts:
       {"file": "...png", "id": "back_cover", "name": "Back Cover",
        "layer": 0, "position": [x,y], "size": [w,h], "rotation": 0}
-    Незаданные поля проставляются по умолчанию: layer = порядок в списке,
-    position = центр холста, size = натуральный размер детали.
+    Unset fields get defaults: layer = order in the list,
+    position = canvas centre, size = the natural size of the part.
     """
     started = time.time()
     out = Path(out_dir)
@@ -395,11 +395,11 @@ def pack_atlas(
             item = {"file": str(item)}
         f = Path(item["file"])
         if not f.is_file():
-            return {"ok": False, "error": "not_found", "message": f"Нет файла детали: {f}"}
+            return {"ok": False, "error": "not_found", "message": f"No part file: {f}"}
         spec.append({**item, "file": f})
 
     if not spec:
-        return {"ok": False, "error": "empty", "message": "Пустой список деталей"}
+        return {"ok": False, "error": "empty", "message": "Empty part list"}
 
     images = [Image.open(s["file"]).convert("RGBA") for s in spec]
     sizes = [(im.width, im.height) for im in images]
@@ -433,11 +433,11 @@ def pack_atlas(
             {
                 "id": pid,
                 "name": s.get("name") or pid.replace("_", " ").title(),
-                # общая классификация детали, единая для всех устройств:
-                # список типов и правила выбора — в ТИПЫ_ДЕТАЛЕЙ.md в корне
+                # the shared part classification, the same across all devices:
+                # the list of types and the rules are in PART_TYPES.md in the root
                 "type": slug(s.get("type") or "misc"),
                 "frame": {"x": int(x), "y": int(y), "w": int(w), "h": int(h)},
-                # четыре угла кадра в текстуре: по часовой от левого верхнего
+                # the four corners of the frame in the texture: clockwise from top-left
                 "corners": [
                     [int(x), int(y)],
                     [int(x + w), int(y)],
@@ -484,14 +484,14 @@ def pack_atlas(
         "elapsed_sec": round(time.time() - started, 2),
         "parts": [{"id": p["id"], "frame": p["frame"], "layer": p["layer"]} for p in parts_json],
         "message": (
-            f"Атлас {atlas_w}x{atlas_h}, деталей {len(parts_json)}. "
-            "Дальше: правь position/size/rotation/layer в device.json и зови render_assembly."
+            f"Atlas {atlas_w}x{atlas_h}, {len(parts_json)} parts. "
+            "Next: fix position/size/rotation/layer in device.json and call render_assembly."
         ),
     }
 
 
 # ---------------------------------------------------------------------------
-# Шаг 3: отрисовка сборки для визуальной проверки
+# Step 3: rendering the assembly for a visual check
 # ---------------------------------------------------------------------------
 
 
@@ -523,12 +523,12 @@ def render_assembly(
     explode_step: int = 60,
     only_layers: list[int] | None = None,
 ) -> dict:
-    """Отрисовать сборку по device.json.
+    """Render the assembly from device.json.
 
     mode:
-      flat     — как выглядит собранное устройство (то, что нужно проверять);
-      exploded — детали разнесены по диагонали, видно порядок слоёв;
-      grid     — каждая деталь отдельно с подписью id (проверка нарезки).
+      flat     — what the assembled device looks like (this is what to check);
+      exploded — parts spread out along a diagonal, the layer order is visible;
+      grid     — every part separately with its id (a check of the extraction).
     background: checker | white | black | transparent
     """
     started = time.time()
@@ -538,7 +538,7 @@ def render_assembly(
     if only_layers:
         parts = [p for p in parts if p["layer"] in only_layers]
     if not parts:
-        return {"ok": False, "error": "empty", "message": "Нет деталей для отрисовки"}
+        return {"ok": False, "error": "empty", "message": "No parts to render"}
 
     cw, ch = data.get("canvas", [1024, 1024])
 
@@ -602,16 +602,16 @@ def render_assembly(
         "layers": [{"layer": p["layer"], "id": p["id"], "position": p["position"],
                     "size": p["size"], "rotation": p["rotation"]} for p in parts],
         "elapsed_sec": round(time.time() - started, 2),
-        "message": f"Превью сохранено: {dst}. Открой его глазами и проверь стыковку.",
+        "message": f"Preview saved: {dst}. Open it with your eyes and check the fit.",
     }
 
 
 def update_parts(json_path: str | Path, updates: list[dict]) -> dict:
-    """Точечно поправить детали в device.json.
+    """Fix individual parts in device.json.
 
     updates: [{"id":"battery","position":[x,y],"size":[w,h],"rotation":0,
                "layer":2,"scale":1.0,"name":"Battery","type":"battery"}]
-    Передавай только те поля, что меняешь. dx/dy сдвигают позицию относительно.
+    Pass only the fields you are changing. dx/dy shift the position relatively.
     """
     data, _ = load_device(json_path)
     by_id = {p["id"]: p for p in data["parts"]}
@@ -647,13 +647,13 @@ def update_parts(json_path: str | Path, updates: list[dict]) -> dict:
         "changed": changed,
         "missing": missing,
         "json": str(json_path),
-        "message": (f"Обновлено {len(changed)} деталей"
-                    + (f"; не найдены id: {missing}" if missing else "")),
+        "message": (f"Updated {len(changed)} parts"
+                    + (f"; ids not found: {missing}" if missing else "")),
     }
 
 
 # ---------------------------------------------------------------------------
-# Шаг 4: упаковка результата
+# Step 4: packaging the result
 # ---------------------------------------------------------------------------
 
 
@@ -666,21 +666,21 @@ def build_standalone_viewer(
     out_html: str | Path | None = None,
     viewer_src: str | Path | None = None,
 ) -> dict:
-    """Собрать HTML, в который вшиты и device.json, и текстура (base64).
+    """Build an HTML with both device.json and the texture baked in (base64).
 
-    Нужен, потому что страница, открытая по file://, не может прочитать
-    соседние файлы: браузер режет fetch/XHR к локальным путям. Поэтому ассет
-    кладём внутрь самой страницы — файл открывается двойным кликом и сразу
-    показывает сборку, ничего перетаскивать не надо.
+    Needed because a page opened over file:// cannot read the files next to it:
+    the browser blocks fetch/XHR to local paths. So the asset goes inside the
+    page itself — the file opens on a double click and shows the assembly right
+    away, nothing has to be dragged in.
     """
     src = Path(viewer_src) if viewer_src else VIEWER_SRC
     if not src.is_file():
-        return {"ok": False, "error": "no_viewer", "message": f"Нет шаблона вьювера: {src}"}
+        return {"ok": False, "error": "no_viewer", "message": f"No viewer template: {src}"}
 
     data, root = load_device(json_path)
     tex_file = root / data["texture"]
     if not tex_file.is_file():
-        return {"ok": False, "error": "no_texture", "message": f"Нет текстуры: {tex_file}"}
+        return {"ok": False, "error": "no_texture", "message": f"No texture: {tex_file}"}
 
     html = src.read_text(encoding="utf-8")
     start = html.find(PAYLOAD_OPEN)
@@ -688,7 +688,7 @@ def build_standalone_viewer(
         return {
             "ok": False,
             "error": "no_slot",
-            "message": "В шаблоне вьювера нет тега <script id=\"asset-payload\">",
+            "message": "The viewer template has no <script id=\"asset-payload\"> tag",
         }
     end = html.find(PAYLOAD_CLOSE, start)
 
@@ -697,17 +697,17 @@ def build_standalone_viewer(
     payload = {
         "device": data,
         "texture": "data:image/png;base64," + base64.b64encode(tex_file.read_bytes()).decode(),
-        # откуда взят ассет: кнопка «Сохранить» во вьювере пишет правки обратно
-        # ровно сюда — через локальный сервер панели, без окна проводника
+        # where the asset came from: the viewer's "Save" button writes edits back
+        # exactly here — through the local panel server, with no explorer dialog
         "json_path": str(Path(json_path).resolve()),
     }
-    # ensure_ascii=True не нужен, но '<' внутри строки сломал бы разбор тега
+    # ensure_ascii=True is not needed, but a '<' inside the string would break tag parsing
     blob = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
 
     out = (
         Path(out_html)
         if out_html
-        else root / f"ОТКРЫТЬ_{slug(data.get('device', 'device'))}.html"
+        else root / f"OPEN_{slug(data.get('device', 'device'))}.html"
     )
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
@@ -719,7 +719,7 @@ def build_standalone_viewer(
         "file": str(out),
         "bytes": out.stat().st_size,
         "part_count": len(data["parts"]),
-        "message": f"Готово: {out.name} — открывается двойным кликом, ассет уже внутри",
+        "message": f"Done: {out.name} — opens on a double click, the asset is already inside",
     }
 
 
@@ -729,7 +729,7 @@ def package_asset(
     with_viewer: bool = True,
     previews: bool = True,
 ) -> dict:
-    """Сложить готовый ассет в отдельную папку: текстура + json + превью + вьювер."""
+    """Put the finished asset in its own folder: texture + json + preview + viewer."""
     data, root = load_device(json_path)
     dst = Path(out_dir)
     dst.mkdir(parents=True, exist_ok=True)
@@ -750,12 +750,12 @@ def package_asset(
     if with_viewer and VIEWER_SRC.is_file():
         shutil.copy2(VIEWER_SRC, dst / "viewer.html")
         viewer = str(dst / "viewer.html")
-        name = f"ОТКРЫТЬ_{slug(data.get('device', 'device'))}.html"
+        name = f"OPEN_{slug(data.get('device', 'device'))}.html"
         res = build_standalone_viewer(dst / "device.json", dst / name)
         if res["ok"]:
             standalone = res["file"]
         else:
-            log(f"Самодостаточный вьювер не собрался: {res['message']}")
+            log(f"The self-contained viewer did not build: {res['message']}")
 
     return {
         "ok": True,
@@ -767,16 +767,16 @@ def package_asset(
         "open_file": standalone,
         "part_count": len(data["parts"]),
         "message": (
-            f"Ассет собран в {dst}. Двойной клик по {Path(standalone).name} — "
-            "страница откроется с уже вшитым ассетом, перетаскивать ничего не надо."
+            f"Asset assembled in {dst}. Double-click {Path(standalone).name} — "
+            "the page opens with the asset already baked in, nothing to drag."
             if standalone
-            else f"Ассет собран в {dst}."
+            else f"Asset assembled in {dst}."
         ),
     }
 
 
 def validate_device(json_path: str | Path) -> dict:
-    """Проверить device.json: дубли слоёв, вылеты за холст, дубли id, пустые кадры."""
+    """Check device.json: duplicate layers, strays off canvas, duplicate ids, empty frames."""
     data, root = load_device(json_path)
     problems: list[str] = []
     cw, ch = data.get("canvas", [0, 0])
@@ -785,30 +785,30 @@ def validate_device(json_path: str | Path) -> dict:
     ids = [p["id"] for p in data["parts"]]
     dupes = {i for i in ids if ids.count(i) > 1}
     if dupes:
-        problems.append(f"дубли id: {sorted(dupes)}")
+        problems.append(f"duplicate ids: {sorted(dupes)}")
 
     layers = [p["layer"] for p in data["parts"]]
     same = {l for l in layers if layers.count(l) > 1}
     if same:
-        problems.append(f"на одном слое несколько деталей: {sorted(same)}")
+        problems.append(f"several parts on one layer: {sorted(same)}")
 
     for p in data["parts"]:
         f = p["frame"]
         if f["x"] < 0 or f["y"] < 0 or f["x"] + f["w"] > tw or f["y"] + f["h"] > th:
-            problems.append(f"{p['id']}: кадр вне текстуры")
+            problems.append(f"{p['id']}: frame outside the texture")
         w, h = p["size"][0] * p.get("scale", 1), p["size"][1] * p.get("scale", 1)
         x0, y0 = p["position"][0] - w / 2, p["position"][1] - h / 2
         if x0 < -w or y0 < -h or x0 + w > cw + w or y0 + h > ch + h:
-            problems.append(f"{p['id']}: деталь далеко за холстом")
+            problems.append(f"{p['id']}: part far off canvas")
 
-    # пересечения кадров в атласе — упаковка не должна их допускать
+    # overlapping frames in the atlas — packing must not allow them
     boxes = [(p["id"], p["frame"]) for p in data["parts"]]
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i][1], boxes[j][1]
             if (a["x"] < b["x"] + b["w"] and b["x"] < a["x"] + a["w"]
                     and a["y"] < b["y"] + b["h"] and b["y"] < a["y"] + a["h"]):
-                problems.append(f"кадры пересекаются в атласе: {boxes[i][0]} / {boxes[j][0]}")
+                problems.append(f"frames overlap in the atlas: {boxes[i][0]} / {boxes[j][0]}")
 
     return {
         "ok": not problems,
@@ -816,7 +816,7 @@ def validate_device(json_path: str | Path) -> dict:
         "part_count": len(data["parts"]),
         "canvas": data.get("canvas"),
         "texture_size": data.get("texture_size"),
-        "message": "Всё чисто" if not problems else f"Нашлось проблем: {len(problems)}",
+        "message": "All clean" if not problems else f"Problems found: {len(problems)}",
     }
 
 
@@ -826,10 +826,10 @@ def validate_device(json_path: str | Path) -> dict:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Сборка 2D-ассета устройства: атлас + JSON")
+    ap = argparse.ArgumentParser(description="Building a 2D device asset: atlas + JSON")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    e = sub.add_parser("extract", help="Нарезать детали из PNG с прозрачным фоном")
+    e = sub.add_parser("extract", help="Cut parts out of a PNG with a transparent background")
     e.add_argument("images", nargs="+")
     e.add_argument("--out", required=True)
     e.add_argument("--alpha-thr", type=int, default=40)
@@ -837,20 +837,20 @@ def main() -> int:
     e.add_argument("--min-side", type=int, default=14)
     e.add_argument("--close-gaps", type=int, default=2)
 
-    h = sub.add_parser("punch", help="Пробить белые внутренние области в прозрачные")
+    h = sub.add_parser("punch", help="Punch white inner areas through to transparent")
     h.add_argument("files", nargs="+")
     h.add_argument("--tol", type=float, default=42.0)
     h.add_argument("--min-hole-px", type=int, default=24)
-    h.add_argument("--suffix", default="", help="Пусто = переписать на месте")
-    h.add_argument("--out", help="Папка вывода")
+    h.add_argument("--suffix", default="", help="Empty = overwrite in place")
+    h.add_argument("--out", help="Output folder")
 
-    p = sub.add_parser("pack", help="Упаковать детали в атлас (JSON-список или файлы)")
-    p.add_argument("parts", nargs="+", help="PNG-файлы или JSON со списком деталей")
+    p = sub.add_parser("pack", help="Pack parts into an atlas (JSON list or files)")
+    p.add_argument("parts", nargs="+", help="PNG files or a JSON with the part list")
     p.add_argument("--out", required=True)
     p.add_argument("--name", default="device")
     p.add_argument("--padding", type=int, default=6)
 
-    r = sub.add_parser("render", help="Отрисовать сборку по device.json")
+    r = sub.add_parser("render", help="Render the assembly from device.json")
     r.add_argument("json")
     r.add_argument("--out")
     r.add_argument("--mode", choices=["flat", "exploded", "grid"], default="flat")
@@ -858,16 +858,16 @@ def main() -> int:
                    default="checker")
     r.add_argument("--labels", action="store_true")
 
-    k = sub.add_parser("package", help="Сложить готовый ассет в папку")
+    k = sub.add_parser("package", help="Put the finished asset in a folder")
     k.add_argument("json")
     k.add_argument("--out", required=True)
 
-    v = sub.add_parser("validate", help="Проверить device.json")
+    v = sub.add_parser("validate", help="Check device.json")
     v.add_argument("json")
 
-    s = sub.add_parser("viewer", help="Собрать HTML с вшитым ассетом (двойной клик)")
+    s = sub.add_parser("viewer", help="Build an HTML with the asset baked in (double click)")
     s.add_argument("json")
-    s.add_argument("--out", help="Путь к html; по умолчанию рядом с device.json")
+    s.add_argument("--out", help="Path to the html; next to device.json by default")
 
     args = ap.parse_args()
 
@@ -892,7 +892,7 @@ def main() -> int:
         res = package_asset(args.json, args.out)
     elif args.cmd == "viewer":
         data, root = load_device(args.json)
-        out = args.out or (root / f"ОТКРЫТЬ_{slug(data.get('device', 'device'))}.html")
+        out = args.out or (root / f"OPEN_{slug(data.get('device', 'device'))}.html")
         res = build_standalone_viewer(args.json, out)
     else:
         res = validate_device(args.json)

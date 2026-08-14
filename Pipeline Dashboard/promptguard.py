@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Сторож промтов: flow_generate обязан получать текст из Promts/*.txt.
+"""Prompt guard: flow_generate must be given text straight from Prompts/*.txt.
 
-Промты пользователь правит руками, и правит часто. Агент, который держит их
-в контексте с прошлого раза, легко отправит устаревшую копию — визуально
-разницы не видно, а генерация уже потрачена. Поэтому проверку делает не
-инструкция в скилле, а хук: текст сверяется с файлами на диске, и при
-расхождении вызов уходит на подтверждение пользователю.
+The user edits these prompts by hand, and edits them often. An agent holding
+them in context from last time will happily send a stale copy — there is nothing
+to see, and the generation is already spent. So the check is a hook rather than
+an instruction in a skill: the text is compared against the files on disk, and
+on a mismatch the call goes to the user for confirmation.
 
-Подключается на PreToolUse с matcher mcp__flow-images__flow_generate.
-Сравнение по «сжатым» пробелам: перенос строки или лишний отступ не считается
-расхождением, изменение слов — считается.
+Wired to PreToolUse with matcher mcp__flow-images__flow_generate.
+Comparison runs on collapsed whitespace: a line break or extra indent is not a
+mismatch, changed words are.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-PROMPTS_DIR = Path(__file__).resolve().parent.parent / "Promts"
+PROMPTS_DIR = Path(__file__).resolve().parent.parent / "Prompts"
 
 
 def norm(text: str) -> str:
@@ -40,24 +40,24 @@ def known_prompts() -> dict[str, str]:
 def verdict(prompt: str) -> dict:
     files = known_prompts()
     if not files:
-        return {}  # промтов нет — не мешаем
+        return {}  # no prompts on disk — stay out of the way
 
     text = norm(prompt)
     for name, body in files.items():
         if text == body:
-            return {}  # точное совпадение с файлом, всё честно
+            return {}  # exact match with a file, all honest
 
-    # ближайший файл — чтобы в причине было видно, от чего именно отклонились
+    # nearest file — so the reason says what exactly it drifted from
     def overlap(body: str) -> float:
         a, b = set(text.split()), set(body.split())
         return len(a & b) / max(len(a | b), 1)
 
     near, score = max(((n, overlap(b)) for n, b in files.items()), key=lambda kv: kv[1])
     reason = (
-        f"Промт не совпадает с файлами в Promts/ (ближайший — «{near}», "
-        f"совпадение {score * 100:.0f}%). Промты пользователь правит руками: "
-        f"прочитай нужный файл через Read и отправь его текст дословно, "
-        f"а не по памяти. Разрешай только если промт менялся осознанно."
+        f"Prompt does not match any file in Prompts/ (nearest is \"{near}\", "
+        f"{score * 100:.0f}% overlap). The user edits these prompts by hand: "
+        f"read the right file with Read and send its text verbatim rather than "
+        f"from memory. Allow only if the prompt was changed on purpose."
     )
     return {
         "hookSpecificOutput": {
@@ -89,4 +89,4 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except Exception:
-        sys.exit(0)  # сторож не должен ломать работу
+        sys.exit(0)  # the guard must never break the run

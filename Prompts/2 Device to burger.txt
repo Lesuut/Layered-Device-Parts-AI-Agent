@@ -1,0 +1,21 @@
+Create a detailed isometric exploded-view technical illustration of the device shown in the reference photo. Disassemble the device into all its individual components (outer shell/body panels, screen, display module, buttons/keypad, internal circuit board (PCB) with visible chips and connectors, battery, connectors, small internal parts like speakers, antennas, flex cables, screws, back cover, camera module if present) and arrange them floating in vertical exploded/stacked order, spaced apart along a diagonal axis, as if levitating above one another in the exact order they would be assembled.
+
+Style requirements:
+
+Clean technical illustration / blueprint style, isometric 3/4 perspective
+Line-art with soft shading and flat color fill, engineering/teardown diagram aesthetic (like iFixit teardown or patent illustration style)
+White or very light neutral background
+Realistic proportions and correct relative scale between parts
+Show internal details of the PCB (chips, connectors, solder pads) with fine linework
+Small hardware elements such as screws, springs, flex cables and SIM/battery contacts should be rendered individually and accurately
+Soft drop shadow beneath each part for depth
+
+Strictly exclude:
+
+No text labels, no captions, no titles
+No numbers or numbering
+No leader lines / dotted connector lines
+No callouts or legends
+No watermarks or logos added artificially
+
+The final image should look like a pure exploded parts diagram with zero annotations — components only, clearly separated and recognizable by shape and position alone.

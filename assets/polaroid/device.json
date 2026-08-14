@@ -14,7 +14,7 @@
   "parts": [
     {
       "id": "back_cover",
-      "name": "Задняя крышка",
+      "name": "Back Cover",
       "type": "housing_rear",
       "frame": {
         "x": 657,
@@ -65,7 +65,7 @@
     },
     {
       "id": "film_chamber",
-      "name": "Отсек кассеты",
+      "name": "Film Compartment",
       "type": "housing_part",
       "frame": {
         "x": 629,
@@ -116,7 +116,7 @@
     },
     {
       "id": "chassis",
-      "name": "Корпус-шасси",
+      "name": "Body Chassis",
       "type": "chassis",
       "frame": {
         "x": 3,
@@ -167,7 +167,7 @@
     },
     {
       "id": "main_pcb",
-      "name": "Плата",
+      "name": "Main Board",
       "type": "circuit_board",
       "frame": {
         "x": 884,
@@ -218,7 +218,7 @@
     },
     {
       "id": "lens",
-      "name": "Объектив",
+      "name": "Lens",
       "type": "optics",
       "frame": {
         "x": 3,
@@ -269,7 +269,7 @@
     },
     {
       "id": "viewfinder",
-      "name": "Видоискатель",
+      "name": "Viewfinder",
       "type": "optics",
       "frame": {
         "x": 753,
@@ -320,7 +320,7 @@
     },
     {
       "id": "front_shell",
-      "name": "Передняя панель",
+      "name": "Front Shell",
       "type": "housing_front",
       "frame": {
         "x": 3,
@@ -371,7 +371,7 @@
     },
     {
       "id": "eject_panel",
-      "name": "Нижняя панель со слотом",
+      "name": "Bottom Panel with Slot",
       "type": "housing_part",
       "frame": {
         "x": 3,
@@ -422,7 +422,7 @@
     },
     {
       "id": "shutter_button",
-      "name": "Кнопка спуска",
+      "name": "Shutter Button",
       "type": "button",
       "frame": {
         "x": 624,
@@ -473,7 +473,7 @@
     },
     {
       "id": "flash_cover",
-      "name": "Крышка со вспышкой",
+      "name": "Flash Lid",
       "type": "housing_part",
       "frame": {
         "x": 308,

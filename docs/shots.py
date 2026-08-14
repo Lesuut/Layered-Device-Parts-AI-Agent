@@ -1,14 +1,14 @@
-"""Скриншоты интерфейсов для README: вьювер целиком и панель прогресса.
+"""Interface screenshots for the README: the whole viewer and the progress panel.
 
-Отдельно от make_gif.py: там снимается сцена со сборкой без обвязки, тут
-наоборот — нужна вся обвязка, кнопки и список деталей, ради этого всё и есть.
+Kept apart from make_gif.py: there the scene is shot with the assembly and no
+chrome, here it is the other way round — the chrome, the buttons and the parts list are the whole point.
 
-    py docs/shots.py                       вьювер (nokia_3310) + панель
+    py docs/shots.py                       viewer (nokia_3310) + panel
     py docs/shots.py --device gameboy_advance
     py docs/shots.py --skip-dashboard
 
-Панель снимается с живого сервера: подними её заранее
-`py "Pipeline Dashboard/server.py" --ensure`, иначе шаг пропустится.
+The panel is shot off a live server: bring it up beforehand with
+`py "Pipeline Dashboard/server.py" --ensure`, otherwise the step is skipped.
 """
 
 from __future__ import annotations
@@ -32,14 +32,14 @@ DASHBOARD_URL = "http://127.0.0.1:7788/"
 
 
 def shoot_viewer(browser, device: str, width: int, height: int) -> None:
-    """Вьювер как его видит человек: шапка, сцена, схема, список деталей."""
+    """The viewer as a human sees it: header, scene, schema, parts list."""
     json_path = ROOT / "assets" / device / "device.json"
     if not json_path.is_file():
-        log(f"[!!] нет {json_path}")
+        log(f"[!!] no {json_path}")
         return
     tmp = Path(tempfile.mkdtemp(prefix="devshot_")) / f"{device}.html"
     if not build_standalone_viewer(json_path, out_html=tmp).get("ok"):
-        log("[!!] не собрал страницу вьювера")
+        log("[!!] could not build the viewer page")
         return
 
     page = browser.new_page(
@@ -49,23 +49,23 @@ def shoot_viewer(browser, device: str, width: int, height: int) -> None:
         page.goto(tmp.as_uri())
         page.wait_for_function("() => window.__capture && window.__capture.ready()", timeout=20000)
         page.check("#schemaChk")
-        page.click("#toggleList")          # правая колонка со списком деталей
+        page.click("#toggleList")          # the right-hand column with the parts list
         page.evaluate("() => window.__capture.pose(46, -22, 0.45, 1.05, 62)")
-        page.wait_for_timeout(700)         # выноски доезжают до своих мест
+        page.wait_for_timeout(700)         # the callouts reach their places
         img = Image.open(io.BytesIO(page.screenshot())).convert("RGB")
     finally:
         page.close()
 
     out = MEDIA / "viewer.png"
     img.resize((width, height), Image.LANCZOS).save(out, optimize=True)
-    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} КБ")
+    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} KB")
 
 
 def shoot_dashboard(browser, width: int, height: int) -> None:
     try:
         urllib.request.urlopen(DASHBOARD_URL, timeout=2).read(1)
     except Exception as exc:
-        log(f"[..] панель не отвечает ({exc}), пропускаю — подними её и запусти снова")
+        log(f"[..] the panel is not answering ({exc}), skipping — bring it up and run again")
         return
 
     page = browser.new_page(
@@ -73,25 +73,25 @@ def shoot_dashboard(browser, width: int, height: int) -> None:
     )
     try:
         page.goto(DASHBOARD_URL)
-        page.wait_for_timeout(2500)        # страница опрашивает /api/state раз в 700 мс
+        page.wait_for_timeout(2500)        # the page polls /api/state every 700 ms
         img = Image.open(io.BytesIO(page.screenshot())).convert("RGB")
     finally:
         page.close()
 
     out = MEDIA / "dashboard.png"
     img.resize((width, height), Image.LANCZOS).save(out, optimize=True)
-    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} КБ")
+    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} KB")
 
 
 def shoot_atlas(device: str, width: int) -> None:
-    """Атлас деталей на непрозрачном фоне.
+    """The parts atlas on an opaque background.
 
-    texture.png лежит в репозитории, но он прозрачный: на тёмной теме GitHub
-    тёмный корпус на нём пропадает. Для README нужна подложка.
+    texture.png is in the repository, but it is transparent: on GitHub's dark
+    theme a dark shell disappears on it. The README needs a backing.
     """
     tex = ROOT / "assets" / device / "texture.png"
     if not tex.is_file():
-        log(f"[!!] нет {tex}")
+        log(f"[!!] no {tex}")
         return
     src = Image.open(tex).convert("RGBA")
     scale = width / src.width
@@ -100,11 +100,11 @@ def shoot_atlas(device: str, width: int) -> None:
     plate.paste(src, (0, 0), src)
     out = MEDIA / "atlas.png"
     plate.save(out, optimize=True)
-    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} КБ")
+    log(f"[ok] {out.name} — {out.stat().st_size / 1024:.0f} KB")
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="скриншоты интерфейсов для README")
+    ap = argparse.ArgumentParser(description="interface screenshots for the README")
     ap.add_argument("--device", default="nokia_3310")
     ap.add_argument("--width", type=int, default=1180)
     ap.add_argument("--height", type=int, default=720)

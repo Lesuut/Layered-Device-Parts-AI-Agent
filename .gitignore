@@ -17,9 +17,9 @@ desktop.ini
 .DS_Store
 *.stackdump
 
-# Промежуточные файлы конвейера — сотни МБ, пересобираются из исходников.
-# Готовые ассеты лежат в assets/ и трекаются.
+# Pipeline intermediates — hundreds of MB, rebuildable from the sources.
+# Finished assets live in assets/ and are tracked.
 work/
 
-# Лента событий панели — своя на каждую сессию
+# Dashboard event feed — one per session
 Pipeline Dashboard/state/

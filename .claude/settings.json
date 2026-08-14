@@ -7,7 +7,7 @@
             "type": "command",
             "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\hook.py\" session-start",
             "timeout": 25,
-            "statusMessage": "Открываю панель конвейера"
+            "statusMessage": "Opening the pipeline dashboard"
           }
         ]
       }
@@ -20,7 +20,7 @@
             "type": "command",
             "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Pipeline Dashboard\\promptguard.py\"",
             "timeout": 10,
-            "statusMessage": "Сверяю промт с Promts/"
+            "statusMessage": "Checking the prompt against Prompts/"
           }
         ]
       },
@@ -42,10 +42,10 @@
         "hooks": [
           {
             "type": "command",
-            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Библиотека деталей\\library.py\" hook",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Parts Library\\library.py\" hook",
             "timeout": 60,
             "async": true,
-            "statusMessage": "Складываю детали в библиотеку"
+            "statusMessage": "Filing parts into the library"
           }
         ]
       },

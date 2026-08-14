@@ -1,50 +1,52 @@
 ---
 name: bg-remove
-description: Локальное удаление фона у картинок через MCP-сервер bg-remover. Используй, когда просят убрать/вырезать фон, сделать прозрачный PNG, «вырежи объект», «убери белый фон», подготовить ассет с альфа-каналом, или когда нужно почистить фон у только что сгенерированных картинок (например из Google Flow). Работает офлайн, отдаёт готовые PNG с прозрачностью на диске.
+description: Local background removal for images through the bg-remover MCP server. Use it when asked to remove/cut out a background, make a transparent PNG, "cut out the object", "get rid of the white background", prepare an asset with an alpha channel, or when the background has to be cleaned off freshly generated pictures (from Google Flow, for instance). Works offline and writes finished PNGs with transparency to disk.
 ---
 
-# Удаление фона локально
+# Background removal, locally
 
-MCP-сервер `bg-remover` режет фон на машине пользователя и сохраняет PNG
-с альфа-каналом. Интернет не нужен (кроме первой загрузки ИИ-модели).
+The `bg-remover` MCP server cuts the background on the user's machine and saves
+PNGs with an alpha channel. No internet needed (except the first download of the
+AI model).
 
-## Инструменты
+## Tools
 
-| Инструмент | Назначение |
+| Tool | Purpose |
 |---|---|
-| `bg_check` | Что доступно: библиотеки, ИИ-движок, скачанные модели |
-| `bg_remove` | Основной: файлы/папка/маска → PNG с прозрачностью |
-| `bg_inspect` | Карта непробитых белых дыр с номерами — **смотреть глазами** |
-| `bg_punch` | Выбить белое по номерам/точкам, которые выбрал глаз |
-| `bg_shrink` | Срезать N px по всей границе — убрать белую кайму |
-| `bg_install_ai` | Доставить rembg+onnxruntime. **Только по согласию пользователя** |
+| `bg_check` | What is available: libraries, AI engine, downloaded models |
+| `bg_remove` | The main one: files/folder/mask → PNG with transparency |
+| `bg_inspect` | Map of unpunched white holes with numbers — **look at it with your eyes** |
+| `bg_punch` | Knock out white by the numbers/points your eye picked |
+| `bg_shrink` | Cut N px off the whole boundary — remove the white fringe |
+| `bg_install_ai` | Install rembg+onnxruntime. **Only with the user's consent** |
 
-Полный цикл для ассета:
+The full cycle for an asset:
 
 ```
-bg_remove → bg_inspect → [посмотреть map_png] → bg_punch(ids=[...]) → bg_shrink(px=2)
+bg_remove → bg_inspect → [look at map_png] → bg_punch(ids=[...]) → bg_shrink(px=2)
 ```
 
-Быстрый черновик — только `bg_remove` (можно сразу с `shrink: 2`).
+A quick draft — just `bg_remove` (with `shrink: 2` right away if you like).
 
-## Два движка
+## Two engines
 
-| Метод | Когда | Скорость | Требует |
+| Method | When | Speed | Requires |
 |---|---|---|---|
-| `white` | фон белый/студийный, генерации, товарка на белом | ~1.5–2 с на 2400×1792 | ничего сверх pillow/numpy/scipy |
-| `ai` | любой фон: фото, улица, интерьер, сложный объект | 5–15 с на CPU | `rembg` + `onnxruntime` |
-| `auto` | **по умолчанию**: смотрит рамку кадра, белая → `white`, иначе → `ai` | — | — |
+| `white` | white/studio background, generations, product shots on white | ~1.5–2 s for 2400×1792 | nothing beyond pillow/numpy/scipy |
+| `ai` | any background: photo, street, interior, complex object | 5–15 s on CPU | `rembg` + `onnxruntime` |
+| `auto` | **the default**: looks at the frame border, white → `white`, otherwise → `ai` | — | — |
 
-Если фон не белый, а ИИ не установлен, `auto` не падает: режет как белый
-и пишет предупреждение в `notes`. Тогда предложи пользователю `bg_install_ai`.
+If the background is not white and the AI is not installed, `auto` does not
+fail: it cuts as if white and writes a warning into `notes`. In that case offer
+the user `bg_install_ai`.
 
-## Порядок работы
+## Order of work
 
-1. Первый раз в сессии — `bg_check` (узнать, есть ли `ai`).
-2. `bg_remove` со списком абсолютных путей.
-3. Проверить `opaque_share` у каждого результата и `notes`.
+1. First time in a session — `bg_check` (to find out whether `ai` is there).
+2. `bg_remove` with a list of absolute paths.
+3. Check `opaque_share` on every result, and `notes`.
 
-## Что на выходе
+## What comes out
 
 ```json
 {
@@ -58,79 +60,87 @@ bg_remove → bg_inspect → [посмотреть map_png] → bg_punch(ids=[..
 }
 ```
 
-Как читать результат:
+How to read the result:
 
-- `opaque_share` — доля непрозрачных пикселей. Здоровые значения примерно
-  0.05–0.8. Ориентир, а не приговор: у раскладки на весь кадр честные ~0.5.
-- `opaque_share > 0.99` → фон не нашёлся. Подними `tol_bg` (14–25) либо
-  переключись на `method: "ai"`.
-- `opaque_share < 0.01` → вырезалось почти всё. Опусти `tol_bg` (6–8).
-- `notes` — предупреждения, показывай их пользователю.
-- `error: "ai_unavailable"` → ИИ не установлен, предложи `bg_install_ai`
-  или `method: "white"`.
+- `opaque_share` — the share of non-transparent pixels. Healthy values are
+  roughly 0.05–0.8. A guideline, not a verdict: a layout filling the frame
+  honestly sits around 0.5.
+- `opaque_share > 0.99` → the background was not found. Raise `tol_bg` (14–25)
+  or switch to `method: "ai"`.
+- `opaque_share < 0.01` → almost everything was cut away. Lower `tol_bg` (6–8).
+- `notes` — warnings; show them to the user.
+- `error: "ai_unavailable"` → the AI is not installed, offer `bg_install_ai` or
+  `method: "white"`.
 
-## Параметры
+## Parameters
 
-- `images` — список: **абсолютные пути**, папка целиком или маска
-  (`C:\images\*.jpeg`). Можно смешивать. Файлы с суффиксом `_nobg`
-  пропускаются автоматически — свой вывод не жуём.
-- `out_dir` — куда класть. Без него PNG лягут рядом с исходниками.
+- `images` — a list: **absolute paths**, a whole folder or a mask
+  (`C:\images\*.jpeg`). They can be mixed. Files with the `_nobg` suffix are
+  skipped automatically — we do not chew our own output.
+- `out_dir` — where to put them. Without it the PNGs land next to the sources.
 - `method` — `auto` / `white` / `ai`.
-- `trim` + `pad` — обрезать прозрачные поля (для ассетов, иконок, спрайтов).
-  Для набора картинок одного размера **не включай**: кадры разъедутся.
-- `tol_bg` (12) — что считать фоном. Главная ручка при плохом результате.
-- `tol_fg` (45), `edge` (2), `feather` (0) — мягкость кромки. Трогай редко.
-- `keep_holes` (true) — белые области, не связанные с краем кадра, остаются
-  непрозрачными (блики, белые детали, надписи внутри объекта). Ставь `false`,
-  только если нужны сквозные дырки, например внутри буквы «О» или ручки кружки.
-- `shrink` (0) — сразу срезать N px по границе. Для деталей ассета ставь `2`.
-- `ai_model` — `general` (по умолчанию), `human` (люди), `anime`, `fast`, `u2net`.
+- `trim` + `pad` — crop the transparent margins (for assets, icons, sprites).
+  For a set of pictures of the same size **do not enable it**: the frames will
+  drift apart.
+- `tol_bg` (12) — what counts as background. The main knob when the result is
+  bad.
+- `tol_fg` (45), `edge` (2), `feather` (0) — edge softness. Rarely touched.
+- `keep_holes` (true) — white areas not connected to the frame border stay
+  opaque (highlights, white parts, lettering inside the object). Set it to
+  `false` only when you need see-through holes, for example inside the letter
+  "O" or a mug handle.
+- `shrink` (0) — cut N px off the boundary right away. For asset parts set `2`.
+- `ai_model` — `general` (default), `human` (people), `anime`, `fast`, `u2net`.
 
-## Доводка: дыры и кайма
+## Finishing: holes and the fringe
 
-Два дефекта остаются всегда, и оба лечатся после `bg_remove`.
+Two defects always remain, and both are cured after `bg_remove`.
 
-**1. Непробитые дыры.** `keep_holes` намеренно не выбивает белое внутри
-объекта — иначе выест белые клавиши и шелкографию на плате. Из-за этого
-настоящие сквозные дыры (окно экрана, отверстия в плате, просветы между
-рёбрами корпуса) остаются залитыми белым. Алгоритмически дыра и белая деталь
-неотличимы — решает только глаз:
+**1. Unpunched holes.** `keep_holes` deliberately does not knock out white
+inside the object — otherwise it would eat the white keys and the silkscreen on
+the board. Because of that, genuine see-through holes (the screen window, holes
+in the board, gaps between the shell ribs) stay filled with white.
+Algorithmically a hole and a white part are indistinguishable — only the eye
+decides:
 
-1. `bg_inspect(image)` — находит все белые непрозрачные пятна, пишет
-   `<имя>_holes.png` (объект на тёмной клетке, пятна обведены и пронумерованы)
-   и `<имя>_holes.json`.
-2. **Открой `map_png` и посмотри.** Ориентиры в JSON помогают, но не решают:
-   `enclosed: true` — пятно со всех сторон окружено телом детали (обычно дыра),
-   `area_px` — крупные пятна почти всегда дыры, `whiteness` ближе к 0 — чище
-   белое. Клавиши, надписи, блики — **не трогать**.
-3. `bg_punch(image, ids=[1, 4, 7])` — от каждой метки заливкой уходит вся
-   связная белая область. Пропущенную мелочь добавляй своими точками:
-   `points: ["640x320"]` в пикселях **оригинала**.
-4. Если после пробивки съело лишнее — область протекла наружу через щель
-   в контуре: повтори с `mode: "ball"` и небольшим `radius`, либо понизь `tol`.
+1. `bg_inspect(image)` — finds every white opaque blob, writes
+   `<name>_holes.png` (the object on a dark checker, blobs outlined and
+   numbered) and `<name>_holes.json`.
+2. **Open `map_png` and look.** The hints in the JSON help but do not decide:
+   `enclosed: true` — the blob is surrounded by the body of the part on every
+   side (usually a hole), `area_px` — large blobs are nearly always holes,
+   `whiteness` closer to 0 — cleaner white. Keys, lettering, highlights — **do
+   not touch**.
+3. `bg_punch(image, ids=[1, 4, 7])` — from every mark the whole connected white
+   area is flood-filled away. Add anything small you missed with your own
+   points: `points: ["640x320"]` in the pixels of the **original**.
+4. If the punch ate too much, the area leaked outward through a gap in the
+   contour: repeat with `mode: "ball"` and a small `radius`, or lower `tol`.
 
-**2. Белая кайма.** Граничный пиксель наполовину фоновый, его цвет уже не
-восстановить — поэтому его просто выбрасывают. `bg_shrink(images, px=2)`
-срезает 2 px вглубь везде, где непрозрачное касается прозрачного: и по
-внешнему контуру, и вокруг пробитых дыр. Пиксели, упирающиеся в рамку кадра,
-не срезаются.
+**2. The white fringe.** A boundary pixel is half background and its colour
+cannot be recovered any more — so it is simply thrown away.
+`bg_shrink(images, px=2)` cuts 2 px inward everywhere opaque touches
+transparent: both on the outer contour and around the punched holes. Pixels
+butting against the frame border are not cut.
 
-Делать **последним** шагом: после `bg_punch`, иначе новая дыра принесёт свою
-кайму. Смотри `removed_share` — если больше трети, `px` велик для тонкой
-детали, вернись к 1.
+Do it as the **last** step: after `bg_punch`, otherwise a new hole brings its
+own fringe. Watch `removed_share` — over a third means `px` is too large for a
+thin part, go back to 1.
 
-## Ограничения
+## Limits
 
-- `white` вырезает **связный с краем кадра** белый фон. Если объект упирается
-  в край кадра и сам белый — часть объекта уйдёт вместе с фоном.
-- Тени на белом станут полупрозрачными, а не пропадут. Нужна чистая кромка —
-  подними `tol_bg`.
-- Выход всегда PNG (JPEG не умеет прозрачность). Размер файла ощутимо больше
-  исходного JPEG — это нормально.
-- Исходники не трогаются никогда, пишется новый файл рядом или в `out_dir`.
+- `white` cuts white background **connected to the frame border**. If the object
+  touches the frame edge and is white itself, part of the object goes with the
+  background.
+- Shadows on white become semi-transparent rather than disappearing. If you need
+  a clean edge, raise `tol_bg`.
+- The output is always PNG (JPEG has no transparency). The file is noticeably
+  larger than the source JPEG — that is normal.
+- Sources are never touched; a new file is written next to them or into
+  `out_dir`.
 
-## Связка с генерацией
+## Pairing with generation
 
-Типовой конвейер: `flow_generate` (скилл flow-image-gen) даёт картинки на
-белом фоне → отдай их пути в `bg_remove` с `method: "white"` → получишь PNG
-с прозрачностью. Для ассета поштучно добавь `trim: true`.
+The typical pipeline: `flow_generate` (the flow-image-gen skill) gives pictures
+on a white background → hand their paths to `bg_remove` with `method: "white"` →
+you get PNGs with transparency. For a per-part asset add `trim: true`.

@@ -8,20 +8,20 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// Импорт ассета устройства из конвейера Device Generator в Unity.
+/// Importing a device asset from the Device Generator pipeline into Unity.
 ///
-/// На вход — device.json и атлас texture.png. Окно режет из атласа каждую
-/// деталь в отдельный PNG, заводит их как спрайты и собирает на сцене иерархию:
-/// пустой объект с именем устройства, внутри — SpriteRenderer на каждый слой,
-/// расставленные по позициям из JSON и разведённые по Z в порядке разборки.
+/// The input is device.json and the texture.png atlas. The window cuts every part
+/// out of the atlas into its own PNG, registers them as sprites and builds a
+/// hierarchy in the scene: an empty object named after the device, holding a
+/// SpriteRenderer per layer, placed by the positions from the JSON and spread along Z in teardown order.
 ///
-/// Положить в папку Editor (например Assets/DeviceGenerator/Editor/).
-/// Открывается: Tools → Device Asset Importer.
+/// Put it in an Editor folder (Assets/DeviceGenerator/Editor/, for instance).
+/// Opened from: Tools → Device Asset Importer.
 /// </summary>
 public class DeviceAssetImporter : EditorWindow
 {
     // ------------------------------------------------------------------
-    // Настройки окна
+    // Window settings
     // ------------------------------------------------------------------
 
     const string PrefJson = "DeviceAssetImporter.json";
@@ -31,7 +31,7 @@ public class DeviceAssetImporter : EditorWindow
 
     string _jsonPath = "";
     string _texturePath = "";
-    string _outFolder = "Assets/Devices";      // всегда внутри Assets
+    string _outFolder = "Assets/Devices";      // always inside Assets
     float _pixelsPerUnit = 100f;
     float _zStep = 0.01f;
     int _sortingLayerIndex;
@@ -69,30 +69,30 @@ public class DeviceAssetImporter : EditorWindow
     }
 
     // ------------------------------------------------------------------
-    // Интерфейс
+    // Interface
     // ------------------------------------------------------------------
 
     void OnGUI()
     {
         _scroll = EditorGUILayout.BeginScrollView(_scroll);
 
-        EditorGUILayout.LabelField("Ассет устройства", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Device asset", EditorStyles.boldLabel);
         DrawDropArea();
 
         _jsonPath = PathField("device.json", _jsonPath, "json", false);
-        _texturePath = PathField("Атлас (png)", _texturePath, "png", false);
+        _texturePath = PathField("Atlas (png)", _texturePath, "png", false);
 
         GUILayout.Space(6);
-        EditorGUILayout.LabelField("Куда импортировать", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Where to import", EditorStyles.boldLabel);
         DrawOutputField();
 
         GUILayout.Space(6);
-        EditorGUILayout.LabelField("Настройки сборки", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Assembly settings", EditorStyles.boldLabel);
         _pixelsPerUnit = Mathf.Max(1f, EditorGUILayout.FloatField(
-            new GUIContent("Pixels Per Unit", "Сколько пикселей холста в одной юнити-единице"),
+            new GUIContent("Pixels Per Unit", "How many canvas pixels go into one Unity unit"),
             _pixelsPerUnit));
         _zStep = EditorGUILayout.FloatField(
-            new GUIContent("Шаг по Z", "На сколько каждый следующий слой ближе к камере"),
+            new GUIContent("Z step", "How much closer to the camera each next layer sits"),
             _zStep);
 
         var layerNames = SortingLayer.layers.Select(l => l.name).ToArray();
@@ -100,31 +100,31 @@ public class DeviceAssetImporter : EditorWindow
         if (layerNames.Length > 0)
         {
             _sortingLayerIndex = EditorGUILayout.Popup(
-                new GUIContent("Sorting Layer", "Слой сортировки для всех деталей"),
+                new GUIContent("Sorting Layer", "Sorting layer for every part"),
                 _sortingLayerIndex, layerNames);
         }
         _sortingOrderBase = EditorGUILayout.IntField(
-            new GUIContent("Order базовый", "К нему прибавляется layer детали"),
+            new GUIContent("Base order", "The part's layer is added to it"),
             _sortingOrderBase);
-        _filterMode = (FilterMode)EditorGUILayout.EnumPopup("Фильтрация", _filterMode);
+        _filterMode = (FilterMode)EditorGUILayout.EnumPopup("Filtering", _filterMode);
 
         _makePrefab = EditorGUILayout.Toggle(
-            new GUIContent("Сохранить префаб", "Собранное устройство лечь префабом рядом со спрайтами"),
+            new GUIContent("Save prefab", "Put the assembled device down as a prefab next to the sprites"),
             _makePrefab);
         _overwrite = EditorGUILayout.Toggle(
-            new GUIContent("Перезаписывать", "Импорт поверх уже существующей папки устройства"),
+            new GUIContent("Overwrite", "Import over an already existing device folder"),
             _overwrite);
 
         GUILayout.Space(10);
         using (new EditorGUI.DisabledScope(string.IsNullOrEmpty(_jsonPath)))
         {
-            if (GUILayout.Button("Импортировать", GUILayout.Height(32))) RunImport();
+            if (GUILayout.Button("Import", GUILayout.Height(32))) RunImport();
         }
 
         if (_log.Count > 0)
         {
             GUILayout.Space(8);
-            EditorGUILayout.LabelField(_lastRunFailed ? "Ошибки" : "Отчёт", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(_lastRunFailed ? "Errors" : "Report", EditorStyles.boldLabel);
             var style = new GUIStyle(EditorStyles.helpBox) { wordWrap = true, richText = false };
             EditorGUILayout.LabelField(string.Join("\n", _log), style);
         }
@@ -135,7 +135,7 @@ public class DeviceAssetImporter : EditorWindow
     void DrawDropArea()
     {
         var rect = GUILayoutUtility.GetRect(0, 54, GUILayout.ExpandWidth(true));
-        GUI.Box(rect, "Брось сюда device.json и texture.png\n(папку ассета целиком тоже можно)",
+        GUI.Box(rect, "Drop device.json and texture.png here\n(the whole asset folder works too)",
             EditorStyles.helpBox);
 
         var e = Event.current;
@@ -151,7 +151,7 @@ public class DeviceAssetImporter : EditorWindow
         Repaint();
     }
 
-    /// <summary>Разложить перетащенный путь по полям. Папку — обходим внутри.</summary>
+    /// <summary>Sort a dropped path into the fields. A folder is walked through.</summary>
     void Accept(string path)
     {
         if (string.IsNullOrEmpty(path)) return;
@@ -165,7 +165,7 @@ public class DeviceAssetImporter : EditorWindow
         var ext = Path.GetExtension(full).ToLowerInvariant();
         if (ext == ".json")
         {
-            // рядом могут лежать служебные json — берём тот, что похож на ассет
+            // auxiliary jsons may sit next to it — we take the one that looks like an asset
             if (string.IsNullOrEmpty(_jsonPath) ||
                 Path.GetFileName(full).ToLowerInvariant() == "device.json")
             {
@@ -176,13 +176,13 @@ public class DeviceAssetImporter : EditorWindow
         else if (ext == ".png")
         {
             var nm = Path.GetFileName(full).ToLowerInvariant();
-            // превью и контактка — не атлас
+            // the preview and the contact sheet are not the atlas
             if (nm.Contains("preview") || nm.Contains("contact") || nm.Contains("sheet")) return;
             _texturePath = full;
         }
     }
 
-    /// <summary>Атлас берём из поля texture самого JSON — он лежит рядом с ним.</summary>
+    /// <summary>The atlas is taken from the JSON's own texture field — it sits next to it.</summary>
     void AutoFillTexture()
     {
         try
@@ -195,7 +195,7 @@ public class DeviceAssetImporter : EditorWindow
         }
         catch (Exception)
         {
-            // молча: путь к атласу пользователь укажет руками
+            // silently: the user will point at the atlas by hand
         }
     }
 
@@ -223,16 +223,16 @@ public class DeviceAssetImporter : EditorWindow
     void DrawOutputField()
     {
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel(new GUIContent("Папка", "Обязана лежать внутри Assets"));
+        EditorGUILayout.PrefixLabel(new GUIContent("Folder", "Has to be inside Assets"));
         _outFolder = EditorGUILayout.TextField(_outFolder ?? "");
         if (GUILayout.Button("…", GUILayout.Width(26)))
         {
-            var picked = EditorUtility.OpenFolderPanel("Куда импортировать", Application.dataPath, "");
+            var picked = EditorUtility.OpenFolderPanel("Where to import", Application.dataPath, "");
             if (!string.IsNullOrEmpty(picked))
             {
                 var rel = ToProjectRelative(picked);
-                if (rel == null) EditorUtility.DisplayDialog("Не годится",
-                    "Папка должна быть внутри Assets этого проекта.", "Ок");
+                if (rel == null) EditorUtility.DisplayDialog("No good",
+                    "The folder has to be inside this project's Assets.", "OK");
                 else _outFolder = rel;
             }
             GUI.FocusControl(null);
@@ -248,7 +248,7 @@ public class DeviceAssetImporter : EditorWindow
     }
 
     // ------------------------------------------------------------------
-    // Импорт
+    // Import
     // ------------------------------------------------------------------
 
     void RunImport()
@@ -262,7 +262,7 @@ public class DeviceAssetImporter : EditorWindow
         catch (Exception ex)
         {
             _lastRunFailed = true;
-            _log.Add("Импорт оборван: " + ex.Message);
+            _log.Add("Import aborted: " + ex.Message);
             Debug.LogException(ex);
         }
         finally
@@ -274,27 +274,27 @@ public class DeviceAssetImporter : EditorWindow
 
     void Import()
     {
-        // --- проверки входа ---
+        // --- input checks ---
         if (string.IsNullOrEmpty(_jsonPath) || !File.Exists(_jsonPath))
-            throw new Exception("device.json не найден: " + _jsonPath);
+            throw new Exception("device.json not found: " + _jsonPath);
         if (string.IsNullOrEmpty(_texturePath) || !File.Exists(_texturePath))
-            throw new Exception("атлас не найден: " + _texturePath);
+            throw new Exception("atlas not found: " + _texturePath);
 
         var outFolder = NormalizeOutFolder(_outFolder);
 
         var doc = DeviceDoc.Load(_jsonPath);
-        if (doc.Parts.Count == 0) throw new Exception("в JSON нет деталей");
+        if (doc.Parts.Count == 0) throw new Exception("the JSON has no parts");
 
         var atlas = LoadTexture(_texturePath);
         try
         {
-            // Размер атласа из JSON — только сверка: режем всегда по факту
+            // The atlas size from the JSON is only a cross-check: we always cut by the file
             if (doc.TextureSize.x > 0 &&
                 (Mathf.RoundToInt(doc.TextureSize.x) != atlas.width ||
                  Mathf.RoundToInt(doc.TextureSize.y) != atlas.height))
             {
                 _log.Add(string.Format(
-                    "Внимание: в JSON атлас {0}×{1}, а файл {2}×{3}. Режу по файлу — проверь, тот ли это атлас.",
+                    "Warning: the JSON says the atlas is {0}×{1}, the file is {2}×{3}. Cutting by the file — check this is the right atlas.",
                     Mathf.RoundToInt(doc.TextureSize.x), Mathf.RoundToInt(doc.TextureSize.y),
                     atlas.width, atlas.height));
             }
@@ -304,22 +304,22 @@ public class DeviceAssetImporter : EditorWindow
             var deviceFolderAbs = ToAbsolute(deviceFolder);
 
             if (Directory.Exists(deviceFolderAbs) && !_overwrite)
-                throw new Exception("папка уже есть: " + deviceFolder + " — включи «Перезаписывать»");
+                throw new Exception("the folder already exists: " + deviceFolder + " — switch on \"Overwrite\"");
 
             EnsureFolder(spritesFolder);
 
-            // --- нарезка ---
-            var written = new List<KeyValuePair<PartDef, string>>();  // деталь → путь спрайта
+            // --- cutting ---
+            var written = new List<KeyValuePair<PartDef, string>>();  // part → sprite path
             var used = new HashSet<string>();
             for (int i = 0; i < doc.Parts.Count; i++)
             {
                 var p = doc.Parts[i];
-                EditorUtility.DisplayProgressBar("Импорт устройства",
-                    "Режу " + p.Id, (float)i / doc.Parts.Count);
+                EditorUtility.DisplayProgressBar("Importing the device",
+                    "Cutting " + p.Id, (float)i / doc.Parts.Count);
 
                 string err;
                 var png = CutPart(atlas, p, out err);
-                if (png == null) { _log.Add("Пропущена деталь " + p.Id + ": " + err); continue; }
+                if (png == null) { _log.Add("Part skipped " + p.Id + ": " + err); continue; }
 
                 var fileName = Sanitize(p.Id);
                 var n = 1;
@@ -329,20 +329,20 @@ public class DeviceAssetImporter : EditorWindow
                 File.WriteAllBytes(ToAbsolute(assetPath), png);
                 written.Add(new KeyValuePair<PartDef, string>(p, assetPath));
             }
-            if (written.Count == 0) throw new Exception("не нарезалось ни одной детали");
+            if (written.Count == 0) throw new Exception("not a single part was cut");
 
-            // переимпорт: PNG деталей, которых в новом JSON уже нет, убираем —
-            // иначе в папке копятся спрайты вырезанных деталей
+            // re-import: PNGs of parts no longer in the new JSON are removed —
+            // otherwise sprites of cut-out parts pile up in the folder
             var keep = new HashSet<string>(written.Select(kv => Path.GetFileName(kv.Value)));
             foreach (var stale in Directory.GetFiles(ToAbsolute(spritesFolder), "*.png"))
             {
                 if (keep.Contains(Path.GetFileName(stale))) continue;
                 AssetDatabase.DeleteAsset(spritesFolder + "/" + Path.GetFileName(stale));
-                _log.Add("Убран лишний спрайт: " + Path.GetFileName(stale));
+                _log.Add("Stray sprite removed: " + Path.GetFileName(stale));
             }
 
-            // --- завести PNG как спрайты ---
-            EditorUtility.DisplayProgressBar("Импорт устройства", "Настраиваю спрайты", 0.7f);
+            // --- register the PNGs as sprites ---
+            EditorUtility.DisplayProgressBar("Importing the device", "Setting up the sprites", 0.7f);
             AssetDatabase.Refresh();
 
             var maxSide = written.Max(kv => Mathf.Max(kv.Key.Frame.width, kv.Key.Frame.height));
@@ -350,23 +350,23 @@ public class DeviceAssetImporter : EditorWindow
             foreach (var kv in written) ConfigureSprite(kv.Value, maxTex);
             AssetDatabase.Refresh();
 
-            // --- сборка на сцене ---
-            EditorUtility.DisplayProgressBar("Импорт устройства", "Собираю на сцене", 0.9f);
+            // --- assembling in the scene ---
+            EditorUtility.DisplayProgressBar("Importing the device", "Assembling in the scene", 0.9f);
             var root = BuildHierarchy(doc, written);
 
             if (_makePrefab)
             {
                 var prefabPath = deviceFolder + "/" + Sanitize(doc.Device) + ".prefab";
                 PrefabUtility.SaveAsPrefabAssetAndConnect(root, prefabPath, InteractionMode.AutomatedAction);
-                _log.Add("Префаб: " + prefabPath);
+                _log.Add("Prefab: " + prefabPath);
             }
 
             Selection.activeGameObject = root;
             EditorGUIUtility.PingObject(root);
 
-            _log.Insert(0, string.Format("Готово: {0} — деталей {1}, спрайты в {2}",
+            _log.Insert(0, string.Format("Done: {0} — {1} parts, sprites in {2}",
                 doc.Device, written.Count, spritesFolder));
-            _log.Add(string.Format("Холст {0}×{1} px → {2:0.##}×{3:0.##} юнитов при PPU {4:0.##}",
+            _log.Add(string.Format("Canvas {0}×{1} px → {2:0.##}×{3:0.##} units at PPU {4:0.##}",
                 Mathf.RoundToInt(doc.Canvas.x), Mathf.RoundToInt(doc.Canvas.y),
                 doc.Canvas.x / _pixelsPerUnit, doc.Canvas.y / _pixelsPerUnit, _pixelsPerUnit));
         }
@@ -376,27 +376,27 @@ public class DeviceAssetImporter : EditorWindow
         }
     }
 
-    /// <summary>Вырезать кадр детали из атласа в готовые байты PNG.</summary>
+    /// <summary>Cut a part's frame out of the atlas into ready PNG bytes.</summary>
     byte[] CutPart(Texture2D atlas, PartDef p, out string error)
     {
         error = null;
         var f = p.Frame;
-        if (f.width <= 0 || f.height <= 0) { error = "пустой кадр в JSON"; return null; }
+        if (f.width <= 0 || f.height <= 0) { error = "empty frame in the JSON"; return null; }
 
-        // JSON меряет атлас сверху вниз, Unity — снизу вверх
+        // the JSON measures the atlas top-down, Unity bottom-up
         var x0 = Mathf.RoundToInt(f.x);
         var y0 = atlas.height - Mathf.RoundToInt(f.y + f.height);
         var w = Mathf.RoundToInt(f.width);
         var h = Mathf.RoundToInt(f.height);
 
-        // подрезаем по границам атласа: лучше отдать усечённую деталь, чем упасть
+        // clamp to the atlas bounds: better to return a truncated part than to crash
         var clampedX = Mathf.Clamp(x0, 0, atlas.width);
         var clampedY = Mathf.Clamp(y0, 0, atlas.height);
         w = Mathf.Min(w - (clampedX - x0), atlas.width - clampedX);
         h = Mathf.Min(h - (clampedY - y0), atlas.height - clampedY);
-        if (w <= 0 || h <= 0) { error = "кадр целиком вне атласа"; return null; }
+        if (w <= 0 || h <= 0) { error = "the frame is entirely outside the atlas"; return null; }
         if (clampedX != x0 || clampedY != y0 || w != Mathf.RoundToInt(f.width) || h != Mathf.RoundToInt(f.height))
-            _log.Add("Деталь " + p.Id + ": кадр вылезал за атлас, подрезал до " + w + "×" + h);
+            _log.Add("Part " + p.Id + ": the frame stuck out of the atlas, clamped to " + w + "×" + h);
 
         var pixels = atlas.GetPixels(clampedX, clampedY, w, h);
         var tex = new Texture2D(w, h, TextureFormat.RGBA32, false);
@@ -415,7 +415,7 @@ public class DeviceAssetImporter : EditorWindow
     void ConfigureSprite(string assetPath, int maxTextureSize)
     {
         var ti = AssetImporter.GetAtPath(assetPath) as TextureImporter;
-        if (ti == null) { _log.Add("Не смог настроить спрайт: " + assetPath); return; }
+        if (ti == null) { _log.Add("Could not set up the sprite: " + assetPath); return; }
 
         ti.textureType = TextureImporterType.Sprite;
         ti.spriteImportMode = SpriteImportMode.Single;
@@ -427,9 +427,9 @@ public class DeviceAssetImporter : EditorWindow
         ti.maxTextureSize = maxTextureSize;
         ti.textureCompression = TextureImporterCompression.Uncompressed;
 
-        // Пивот строго по центру: в device.json position — это центр детали,
-        // и вьювер конвейера рисует её так же. Любой другой пивот развалит
-        // совпадение сборки в игре и в просмотрщике.
+        // The pivot is strictly at the centre: in device.json position is the centre of
+        // the part, and the pipeline viewer draws it the same way. Any other pivot would
+        // break the match between the assembly in the game and in the viewer.
         var settings = new TextureImporterSettings();
         ti.ReadTextureSettings(settings);
         settings.spriteAlignment = (int)SpriteAlignment.Center;
@@ -446,15 +446,15 @@ public class DeviceAssetImporter : EditorWindow
             : "Default";
 
         var root = new GameObject(doc.Device);
-        Undo.RegisterCreatedObjectUndo(root, "Импорт устройства");
+        Undo.RegisterCreatedObjectUndo(root, "Importing the device");
         root.transform.position = Vector3.zero;
 
-        // снизу вверх: порядок в иерархии совпадает с порядком сборки
+        // bottom-up: the order in the hierarchy matches the assembly order
         foreach (var kv in written.OrderBy(k => k.Key.Layer))
         {
             var p = kv.Key;
             var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(kv.Value);
-            if (sprite == null) { _log.Add("Спрайт не загрузился: " + kv.Value); continue; }
+            if (sprite == null) { _log.Add("The sprite did not load: " + kv.Value); continue; }
 
             var go = new GameObject(string.IsNullOrEmpty(p.Name) ? p.Id : p.Name);
             go.transform.SetParent(root.transform, false);
@@ -464,18 +464,18 @@ public class DeviceAssetImporter : EditorWindow
             sr.sortingLayerName = sortingName;
             sr.sortingOrder = _sortingOrderBase + p.Layer;
 
-            // Холст меряется сверху вниз от левого верхнего угла, Unity — снизу
-            // вверх от центра. Центр холста кладём в начало координат родителя.
+            // The canvas is measured top-down from the top-left corner, Unity bottom-up
+            // from the centre. The canvas centre goes to the parent's origin.
             var x = (p.Position.x - doc.Canvas.x * 0.5f) / _pixelsPerUnit;
             var y = (doc.Canvas.y * 0.5f - p.Position.y) / _pixelsPerUnit;
             go.transform.localPosition = new Vector3(x, y, -p.Layer * _zStep);
 
-            // rotation в JSON — по часовой стрелке при оси Y вниз; в Unity ось Y
-            // вверх, там по часовой это отрицательный угол
+            // rotation in the JSON is clockwise with the Y axis pointing down; in Unity
+            // the Y axis points up, so clockwise there is a negative angle
             go.transform.localRotation = Quaternion.Euler(0f, 0f, -p.Rotation);
 
-            // Кадр в атласе и размер на холсте не обязаны совпадать (деталь
-            // могли ужать при сборке) — разницу добираем масштабом.
+            // The frame in the atlas and the size on the canvas need not match (the part
+            // may have been shrunk during assembly) — the difference is made up by scale.
             var sx = p.Frame.width > 0 ? p.Size.x * p.Scale / p.Frame.width : p.Scale;
             var sy = p.Frame.height > 0 ? p.Size.y * p.Scale / p.Frame.height : p.Scale;
             go.transform.localScale = new Vector3(sx, sy, 1f);
@@ -484,35 +484,35 @@ public class DeviceAssetImporter : EditorWindow
     }
 
     // ------------------------------------------------------------------
-    // Пути и файлы
+    // Paths and files
     // ------------------------------------------------------------------
 
     static Texture2D LoadTexture(string path)
     {
-        // Читаем файл сами, а не через AssetDatabase: атлас обычно лежит вне
-        // проекта, да и флаг Read/Write у импортированной текстуры не нужен.
+        // We read the file ourselves rather than through AssetDatabase: the atlas usually
+        // lives outside the project, and the Read/Write flag on an imported texture is not needed.
         var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
         if (!tex.LoadImage(File.ReadAllBytes(path)))
         {
             DestroyImmediate(tex);
-            throw new Exception("не смог прочитать атлас: " + path);
+            throw new Exception("could not read the atlas: " + path);
         }
         return tex;
     }
 
     string NormalizeOutFolder(string folder)
     {
-        if (string.IsNullOrEmpty(folder)) throw new Exception("не задана папка назначения");
+        if (string.IsNullOrEmpty(folder)) throw new Exception("no destination folder was set");
         folder = folder.Replace('\\', '/').TrimEnd('/');
 
         if (Path.IsPathRooted(folder))
         {
             var rel = ToProjectRelative(folder);
-            if (rel == null) throw new Exception("папка назначения должна быть внутри Assets: " + folder);
+            if (rel == null) throw new Exception("the destination folder has to be inside Assets: " + folder);
             folder = rel;
         }
         if (!folder.StartsWith("Assets", StringComparison.Ordinal))
-            throw new Exception("папка назначения должна начинаться с Assets/: " + folder);
+            throw new Exception("the destination folder has to start with Assets/: " + folder);
         return folder;
     }
 
@@ -534,7 +534,7 @@ public class DeviceAssetImporter : EditorWindow
         return Path.GetFullPath(p);
     }
 
-    /// <summary>Создать цепочку папок проекта, чтобы AssetDatabase о них знала.</summary>
+    /// <summary>Create the chain of project folders so AssetDatabase knows about them.</summary>
     static void EnsureFolder(string projectPath)
     {
         var parts = projectPath.Split('/');
@@ -565,7 +565,7 @@ public class DeviceAssetImporter : EditorWindow
     }
 
     // ------------------------------------------------------------------
-    // Модель device.json
+    // The device.json model
     // ------------------------------------------------------------------
 
     class DeviceDoc
@@ -578,7 +578,7 @@ public class DeviceAssetImporter : EditorWindow
         public static DeviceDoc Load(string path)
         {
             var root = MiniJson.Parse(File.ReadAllText(path, Encoding.UTF8)) as Dictionary<string, object>;
-            if (root == null) throw new Exception("device.json не разобрался: в корне не объект");
+            if (root == null) throw new Exception("device.json did not parse: the root is not an object");
 
             var doc = new DeviceDoc();
             doc.Device = MiniJson.Str(root, "device", "device");
@@ -586,7 +586,7 @@ public class DeviceAssetImporter : EditorWindow
             doc.TextureSize = MiniJson.Vec2(root, "texture_size", Vector2.zero);
 
             var parts = MiniJson.Get(root, "parts") as List<object>;
-            if (parts == null) throw new Exception("в device.json нет массива parts");
+            if (parts == null) throw new Exception("device.json has no parts array");
 
             var index = 0;
             foreach (var raw in parts)
@@ -612,7 +612,7 @@ public class DeviceAssetImporter : EditorWindow
                         MiniJson.Num(frame, "x", 0f), MiniJson.Num(frame, "y", 0f),
                         MiniJson.Num(frame, "w", 0f), MiniJson.Num(frame, "h", 0f));
                 }
-                // size может отсутствовать — тогда деталь рисуется как есть в атласе
+                // size may be missing — then the part is drawn as it is in the atlas
                 if (p.Size == Vector2.zero) p.Size = new Vector2(p.Frame.width, p.Frame.height);
 
                 doc.Parts.Add(p);
@@ -636,12 +636,12 @@ public class DeviceAssetImporter : EditorWindow
     }
 
     // ------------------------------------------------------------------
-    // Разбор JSON
+    // JSON parsing
     // ------------------------------------------------------------------
     //
-    // JsonUtility не умеет ни массивы чисел в корне поля, ни вложенные
-    // массивы вроде corners — а формат конвейера состоит из них. Поэтому свой
-    // маленький разбор: объекты, массивы, числа, строки, true/false/null.
+    // JsonUtility handles neither arrays of numbers at the root of a field nor nested
+    // arrays like corners — and the pipeline format is made of them. Hence our own
+    // small parser: objects, arrays, numbers, strings, true/false/null.
 
     static class MiniJson
     {
@@ -650,7 +650,7 @@ public class DeviceAssetImporter : EditorWindow
             var i = 0;
             var value = ParseValue(text, ref i);
             SkipWhite(text, ref i);
-            if (i < text.Length) throw new Exception("мусор после JSON на позиции " + i);
+            if (i < text.Length) throw new Exception("junk after the JSON at position " + i);
             return value;
         }
 
@@ -684,7 +684,7 @@ public class DeviceAssetImporter : EditorWindow
         static object ParseValue(string s, ref int i)
         {
             SkipWhite(s, ref i);
-            if (i >= s.Length) throw new Exception("JSON оборвался");
+            if (i >= s.Length) throw new Exception("the JSON ended abruptly");
             switch (s[i])
             {
                 case '{': return ParseObject(s, ref i);
@@ -706,17 +706,17 @@ public class DeviceAssetImporter : EditorWindow
             while (true)
             {
                 SkipWhite(s, ref i);
-                if (i >= s.Length || s[i] != '"') throw new Exception("ждал ключ на позиции " + i);
+                if (i >= s.Length || s[i] != '"') throw new Exception("expected a key at position " + i);
                 var key = ParseString(s, ref i);
                 SkipWhite(s, ref i);
-                if (i >= s.Length || s[i] != ':') throw new Exception("ждал ':' на позиции " + i);
+                if (i >= s.Length || s[i] != ':') throw new Exception("expected ':' at position " + i);
                 i++;
                 res[key] = ParseValue(s, ref i);
                 SkipWhite(s, ref i);
-                if (i >= s.Length) throw new Exception("объект не закрыт");
+                if (i >= s.Length) throw new Exception("the object was not closed");
                 if (s[i] == ',') { i++; continue; }
                 if (s[i] == '}') { i++; return res; }
-                throw new Exception("ждал ',' или '}' на позиции " + i);
+                throw new Exception("expected ',' or '}' at position " + i);
             }
         }
 
@@ -730,10 +730,10 @@ public class DeviceAssetImporter : EditorWindow
             {
                 res.Add(ParseValue(s, ref i));
                 SkipWhite(s, ref i);
-                if (i >= s.Length) throw new Exception("массив не закрыт");
+                if (i >= s.Length) throw new Exception("the array was not closed");
                 if (s[i] == ',') { i++; continue; }
                 if (s[i] == ']') { i++; return res; }
-                throw new Exception("ждал ',' или ']' на позиции " + i);
+                throw new Exception("expected ',' or ']' at position " + i);
             }
         }
 
@@ -759,14 +759,14 @@ public class DeviceAssetImporter : EditorWindow
                     case 'r': sb.Append('\r'); break;
                     case 't': sb.Append('\t'); break;
                     case 'u':
-                        if (i + 4 > s.Length) throw new Exception("обрезанный \\u");
+                        if (i + 4 > s.Length) throw new Exception("truncated \\u");
                         sb.Append((char)Convert.ToInt32(s.Substring(i, 4), 16));
                         i += 4;
                         break;
-                    default: throw new Exception("неизвестный escape \\" + esc);
+                    default: throw new Exception("unknown escape \\" + esc);
                 }
             }
-            throw new Exception("строка не закрыта");
+            throw new Exception("the string was not closed");
         }
 
         static object ParseNumber(string s, ref int i)
@@ -776,14 +776,14 @@ public class DeviceAssetImporter : EditorWindow
             var text = s.Substring(start, i - start);
             double d;
             if (!double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out d))
-                throw new Exception("не число: '" + text + "' на позиции " + start);
+                throw new Exception("not a number: '" + text + "' at position " + start);
             return d;
         }
 
         static void Expect(string s, ref int i, string word)
         {
             if (i + word.Length > s.Length || s.Substring(i, word.Length) != word)
-                throw new Exception("ждал '" + word + "' на позиции " + i);
+                throw new Exception("expected '" + word + "' at position " + i);
             i += word.Length;
         }
 

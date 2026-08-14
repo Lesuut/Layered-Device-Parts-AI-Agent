@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>Конвейер ассетов — живая панель</title>
+<title>Asset pipeline — live panel</title>
 <style>
   :root {
     --bg: #0d0f16;  --panel: #141824;  --line: #232a3c;
@@ -14,7 +14,7 @@
     display: grid; grid-template-rows: auto 1fr; height: 100vh; overflow: hidden;
   }
 
-  /* ---------- шапка ---------- */
+  /* ---------- header ---------- */
   header { padding: 14px 22px 12px; border-bottom: 1px solid var(--line); background: var(--panel); }
   .top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
   h1 { margin: 0; font-size: 17px; letter-spacing: .3px; }
@@ -42,14 +42,14 @@
   }
   @keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
 
-  /* ---------- раскладка ---------- */
+  /* ---------- layout ---------- */
   main { display: grid; grid-template-columns: 290px 1fr 300px; min-height: 0; }
   section { min-height: 0; overflow: auto; padding: 16px; }
   #steps { border-right: 1px solid var(--line); background: #10131d; }
   #feed  { border-left: 1px solid var(--line); background: #10131d; }
   h2 { margin: 0 0 12px; font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--dim); }
 
-  /* ---------- шаги ---------- */
+  /* ---------- steps ---------- */
   .step {
     display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 9px 10px;
     border-radius: 9px; margin-bottom: 3px; border: 1px solid transparent; transition: .25s;
@@ -74,7 +74,7 @@
   .step.active .t { color: var(--accent); font-weight: 600; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ---------- «сейчас» ---------- */
+  /* ---------- "now" ---------- */
   .now {
     display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin-bottom: 16px;
     border: 1px solid rgba(90,200,250,.3); border-radius: 11px; background: rgba(90,200,250,.06);
@@ -85,7 +85,7 @@
   .now.idle .beam { background: var(--dim); animation: none; }
   @keyframes blink { 50% { opacity: .25; transform: scale(.7); } }
 
-  /* ---------- галерея ---------- */
+  /* ---------- gallery ---------- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
   .card {
     border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--panel);
@@ -103,8 +103,8 @@
   }
   .shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .cap { padding: 8px 10px; display: flex; align-items: center; gap: 8px; }
-  .cap b { font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cap span { font-size: 11px; color: var(--dim); margin-left: auto; white-space: nowrap; }
+  .cap b { font-size: 12px; font-weight: 600; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cap span { font-size: 11px; color: var(--dim); flex: 0 0 auto; white-space: nowrap; }
   .tag {
     font-size: 10px; letter-spacing: .6px; text-transform: uppercase; padding: 2px 7px;
     border-radius: 20px; border: 1px solid var(--line); color: var(--dim);
@@ -117,7 +117,7 @@
   .tag.parts { color: #ff8fd0; border-color: #7a3a63; }
   .tag.build { color: var(--ok); border-color: #2a6b4b; }
 
-  /* сканирующий луч поверх картинки, пока агент её разглядывает */
+  /* a scanning beam over the picture while the agent is looking at it */
   .shot.scan::after {
     content: ''; position: absolute; left: 0; right: 0; height: 34%;
     background: linear-gradient(180deg, transparent, rgba(90,200,250,.32), transparent);
@@ -125,11 +125,11 @@
   }
   @keyframes scan { 0% { top: -34%; } 100% { top: 100%; } }
 
-  /* шторка «фон уходит»: слева проступает шахматка прозрачности */
+  /* the "background going away" curtain: a transparency checker appears from the left */
   .shot.cut img { animation: reveal 1.1s ease-out both; }
   @keyframes reveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 
-  /* метки дыр */
+  /* hole marks */
   .mk {
     position: absolute; width: 13px; height: 13px; margin: -7px 0 0 -7px;
     border: 2px solid var(--hot); border-radius: 50%; background: rgba(255,212,0,.18);
@@ -144,7 +144,7 @@
     background: rgba(0,0,0,.6); color: var(--hot); letter-spacing: .4px;
   }
 
-  /* ---------- лента ---------- */
+  /* ---------- feed ---------- */
   .row { padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 12px; }
   .row:last-child { border: 0; }
   .row .w { color: var(--dim); font-size: 11px; }
@@ -161,31 +161,31 @@
 
 <header>
   <div class="top">
-    <h1>Конвейер ассетов <span class="device" id="device"></span></h1>
+    <h1>Asset pipeline <span class="device" id="device"></span></h1>
     <div class="stat" id="counts">—</div>
     <div class="spacer"></div>
-    <div class="stat"><span class="dot" id="link"></span><span id="linkText">подключаюсь…</span></div>
+    <div class="stat"><span class="dot" id="link"></span><span id="linkText">connecting…</span></div>
   </div>
   <div class="bar" id="bar"><i id="barFill"></i></div>
 </header>
 
 <main>
-  <section id="steps"><h2>Шаги</h2><div id="stepList"></div></section>
+  <section id="steps"><h2>Steps</h2><div id="stepList"></div></section>
 
   <section id="stage">
-    <div class="now idle" id="now"><span class="beam"></span><span id="nowText">жду начала работы</span></div>
-    <h2>Картинки конвейера</h2>
+    <div class="now idle" id="now"><span class="beam"></span><span id="nowText">waiting for work to start</span></div>
+    <h2>Pipeline pictures</h2>
     <div class="grid" id="grid"></div>
-    <div class="empty" id="gridEmpty">пока пусто — как только пойдут генерации, они появятся здесь</div>
+    <div class="empty" id="gridEmpty">empty for now — as soon as generations start, they show up here</div>
   </section>
 
-  <section id="feed"><h2>Лента</h2><div id="feedList"></div></section>
+  <section id="feed"><h2>Feed</h2><div id="feedList"></div></section>
 </main>
 
 <script>
-const STAGE_RU = {
-  generated: 'сгенерировано', scan: 'смотрю', cut: 'фон убран',
-  marked: 'метки дыр', punched: 'дыры пробиты', parts: 'нарезано', build: 'сборка',
+const STAGE_LABELS = {
+  generated: 'generated', scan: 'looking', cut: 'cut out',
+  marked: 'marked', punched: 'punched', parts: 'parts', build: 'build',
 };
 const $ = id => document.getElementById(id);
 let lastVersion = -1, seenFeed = 0, seenCards = 0, session = null;
@@ -233,7 +233,7 @@ function renderGallery(images) {
     const stamp = it.stage + '|' + it.ts;
     if (card.dataset.stamp !== stamp) {
       card.dataset.stamp = stamp;
-      // ?v= ломает кеш: файл мог быть перезаписан на месте (punch/shrink)
+      // ?v= breaks the cache: the file may have been overwritten in place (punch/shrink)
       img.src = imgURL(it.path, 520) + '&v=' + Math.round(it.ts);
       shot.className = 'shot ' + it.stage;
       shot.querySelectorAll('.mk, .badge').forEach(n => n.remove());
@@ -248,13 +248,13 @@ function renderGallery(images) {
         });
         const b = document.createElement('div');
         b.className = 'badge';
-        b.textContent = 'меток: ' + it.marks.length;
+        b.textContent = 'marks: ' + it.marks.length;
         shot.appendChild(b);
       }
       card.querySelector('b').textContent = it.name;
       const tag = card.querySelector('.tag');
       tag.className = 'tag ' + it.stage;
-      tag.textContent = STAGE_RU[it.stage] || it.stage;
+      tag.textContent = STAGE_LABELS[it.stage] || it.stage;
       card.querySelector('.n').textContent = it.note || '';
     }
     card.classList.toggle('hot', !!it.hot);
@@ -263,7 +263,7 @@ function renderGallery(images) {
     if (!alive.has(c.dataset.p)) c.remove();
   });
 
-  // новая картинка приезжает в конец — крутим к ней, чтобы свежее было видно
+  // a new picture arrives at the end — scroll to it so the newest is visible
   if (images.length > seenCards) {
     const box = $('stage');
     requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
@@ -275,7 +275,7 @@ function renderFeed(feed) {
   const box = $('feedList');
   const grew = feed.length > seenFeed;
   box.innerHTML = '';
-  // хронологически: свежее внизу, как в терминале
+  // chronological: newest at the bottom, like in a terminal
   feed.forEach((f, i) => {
     const el = document.createElement('div');
     el.className = 'row' + (grew && i === feed.length - 1 ? ' fresh' : '');
@@ -292,9 +292,9 @@ function renderFeed(feed) {
 
 function paint(s) {
   $('device').textContent = s.device ? '· ' + s.device : '';
-  $('counts').textContent = s.done + ' из ' + s.total + ' шагов'
-    + (s.parts_total ? ' · деталей нарезано ' + s.parts_total : '')
-    + (s.assemble_iters ? ' · итераций сборки ' + s.assemble_iters : '');
+  $('counts').textContent = s.done + ' of ' + s.total + ' steps'
+    + (s.parts_total ? ' · parts extracted ' + s.parts_total : '')
+    + (s.assemble_iters ? ' · assembly iterations ' + s.assemble_iters : '');
   $('barFill').style.width = s.progress + '%';
   $('bar').classList.toggle('busy', !!s.current);
 
@@ -302,7 +302,7 @@ function paint(s) {
   now.classList.toggle('idle', !s.current);
   $('nowText').textContent = s.current
     ? s.current.label
-    : (s.done ? 'жду следующего шага' : 'жду начала работы');
+    : (s.done ? 'waiting for the next step' : 'waiting for work to start');
 
   renderSteps(s.steps);
   renderGallery(s.images);
@@ -314,15 +314,15 @@ async function tick() {
     const r = await fetch('/api/state', { cache: 'no-store' });
     const s = await r.json();
     $('link').classList.add('on');
-    $('linkText').textContent = 'на связи';
-    // стартовала новая сессия — страница начинает с нуля, а не домешивает
-    // новые события к старой ленте
+    $('linkText').textContent = 'connected';
+    // a new session started — the page starts from scratch instead of mixing
+    // new events into the old feed
     if (session !== null && s.session !== session) { location.reload(); return; }
     session = s.session;
     if (s.version !== lastVersion) { lastVersion = s.version; paint(s); }
   } catch (e) {
     $('link').classList.remove('on');
-    $('linkText').textContent = 'нет связи с сервером панели';
+    $('linkText').textContent = 'no connection to the panel server';
   }
 }
 tick();

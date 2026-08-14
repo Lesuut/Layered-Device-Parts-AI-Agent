@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-"""Доработка вырезанного PNG: непробитые белые дыры и кайма по контуру.
+"""Finishing a cut-out PNG: unpunched white holes and the fringe along the contour.
 
-Зачем. Движок `white` намеренно оставляет белое ВНУТРИ объекта (keep_holes):
-иначе он выест белые клавиши, шелкографию на плате и блики. Плата за это —
-настоящие сквозные дыры (окно экрана, отверстия в плате, просветы между
-рёбрами корпуса) остаются залитыми белым. Алгоритмически «дыра» и «белая
-деталь» неотличимы — решает глаз.
+Why. The `white` engine deliberately leaves white INSIDE the object (keep_holes):
+otherwise it would eat the white keys, the silkscreen on the board and the
+highlights. The price is that genuine see-through holes (the screen window, holes
+in the board, gaps between the shell ribs) stay filled with white. Algorithmically
+a "hole" and a "white part" are indistinguishable — the eye decides.
 
-Отсюда конвейер из трёх шагов:
+Hence a pipeline of three steps:
 
-  1. inspect_image  — находит ВСЕ белые пятна, оставшиеся непрозрачными,
-                      и рисует карту с пронумерованными метками (PNG) плюс
-                      машинный список (JSON). Агент смотрит карту глазами.
-  2. punch_image    — агент отдаёт номера меток и/или свои точки, каждая
-                      точка заливается по связной белой области -> альфа 0.
-  3. shrink_image   — по всей границе с прозрачностью срезает N пикселей
-                      вглубь: убирает тонкую белую обводку, которая всегда
-                      остаётся от неточности вырезания (bg_remove.shrink_alpha).
+  1. inspect_image  — finds EVERY white blob that stayed opaque and draws a map
+                      with numbered marks (PNG) plus a machine-readable list
+                      (JSON). The agent looks at the map with its eyes.
+  2. punch_image    — the agent hands over the mark numbers and/or its own points;
+                      each point flood-fills its connected white area -> alpha 0.
+  3. shrink_image   — along every boundary with transparency it cuts N pixels
+                      inward: removes the thin white outline that an imprecise
+                      cutout always leaves (bg_remove.shrink_alpha).
 
-Запуск отдельно:
+Standalone usage:
   python refine.py inspect  cut.png
   python refine.py punch    cut.png --ids 1,4,7 --points 512x300,900x412
   python refine.py shrink   cut.png --px 2
@@ -41,7 +41,7 @@ import bg_remove as br
 
 Image.MAX_IMAGE_PIXELS = None
 
-# Карта дыр рисуется на тёмном фоне: белое пятно на белом листе не разглядеть.
+# The hole map is drawn on a dark background: a white blob on a white sheet is invisible.
 MAP_BG = (18, 20, 28)
 MAP_BG_ALT = (27, 31, 43)
 MARK_FILL = (255, 40, 90)
@@ -49,12 +49,12 @@ MARK_LINE = (255, 214, 0)
 
 
 # ---------------------------------------------------------------------------
-# Общее
+# Shared
 # ---------------------------------------------------------------------------
 
 
 def load_rgba(path: str | Path) -> tuple[np.ndarray, np.ndarray]:
-    """RGB float32 0..255 и альфа 0..1. У картинки без альфы она вся единицы."""
+    """RGB float32 0..255 and alpha 0..1. For a picture with no alpha it is all ones."""
     rgb, alpha = br.load_rgb(Path(path))
     if alpha is None:
         alpha = np.ones(rgb.shape[:2], dtype=np.float32)
@@ -76,7 +76,7 @@ def map_paths_for(src: Path, out_dir: str | Path | None) -> tuple[Path, Path]:
 
 
 # ---------------------------------------------------------------------------
-# Шаг 1: найти белые пятна, оставшиеся непрозрачными
+# Step 1: find the white blobs that stayed opaque
 # ---------------------------------------------------------------------------
 
 
@@ -88,14 +88,14 @@ def find_white_regions(
     opaque_thr: float = 0.5,
     max_regions: int = 60,
 ) -> list[dict]:
-    """Связные области «почти белое и при этом непрозрачное».
+    """Connected areas of "almost white and opaque at the same time".
 
-    tol — насколько далеко от чистого белого ещё считается белым (0..255).
-    Отдаёт список, отсортированный по площади: самые заметные пятна первыми.
+    tol — how far from pure white still counts as white (0..255).
+    Returns a list sorted by area: the most noticeable blobs first.
 
-    У каждой области seed — не центр масс (у подковы он снаружи), а самая
-    «глубокая» точка по преобразованию расстояния: она гарантированно внутри
-    и годится как затравка для заливки на шаге punch.
+    Every area's seed is not the centre of mass (for a horseshoe that is outside)
+    but the "deepest" point by the distance transform: it is guaranteed to be
+    inside and works as a seed for the fill at the punch step.
     """
     dist = br.whiteness_distance(rgb)
     mask = (dist <= float(tol)) & (alpha >= opaque_thr)
@@ -118,8 +118,8 @@ def find_white_regions(
     for rank, lab in enumerate(order, 1):
         sy, sx = boxes[lab - 1]
         y0, y1, x0, x1 = sy.start, sy.stop, sx.start, sx.stop
-        # Работаем в вырезке с полем в 1 px: EDT и проверка окружения на полном
-        # кадре для полусотни областей стоят секунды на ровном месте.
+        # We work in a cutout with a 1 px margin: an EDT and a neighbourhood check on
+        # the full frame for fifty-odd areas costs seconds for no reason.
         py0, py1 = max(y0 - 1, 0), min(y1 + 1, h)
         px0, px1 = max(x0 - 1, 0), min(x1 + 1, w)
         crop = labels[py0:py1, px0:px1] == lab
@@ -145,8 +145,8 @@ def find_white_regions(
                 "area_share": round(area / float(h * w), 5),
                 "depth_px": round(depth, 1),
                 "fill_ratio": round(area / bbox_area, 3) if bbox_area else 0.0,
-                # enclosed = пятно со всех сторон окружено телом объекта.
-                # Такие — главные кандидаты в сквозные дыры.
+                # enclosed = the blob is surrounded by the body of the object on every side.
+                # Those are the prime candidates for see-through holes.
                 "enclosed": enclosed,
                 "touches_frame": bool(x0 == 0 or y0 == 0 or x1 == w or y1 == h),
                 "mean_rgb": [int(v) for v in region_rgb.mean(axis=0)],
@@ -165,11 +165,11 @@ def render_hole_map(
     max_side: int = 1600,
     checker: int = 40,
 ) -> dict:
-    """Картинка для глаз агента: объект на тёмной клетке, пятна помечены.
+    """A picture for the agent's eyes: the object on a dark checker, blobs marked.
 
-    Возвращает {path, scale, width, height}. scale — во сколько раз карта
-    меньше оригинала; координаты в JSON всегда в пикселях ОРИГИНАЛА, чтобы
-    punch не пришлось ничего пересчитывать.
+    Returns {path, scale, width, height}. scale — how many times smaller the map is
+    than the original; the coordinates in the JSON are always in pixels of the
+    ORIGINAL, so punch does not have to convert anything.
     """
     h, w = alpha.shape
     scale = min(1.0, float(max_side) / max(h, w))
@@ -206,7 +206,7 @@ def render_hole_map(
         tb = draw.textbbox((0, 0), text, font=font)
         pad = 5
         bw, bh = tb[2] - tb[0] + pad * 2, tb[3] - tb[1] + pad * 2
-        # Подпись держим внутри кадра, иначе у краевых пятен номер уезжает.
+        # The label is kept inside the frame, otherwise the number drifts off for edge blobs.
         bx = min(max(sx + 9, 0), tw - bw)
         by = min(max(sy - bh - 4, 0), th - bh)
         draw.rectangle([bx, by, bx + bw, by + bh], fill=(0, 0, 0, 205))
@@ -225,22 +225,22 @@ def inspect_image(
     max_regions: int = 60,
     max_side: int = 1600,
 ) -> dict:
-    """Найти непробитые белые пятна и отдать карту для визуальной проверки.
+    """Find the unpunched white blobs and return a map for a visual check.
 
-    Пишет рядом два файла: <имя>_holes.png (смотреть глазами) и
-    <имя>_holes.json (кормить в punch_image через map=).
+    Writes two files next to it: <name>_holes.png (to look at) and
+    <name>_holes.json (to feed into punch_image through map=).
     """
     started = time.time()
     src = Path(image)
     if not src.is_file():
-        return {"ok": False, "error": "not_found", "message": f"Нет файла: {src}"}
+        return {"ok": False, "error": "not_found", "message": f"No file: {src}"}
 
     rgb, alpha = load_rgba(src)
     if float((alpha < 0.5).mean()) < 0.001:
         return {
             "ok": False,
             "error": "no_alpha",
-            "message": "В картинке нет прозрачных пикселей — сначала bg_remove",
+            "message": "The picture has no transparent pixels — run bg_remove first",
             "src": str(src),
         }
 
@@ -261,9 +261,9 @@ def inspect_image(
         "regions": regions,
         "elapsed_sec": round(time.time() - started, 2),
         "hint": (
-            "Открой map_png. Пронумерованные пятна — белое, оставшееся непрозрачным. "
-            "Реальные дыры (окно экрана, отверстия платы, просветы корпуса) отдай в "
-            "punch по id; белые ДЕТАЛИ (клавиши, шелкография, блик) не трогай."
+            "Open map_png. The numbered blobs are white that stayed opaque. "
+            "Hand the real holes (the screen window, board holes, shell gaps) to "
+            "punch by id; do not touch white PARTS (keys, silkscreen, a highlight)."
         ),
     }
     map_json.parent.mkdir(parents=True, exist_ok=True)
@@ -272,7 +272,7 @@ def inspect_image(
 
 
 # ---------------------------------------------------------------------------
-# Шаг 2: пробить дыры по меткам
+# Step 2: punch the holes by the marks
 # ---------------------------------------------------------------------------
 
 
@@ -281,7 +281,7 @@ def _seed_list(
     ids: list[int] | None,
     map_data: dict | None,
 ) -> tuple[list[tuple[int, int]], list[str]]:
-    """Свести точки агента и id из карты к списку затравок (x, y)."""
+    """Reduce the agent's points and the map ids to a list of seeds (x, y)."""
     seeds: list[tuple[int, int]] = []
     notes: list[str] = []
 
@@ -297,7 +297,7 @@ def _seed_list(
         try:
             seeds.append((int(float(x)), int(float(y))))
         except (TypeError, ValueError):
-            notes.append(f"точку {p!r} не разобрал — пропустил")
+            notes.append(f"could not parse point {p!r} — skipped")
 
     if ids:
         by_id = {r["id"]: r for r in (map_data or {}).get("regions", [])}
@@ -306,7 +306,7 @@ def _seed_list(
             if r:
                 seeds.append(tuple(r["seed"]))
             else:
-                notes.append(f"id {i} нет в карте — пропустил")
+                notes.append(f"id {i} is not on the map — skipped")
 
     return seeds, notes
 
@@ -321,11 +321,11 @@ def punch_regions(
     mode: str = "flood",
     radius: int = 24,
 ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
-    """Выбить белое в точках-затравках. Возвращает (rgb, alpha, отчёт по точкам).
+    """Knock out white at the seed points. Returns (rgb, alpha, a per-point report).
 
-    mode="flood" — заливка по связной белой области под точкой (обычный случай).
-    mode="ball"  — снести белое в круге радиуса radius вокруг точки; выручает,
-                   когда область протекает наружу через щель в контуре.
+    mode="flood" — fill the connected white area under the point (the usual case).
+    mode="ball"  — wipe white inside a circle of radius around the point; it helps
+                   when the area leaks outward through a gap in the contour.
     """
     dist = br.whiteness_distance(rgb)
     white = (dist <= float(tol)) & (alpha >= 0.5)
@@ -337,7 +337,7 @@ def punch_regions(
 
     for x, y in seeds:
         if not (0 <= x < w and 0 <= y < h):
-            report.append({"seed": [x, y], "ok": False, "why": "точка вне кадра"})
+            report.append({"seed": [x, y], "ok": False, "why": "the point is outside the frame"})
             continue
 
         if mode == "ball":
@@ -352,8 +352,8 @@ def punch_regions(
                     {
                         "seed": [x, y],
                         "ok": False,
-                        "why": "под точкой не белое или уже прозрачно "
-                        f"(до белого {dist[y, x]:.0f}, альфа {alpha[y, x]:.2f})",
+                        "why": "not white under the point, or already transparent "
+                        f"(distance to white {dist[y, x]:.0f}, alpha {alpha[y, x]:.2f})",
                     }
                 )
                 continue
@@ -368,8 +368,8 @@ def punch_regions(
 
     out = alpha.copy()
     if edge > 0:
-        # Та же мягкая кромка, что и у основного вырезания: резкий срез по
-        # порогу даёт зубцы на скруглённых отверстиях.
+        # The same soft edge as in the main cutout: a hard threshold cut gives
+        # jagged teeth on rounded holes.
         band = ndimage.binary_dilation(hit, iterations=int(edge)) & ~hit
         soft = np.clip((dist - tol) / max(tol_fg - tol, 1e-6), 0.0, 1.0)
         out[band] = np.minimum(out[band], soft[band])
@@ -391,15 +391,15 @@ def punch_image(
     shrink: int = 0,
     compress: int = 6,
 ) -> dict:
-    """Пробить белые дыры по меткам агента. Без `out` перезаписывает исходник.
+    """Punch the white holes by the agent's marks. Without `out` it overwrites the source.
 
-    points — [[x, y], ...] или [{"x":..,"y":..}] в пикселях ОРИГИНАЛА;
-    ids    — номера пятен с карты inspect_image (нужен map_path).
+    points — [[x, y], ...] or [{"x":..,"y":..}] in pixels of the ORIGINAL;
+    ids    — blob numbers from the inspect_image map (map_path is needed).
     """
     started = time.time()
     src = Path(image)
     if not src.is_file():
-        return {"ok": False, "error": "not_found", "message": f"Нет файла: {src}"}
+        return {"ok": False, "error": "not_found", "message": f"No file: {src}"}
 
     map_data = None
     if ids and not map_path:
@@ -416,7 +416,7 @@ def punch_image(
         return {
             "ok": False,
             "error": "no_seeds",
-            "message": "Не передано ни одной точки/id",
+            "message": "Not a single point/id was passed",
             "notes": notes,
         }
 
@@ -456,7 +456,7 @@ def punch_image(
 
 
 # ---------------------------------------------------------------------------
-# Шаг 3: срезать кайму
+# Step 3: cut the fringe
 # ---------------------------------------------------------------------------
 
 
@@ -468,21 +468,21 @@ def shrink_image(
     min_island: int = 6,
     compress: int = 6,
 ) -> dict:
-    """Срезать px пикселей вглубь по всей границе с прозрачностью.
+    """Cut px pixels inward along every boundary with transparency.
 
-    Без `out` перезаписывает исходник — это шаг доводки уже вырезанного файла.
+    Without `out` it overwrites the source — this is a finishing step on an already cut file.
     """
     started = time.time()
     src = Path(image)
     if not src.is_file():
-        return {"ok": False, "error": "not_found", "message": f"Нет файла: {src}"}
+        return {"ok": False, "error": "not_found", "message": f"No file: {src}"}
 
     rgb, alpha = load_rgba(src)
     if float((alpha < 0.5).mean()) < 0.001:
         return {
             "ok": False,
             "error": "no_alpha",
-            "message": "Нет прозрачных пикселей — срезать не от чего",
+            "message": "No transparent pixels — there is nothing to cut from",
             "src": str(src),
         }
 
@@ -503,7 +503,7 @@ def shrink_image(
 
 
 def shrink_batch(images, px: int = 2, out_dir=None, recursive: bool = False, **kwargs) -> dict:
-    """Срезать кайму у пачки файлов (детали одного устройства)."""
+    """Cut the fringe off a batch of files (the parts of one device)."""
     files = br.expand_inputs(images, recursive)
     started = time.time()
     results = []
@@ -511,9 +511,9 @@ def shrink_batch(images, px: int = 2, out_dir=None, recursive: bool = False, **k
         dst = (Path(out_dir) / f.name) if out_dir else None
         res = shrink_image(f, px=px, out=dst, **kwargs)
         log_line = (
-            f"[{i}/{len(files)}] {f.name} -> срезано {res.get('removed_px', 0)} px"
+            f"[{i}/{len(files)}] {f.name} -> cut {res.get('removed_px', 0)} px"
             if res["ok"]
-            else f"[{i}/{len(files)}] {f.name} ОШИБКА {res.get('error')}"
+            else f"[{i}/{len(files)}] {f.name} ERROR {res.get('error')}"
         )
         br.log(log_line)
         results.append(res)
@@ -536,20 +536,20 @@ def shrink_batch(images, px: int = 2, out_dir=None, recursive: bool = False, **k
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(description="Доработка вырезанного PNG: дыры и кайма")
+    p = argparse.ArgumentParser(description="Finishing a cut-out PNG: holes and the fringe")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    ins = sub.add_parser("inspect", help="Найти непробитые белые пятна и нарисовать карту")
+    ins = sub.add_parser("inspect", help="Find the unpunched white blobs and draw a map")
     ins.add_argument("image")
     ins.add_argument("--out-dir")
     ins.add_argument("--tol", type=float, default=30.0)
     ins.add_argument("--min-area", type=int, default=40)
     ins.add_argument("--max-regions", type=int, default=60)
 
-    pun = sub.add_parser("punch", help="Выбить белое по точкам/id с карты")
+    pun = sub.add_parser("punch", help="Knock out white by points/ids from the map")
     pun.add_argument("image")
-    pun.add_argument("--ids", help="Номера пятен с карты: 1,4,7")
-    pun.add_argument("--points", help="Точки в пикселях оригинала: 512x300,900x412")
+    pun.add_argument("--ids", help="Blob numbers from the map: 1,4,7")
+    pun.add_argument("--points", help="Points in pixels of the original: 512x300,900x412")
     pun.add_argument("--map", dest="map_path")
     pun.add_argument("--out")
     pun.add_argument("--tol", type=float, default=30.0)
@@ -558,7 +558,7 @@ def main() -> int:
     pun.add_argument("--radius", type=int, default=24)
     pun.add_argument("--shrink", type=int, default=0)
 
-    shr = sub.add_parser("shrink", help="Срезать N px вглубь по всей границе")
+    shr = sub.add_parser("shrink", help="Cut N px inward along the whole boundary")
     shr.add_argument("images", nargs="+")
     shr.add_argument("--px", type=int, default=2)
     shr.add_argument("--out-dir")

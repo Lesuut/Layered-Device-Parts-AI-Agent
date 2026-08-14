@@ -1,5 +1,5 @@
 {
-  "_comment": "Ручная регистрация, если не подошёл install.bat. Для Claude Code положить в .mcp.json проекта, либо добавить блок mcpServers в ~/.claude.json. Для Claude Desktop — в claude_desktop_config.json.",
+  "_comment": "Manual registration if install.bat did not work out. For Claude Code, put it in the project .mcp.json, or add an mcpServers block to ~/.claude.json. For Claude Desktop — into claude_desktop_config.json.",
   "mcpServers": {
     "flow-images": {
       "command": "python",

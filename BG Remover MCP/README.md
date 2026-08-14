@@ -1,121 +1,124 @@
 # BG Remover
 
-Локальное удаление фона: картинка → PNG с прозрачностью. Офлайн, без облаков
-и API-ключей. Два движка: алгоритмический для белого фона и локальная
-нейросеть для любого.
+Local background removal: a picture → a PNG with transparency. Offline, no
+clouds and no API keys. Two engines: an algorithmic one for a white background
+and a local neural net for any.
 
-Два способа использования: **CLI** и **MCP-сервер** для Claude Code.
+Two ways to use it: a **CLI** and an **MCP server** for Claude Code.
 
-## Состав
+## What is inside
 
 ```
-install.bat            установка: зависимости + MCP + скилл
-bg_remove.py           вырезание фона: вся логика + CLI
-refine.py              доводка: карта дыр, пробивка по метке, срез каймы + CLI
-mcp_server.py          MCP-сервер (6 инструментов)
-skills/bg-remove/      скилл для Claude Code
-requirements.txt       зависимости
+install.bat            installation: dependencies + MCP + skill
+bg_remove.py           background cutting: all the logic + CLI
+refine.py              finishing: hole map, punching by mark, fringe cut + CLI
+mcp_server.py          MCP server (6 tools)
+skills/bg-remove/      the skill for Claude Code
+requirements.txt       dependencies
 ```
 
-## Движки
+## Engines
 
-| Метод | Как работает | Скорость (2400×1792) | Нужно поставить |
+| Method | How it works | Speed (2400×1792) | What to install |
 |---|---|---|---|
-| `white` | заливка от краёв кадра ищет связный белый фон; кромка берётся из «белизны» пикселя, затем цвет распремножается | ~1.5–2 с | pillow, numpy, scipy |
-| `ai` | локальная сегментация rembg (U²-Net / IS-Net, ONNX на CPU) | 5–15 с | rembg, onnxruntime + модель ~180 МБ |
-| `auto` | смотрит рамку кадра: белая → `white`, иначе → `ai` | — | — |
+| `white` | a fill from the frame edges looks for connected white background; the edge is taken from the "whiteness" of the pixel, then the colour is unpremultiplied | ~1.5–2 s | pillow, numpy, scipy |
+| `ai` | local segmentation with rembg (U²-Net / IS-Net, ONNX on CPU) | 5–15 s | rembg, onnxruntime + a ~180 MB model |
+| `auto` | looks at the frame border: white → `white`, otherwise → `ai` | — | — |
 
-Важное свойство `white`: фоном считается **только белое, связное с краем
-кадра**. Белые детали внутри объекта, блики и надписи остаются целыми.
-Отключается флагом `--no-keep-holes` (нужно для сквозных дырок).
+An important property of `white`: only white **connected to the frame border**
+counts as background. White parts inside the object, highlights and lettering
+stay intact. Switched off with the `--no-keep-holes` flag (needed for
+see-through holes).
 
-Белой каймы по контуру не остаётся: полупрозрачные пиксели распремножаются
-обратно из «цвет объекта поверх белого» в чистый цвет объекта.
+No white fringe is left along the contour: semi-transparent pixels are
+unpremultiplied back from "object colour over white" into the clean object
+colour.
 
-## Установка
+## Installation
 
-Двойной клик по **`install.bat`** — поставит зависимости, спросит про
-ИИ-движок, скопирует скилл в `~/.claude/skills/bg-remove` и зарегистрирует
-сервер (`claude mcp add bg-remover --scope user`).
+Double-click **`install.bat`** — it installs the dependencies, asks about the
+AI engine, copies the skill into `~/.claude/skills/bg-remove` and registers the
+server (`claude mcp add bg-remover --scope user`).
 
-Вручную:
+By hand:
 
 ```bash
 pip install -r requirements.txt
-pip install rembg onnxruntime        # опционально, движок ai
-python bg_remove.py --install-ai     # то же самое из скрипта
+pip install rembg onnxruntime        # optional, the ai engine
+python bg_remove.py --install-ai     # the same thing from the script
 ```
 
 ## CLI
 
 ```bash
-python bg_remove.py in.jpeg                          # рядом ляжет in_nobg.png
-python bg_remove.py in.jpeg --out C:\cut --trim      # обрезать пустые поля
+python bg_remove.py in.jpeg                          # in_nobg.png lands next to it
+python bg_remove.py in.jpeg --out C:\cut --trim      # crop the empty margins
 python bg_remove.py "C:\images\*.jpeg" --method white
 python bg_remove.py C:\images --recursive --out C:\cut
 python bg_remove.py photo.jpg --method ai --ai-model human
-python bg_remove.py --check                          # что доступно в системе
-python bg_remove.py in.jpeg --shrink 2               # сразу срезать белую кайму
+python bg_remove.py --check                          # what is available on the system
+python bg_remove.py in.jpeg --shrink 2               # cut the white fringe right away
 
-python refine.py inspect cut.png                     # карта дыр: cut_holes.png/.json
-python refine.py punch   cut.png --ids 1,4,7         # выбить дыры по номерам
-python refine.py punch   cut.png --points 640x320    # ... или по своей точке
-python refine.py shrink  C:\parts --px 2             # срезать кайму у всей папки
+python refine.py inspect cut.png                     # hole map: cut_holes.png/.json
+python refine.py punch   cut.png --ids 1,4,7         # knock the holes out by number
+python refine.py punch   cut.png --points 640x320    # ... or by your own point
+python refine.py shrink  C:\parts --px 2             # cut the fringe off a whole folder
 ```
 
-| Ключ | Смысл |
+| Flag | Meaning |
 |---|---|
-| `--out` | папка вывода (по умолчанию рядом с исходником) |
-| `--method` | `auto` (по умолчанию), `white`, `ai` |
+| `--out` | output folder (next to the source by default) |
+| `--method` | `auto` (default), `white`, `ai` |
 | `--ai-model` | `general`, `u2net`, `human`, `anime`, `fast` |
-| `--alpha-matting` | мягкая кромка у ИИ, заметно медленнее |
-| `--tol-bg` | порог «это фон», 0..255 (12) — главная ручка |
-| `--tol-fg` | порог полной непрозрачности (45) |
-| `--edge` | ширина мягкой кромки, px (2) |
-| `--feather` | размытие альфы, sigma (0) |
-| `--trim` / `--pad` | обрезать прозрачные поля / отступ при обрезке |
-| `--no-keep-holes` | выбивать ВСЕ белые пиксели, включая внутренние |
-| `--suffix` | суффикс имени выходного файла (`_nobg`) |
-| `--compress` | сжатие PNG 0–9 (6); 9 даёт −5% размера, но в 8 раз дольше |
-| `--recursive` | обходить папки рекурсивно |
-| `--json` | печатать полный результат JSON в stdout |
-| `--check` / `--install-ai` | окружение / доустановка ИИ |
+| `--alpha-matting` | soft edge from the AI, noticeably slower |
+| `--tol-bg` | the "this is background" threshold, 0..255 (12) — the main knob |
+| `--tol-fg` | full-opacity threshold (45) |
+| `--edge` | width of the soft edge, px (2) |
+| `--feather` | alpha blur, sigma (0) |
+| `--trim` / `--pad` | crop the transparent margins / padding when cropping |
+| `--no-keep-holes` | knock out ALL white pixels, including the inner ones |
+| `--suffix` | suffix of the output file name (`_nobg`) |
+| `--compress` | PNG compression 0–9 (6); 9 gives −5% size but takes 8x longer |
+| `--recursive` | walk folders recursively |
+| `--json` | print the full JSON result to stdout |
+| `--check` / `--install-ai` | environment / installing the AI |
 
-Файлы с суффиксом `_nobg` пропускаются — свой вывод повторно не режется.
-Исходники не меняются никогда.
+Files with the `_nobg` suffix are skipped — our own output is not cut again.
+Sources are never changed.
 
 ## MCP (Claude Code)
 
-| Инструмент | Что делает |
+| Tool | What it does |
 |---|---|
-| `bg_check` | библиотеки, доступность ИИ, скачанные модели |
-| `bg_remove` | файлы/папка/маска → PNG с прозрачностью, отдаёт пути |
-| `bg_inspect` | карта непробитых белых пятен с номерами (PNG + JSON) |
-| `bg_punch` | выбить белое по номерам с карты или по своим точкам |
-| `bg_shrink` | срезать N px по всей границе — убрать белую кайму |
-| `bg_install_ai` | доустановка rembg+onnxruntime |
+| `bg_check` | libraries, AI availability, downloaded models |
+| `bg_remove` | files/folder/mask → PNG with transparency, returns the paths |
+| `bg_inspect` | map of unpunched white blobs with numbers (PNG + JSON) |
+| `bg_punch` | knock out white by numbers from the map or by your own points |
+| `bg_shrink` | cut N px off the whole boundary — remove the white fringe |
+| `bg_install_ai` | installing rembg+onnxruntime |
 
-Полный цикл: `bg_remove` → `bg_inspect` → агент смотрит карту глазами →
-`bg_punch(ids=[...])` → `bg_shrink(px=2)`.
+The full cycle: `bg_remove` → `bg_inspect` → the agent looks at the map with its
+eyes → `bg_punch(ids=[...])` → `bg_shrink(px=2)`.
 
-В ответе `bg_remove` по каждому файлу: `path`, `method`, `width`/`height`,
-`bytes`, `opaque_share` (доля непрозрачных пикселей) и `notes`.
+The `bg_remove` response holds, per file: `path`, `method`, `width`/`height`,
+`bytes`, `opaque_share` (the share of opaque pixels) and `notes`.
 
-## Если результат плохой
+## If the result is bad
 
-- **Фон остался** (`opaque_share` ≈ 1) — фон не идеально белый.
-  Подними `--tol-bg` до 14–25 или бери `--method ai`.
-- **Съело объект** (`opaque_share` ≈ 0) — опусти `--tol-bg` до 6–8.
-- **Пропали белые детали объекта** — проверь, что не стоит `--no-keep-holes`;
-  если деталь касается края кадра, она считается фоном.
-- **Светлая кайма по контуру** — подними `--edge` до 3–4.
-- **Рваная кромка на шумном JPEG** — `--feather 0.8`.
-- **Тени остались полупрозрачными** — так и задумано; убрать полностью
-  можно подняв `--tol-bg`.
+- **The background is still there** (`opaque_share` ≈ 1) — the background is not
+  perfectly white. Raise `--tol-bg` to 14–25 or use `--method ai`.
+- **It ate the object** (`opaque_share` ≈ 0) — lower `--tol-bg` to 6–8.
+- **White parts of the object disappeared** — check that `--no-keep-holes` is not
+  set; if a part touches the frame edge, it counts as background.
+- **A light fringe along the contour** — raise `--edge` to 3–4.
+- **A ragged edge on a noisy JPEG** — `--feather 0.8`.
+- **Shadows stayed semi-transparent** — that is by design; they can be removed
+  completely by raising `--tol-bg`.
 
-## Конвейер с генератором
+## The pipeline with the generator
 
-Картинки из `Image Geneartor MCP` (Google Flow) идут на белом фоне, поэтому:
+Pictures out of `Image Geneartor MCP` (Google Flow) come on a white background,
+so:
 
 ```bash
 python bg_remove.py "..\Image Geneartor MCP\output\20260811_140250_*\*.jpeg" --method white --out C:\cut

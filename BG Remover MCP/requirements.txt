@@ -1,11 +1,11 @@
-# Движок white (белый фон) — обязательный минимум
+# The white engine (white background) — the mandatory minimum
 pillow>=10.0
 numpy>=1.24
 scipy>=1.10
 
-# MCP-сервер для Claude Code
+# MCP server for Claude Code
 mcp
 
-# Движок ai (любой фон) — опционально, ~100 МБ колёс + ~180 МБ модель
+# The ai engine (any background) — optional, ~100 MB of wheels + a ~180 MB model
 # rembg
 # onnxruntime

@@ -31,7 +31,7 @@ Feed the pipeline a reference picture. It gives back:
 | `device.json` | Part list: atlas frame, scene position, size, rotation, layer, type |
 | `preview_flat.png` | The parts stacked — should be indistinguishable from the source device |
 | `preview_exploded.png` | The same parts pulled apart |
-| `ОТКРЫТЬ_<device>.html` | Standalone viewer with the asset baked in — double-click, no server |
+| `OPEN_<device>.html` | Standalone viewer with the asset baked in — double-click, no server |
 | `viewer.html` | The same viewer, empty — drop any other asset onto it |
 
 <p align="center">
@@ -65,7 +65,7 @@ Feed the pipeline a reference picture. It gives back:
 `layer` decides teardown order — layer 0 comes off last. `type` is a shared
 classification (`housing_front`, `circuit_board`, `battery`, `display`, …) so a
 game can treat every battery in every device the same way. The 22 types live in
-[`ТИПЫ_ДЕТАЛЕЙ.md`](ТИПЫ_ДЕТАЛЕЙ.md).
+[`PART_TYPES.md`](PART_TYPES.md).
 
 ---
 
@@ -138,7 +138,7 @@ the final assembly. An asset that has not been looked at does not ship.
 ## The viewer
 
 Every asset ships with a viewer that is also an editor. No build step, no
-server — the asset is base64'd into the HTML, so `ОТКРЫТЬ_<device>.html` opens
+server — the asset is base64'd into the HTML, so `OPEN_<device>.html` opens
 straight off the disk.
 
 <p align="center">
@@ -180,9 +180,9 @@ agent checks the library first: the shell, board or screen it needs has often
 already been cut from a neighbouring device.
 
 ```bash
-py "Библиотека деталей/library.py" stats     # counts per device
-py "Библиотека деталей/library.py" scan      # re-walk work/ and assets/
-py "Библиотека деталей/library.py" sheet     # rebuild the contact sheets
+py "Parts Library/library.py" stats     # counts per device
+py "Parts Library/library.py" scan      # re-walk work/ and assets/
+py "Parts Library/library.py" sheet     # rebuild the contact sheets
 ```
 
 Two folders (used / unused), a flat `index.json` registry, and contact sheets of
@@ -226,7 +226,7 @@ Hand the agent a picture of a device and ask for an asset. It follows the
 `device-asset-pipeline` skill in `.claude/skills/`, which carries the full
 step-by-step procedure, the selection criteria and the JSON contract.
 
-Nothing to hand it? It draws its own reference: the prompts in `Promts/` generate
+Nothing to hand it? It draws its own reference: the prompts in `Prompts/` generate
 a sheet of devices, the best one gets cropped to a square, and that square
 becomes the style anchor for everything downstream.
 
@@ -239,13 +239,13 @@ Image Geneartor MCP/     image generation through a live Chrome on Google Flow
 BG Remover MCP/          background removal → transparent PNG (local)
 Asset Builder MCP/       part cutting, atlas packing, assembly, viewer
 Pipeline Dashboard/      live progress panel
-Promts/                  pipeline prompts (edited by hand, read fresh every run)
-Библиотека деталей/       every part ever cut, used and unused
+Prompts/                 pipeline prompts (edited by hand, read fresh every run)
+Parts Library/           every part ever cut, used and unused
 work/<device>/           pipeline intermediates (not tracked — rebuildable)
 assets/<device>/         finished assets: texture.png + device.json + previews
 Unity/                   Unity editor importer
 docs/                    README media and the scripts that generate it
-ТИПЫ_ДЕТАЛЕЙ.md          the shared part-type registry
+PART_TYPES.md            the shared part-type registry
 ```
 
 ---
@@ -285,8 +285,9 @@ silent lap first so the lag settles into its cycle before capture starts.
 
 ## Notes
 
-- Code comments, prompts and in-app text are in Russian — that is the project's
-  working language. This README is the English entry point.
+- Code, comments, in-app text and the pipeline prompts are all in English.
+  The only Russian left is a handful of CSS selectors in `flow_gen.py` that
+  match Google Flow's own Russian UI.
 - Flow generations are a finite resource. The agent is instructed not to re-roll
   on a hunch: at most two retries, and only with a stated reason.
 - `assets/nokia_3310/` is the reference asset — 7 layers, built end to end

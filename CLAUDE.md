@@ -1,155 +1,165 @@
 # Device Generator
 
-Конвейер создания 2D-ассетов устройств для игры про разборку и сборку
-(телефон разбирается послойно: передняя панель → клавиатура → плата → батарея
-→ задняя крышка, детали чинятся и собираются обратно).
+A pipeline that builds 2D device assets for a game about taking things apart
+and putting them back together (a phone comes apart layer by layer: front
+shell → keypad → board → battery → back cover; parts get repaired and
+reassembled).
 
-**Главное:** когда пользователь даёт картинку устройства и просит ассет —
-работай по скиллу `device-asset-pipeline` (`.claude/skills/device-asset-pipeline/`).
-Там пошаговый конвейер, критерии выбора картинок и деталей, формат JSON.
+**Main rule:** when the user hands over a picture of a device and asks for an
+asset — work through the `device-asset-pipeline` skill
+(`.claude/skills/device-asset-pipeline/`). It holds the step-by-step pipeline,
+the criteria for picking images and parts, and the JSON format.
 
-## Структура
+## Layout
 
 ```
-Image Geneartor MCP/     генерация картинок в Google Flow через живой Chrome
-BG Remover MCP/          удаление фона -> PNG с прозрачностью (локально)
-Asset Builder MCP/       нарезка деталей, атлас, сборка, viewer.html
-Pipeline Dashboard/      живая панель прогресса, открывается сама при старте сессии
-Promts/                  промты конвейера (НЕ менять без просьбы)
-Библиотека деталей/      склад ВСЕХ когда-либо нарезанных кусочков (и лишних)
-work/<device>/           промежуточные файлы конвейера
-assets/<device>/         готовые ассеты: texture.png + device.json + превью
-                         + ОТКРЫТЬ_<device>.html (ассет вшит, клик и смотришь)
-                         + viewer.html (сюда можно бросить другой ассет)
-ТИПЫ_ДЕТАЛЕЙ.md          реестр общих типов деталей (поле type в device.json)
-.claude/skills/          скиллы проекта
+Image Geneartor MCP/     image generation in Google Flow through a live Chrome
+BG Remover MCP/          background removal -> PNG with transparency (local)
+Asset Builder MCP/       part extraction, atlas, assembly, viewer.html
+Pipeline Dashboard/      live progress panel, opens itself when a session starts
+Prompts/                 pipeline prompts (do NOT edit unless asked)
+Parts Library/           storage for EVERY part ever cut (including leftovers)
+work/<device>/           intermediate pipeline files
+assets/<device>/         finished assets: texture.png + device.json + preview
+                         + OPEN_<device>.html (asset baked in, click and look)
+                         + viewer.html (drop any other asset onto it)
+PART_TYPES.md            registry of shared part types (the type field in device.json)
+.claude/skills/          project skills
 ```
 
-## MCP-серверы (зарегистрированы в user scope)
+## MCP servers (registered in user scope)
 
-| Сервер | Инструменты |
+| Server | Tools |
 |---|---|
 | `flow-images` | `flow_check`, `flow_setup`, `flow_generate`, `flow_paste_reference`, `flow_list_files` |
 | `bg-remover` | `bg_check`, `bg_remove`, `bg_inspect`, `bg_punch`, `bg_shrink`, `bg_install_ai` |
 | `asset-builder` | `asset_extract`, `asset_punch`, `asset_pack`, `asset_render`, `asset_update`, `asset_validate`, `asset_viewer`, `asset_package` |
 
-Всё локальное, кроме генерации: она идёт через реальный Chrome с открытым
-Google Flow (CDP), логин пользователя.
+Everything runs locally except generation: that goes through a real Chrome with
+Google Flow open (CDP), signed in as the user.
 
-## Панель прогресса
+## Progress panel
 
-`Pipeline Dashboard/` — живая HTML-панель на http://127.0.0.1:7788. Хук
-`SessionStart` поднимает сервер и открывает окно в браузере, хуки
-`PreToolUse`/`PostToolUse` пишут каждый вызов инструмента в
-`Pipeline Dashboard/state/events.jsonl`. Сервер раскладывает ленту по 13 шагам
-конвейера, собирает галерею картинок и отдаёт `/api/state`; страница опрашивает
-его раз в 700 мс.
+`Pipeline Dashboard/` — a live HTML panel on http://127.0.0.1:7788. The
+`SessionStart` hook brings the server up and opens a browser window; the
+`PreToolUse`/`PostToolUse` hooks write every tool call into
+`Pipeline Dashboard/state/events.jsonl`. The server sorts the feed into the 13
+pipeline steps, collects an image gallery and serves `/api/state`; the page
+polls it every 700 ms.
 
-Панель — только зеркало. Ничего специально для неё делать не надо: она сама
-видит генерации, просмотры картинок, вырезание фона, метки дыр, нарезку и
-итерации сборки. Хуки настроены в `.claude/settings.json`.
+The panel is only a mirror. Nothing has to be done specially for it: it sees
+generations, image views, background removal, hole marks, part extraction and
+assembly iterations on its own. The hooks are configured in
+`.claude/settings.json`.
 
-**Панель открывать всегда — первым делом в работе, до любого шага конвейера.**
-Не ждать хука `SessionStart` и не считать, что она уже поднята: сессия могла
-стартовать из другой папки, хук мог не сработать, окно мог закрыть
-пользователь. Команда одна, безопасная при повторном запуске:
+**Always open the panel — first thing, before any pipeline step.** Do not wait
+for the `SessionStart` hook and do not assume it is already up: the session may
+have started from another folder, the hook may not have fired, or the user may
+have closed the window. One command, safe to run again:
 
 ```
-py "Pipeline Dashboard/server.py" --ensure --open   ; поднять, если нет, и открыть окно
-py "Pipeline Dashboard/server.py" --status          ; проверить, жив ли
+py "Pipeline Dashboard/server.py" --ensure --open   ; start if missing, then open a window
+py "Pipeline Dashboard/server.py" --status          ; check whether it is alive
 ```
 
-`--ensure` не плодит второй сервер, `--open` открывает вкладку. Не поднялась —
-сказать пользователю и работать дальше, панель не блокирует конвейер.
+`--ensure` does not spawn a second server, `--open` opens a tab. If it does not
+come up — tell the user and keep working; the panel does not block the pipeline.
 
-## Что важно помнить
+## What matters
 
-- **Промт всегда с диска.** Перед каждым `flow_generate` — свежий `Read` файла
-  из `Promts/` и отправка его текста дословно. Пользователь правит эти файлы
-  руками, версия из контекста устаревает. Хук `promptguard.py` сверяет промт
-  с файлами и при расхождении спрашивает подтверждение.
-- **Квота Flow конечна.** Каждый `flow_generate` тратит генерации пользователя.
-  Не гонять «на пробу», не перезапускать при сомнениях — максимум два повтора
-  и только с объяснением, почему.
-- **Референс обязателен**: `flow_generate(reference_images=[...])` вставляет
-  картинку в композер, ждёт её загрузки и только потом жмёт «Создать».
-- **Пользователь не дал картинку — рисуешь исходник сам.** Просить картинку не
-  надо. Берёшь `Promts/1 Devices View Generator.txt` дословно, дописываешь в
-  конец, какое именно устройство нужно, генеришь пачку, **смотришь глазами и
-  выбираешь лучший экземпляр**, вырезаешь его из листа **в квадрат** (устройство
-  по центру, поля белые) и кладёшь в `work/<device>/source.png`. Дальше этот
-  квадрат — обычный якорь стиля: он идёт референсом в бургер, в раскладку и в
-  любую догенерацию, и по нему же сверяется финальная сборка.
-- **Chrome отладочный** живёт на портах 9222/9223/9224, порт 9222 у пользователя
-  часто занят Lens Studio — скрипты это распознают и уходят на следующий.
-- **Отладочный Chrome не запущен — подними его сам, не жди пользователя.**
-  `flow_check` вернул `ready: false` из-за отсутствия порта отладки (нет CDP,
-  «порт не отвечает») — сразу вызывай `flow_setup`: он поднимает отдельный
-  процесс Chrome с профилем `ChromeDebugProfile`, обычный Chrome пользователя
-  закрывать не надо. Если MCP `flow-images` недоступен, тот же эффект даёт
-  бат `Image Geneartor MCP/start_chrome_debug.bat` (внутри
-  `py run.py --setup-only`) — запускать в фоне, бат заканчивается на `pause`.
-  После подъёма — снова `flow_check`. Останавливаться и просить пользователя
-  можно только на том, что руками делает он сам: вход в Google и открытие
-  проекта Flow.
-- **`bg_remove` сохраняет белое внутри объекта** (`keep_holes`), поэтому вырезы
-  под экран и клавиши остаются белыми. Пробиваются они по взгляду:
-  `bg_inspect` рисует карту с номерами пятен → смотришь глазами → `bg_punch`
-  по номерам настоящих дыр. Уже нарезанные детали добивает `asset_punch`.
-- **Белая обводка по контуру** остаётся после любого вырезания. Убирает её
-  `bg_shrink(px=2)` — срезает 2 px вглубь по всей границе с прозрачностью.
-  Строго последним шагом, после всех пробивок.
-- **Проверять глазами обязательно** на трёх шагах: выбор лучшей генерации,
-  выбор деталей по контактке, финальная сборка. Ассет без визуальной проверки
-  не отдавать.
-- **Пачка из Flow — материал, а не финал.** Детали свободно берутся из разных
-  раскладок; одну недостающую или кривую деталь догенерировать своим промтом
-  с исходной картинкой пользователя в референсе; некритичную деталь, которая
-  портит сборку, выкинуть и сказать об этом. Подробности — в скилле.
-- **Все нарезанные детали копятся в `Библиотека деталей/`.** Туда попадает
-  каждый кусочек из `asset_extract` — и ушедший в атлас, и отброшенный.
-  Ведётся хуком автоматически (`Библиотека деталей/library.py hook` на
-  `asset_extract` и `asset_pack`), руками ничего копировать не надо.
-  Всё лежит одной кучей, без деления по устройствам — две папки
-  `использованные/` и `неиспользованные/`, устройство видно по имени файла
-  (`discman_part_003_2b1f2fe1.png`). Рядом реестр `index.json` (устройство,
-  размер, откуда взято, `id`, `type`) и контактки
-  `_контактка_использованные_NN.png` / `_контактка_неиспользованные_NN.png`
-  по 96 деталей на лист.
-  **Перед догенерацией детали сперва загляни в контактку неиспользованных**:
-  нужный корпус, плата или экран часто уже нарезаны у соседнего устройства, и
-  генерация не нужна. Команды: `py "Библиотека деталей/library.py" stats`,
-  `scan` (обойти work/ и assets/ заново), `rebuild` (пересчитать пометки),
-  `sheet`.
-- **У каждой детали есть `type`** — общая классификация, одинаковая для всех
-  устройств. Реестр типов лежит в `ТИПЫ_ДЕТАЛЕЙ.md` в корне: сперва прочитать
-  и взять подходящий тип оттуда, и только если ничего не подошло — дописать
-  новый в таблицу, а потом использовать.
-- **Вьювер умеет править ассет.** Кнопка «Редактор»: смена слоя (↑↓), корзина
-  и ✕ (вырезают деталь из ассета, слои после этого пересчитываются подряд без
-  дырок), правка типа, Ctrl+Z, «Сохранить device.json». Геометрия правится
-  тремя способами: поля `X`/`Y`/`W`/`H`/`R` в строке списка (R — поворот в
-  градусах), перетаскивание детали по сцене, стрелки (1 px, с Shift — 10).
-  Галочка «Схема типов» рисует выноски с типами, цвет типа считается из хеша
-  названия.
-- **«Сохранить» пишет в тот же файл, откуда открыт**, окно проводника больше не
-  вылезает. Два пути: у перетащенного ассета вьювер держит хэндл файла и пишет
-  прямо в него; у `ОТКРЫТЬ_*.html` путь к `device.json` вшит при упаковке, и
-  страница отдаёт JSON серверу панели (`POST /api/save-device`), а тот кладёт
-  файл на место **и сразу пересобирает `ОТКРЫТЬ_*.html`**. Сервер пишет только
-  внутрь `assets/` и `work/`, только в существующие `.json`, и только запросам
-  с `file://` или localhost. Панель не запущена — вьювер откатывается на диалог
-  выбора файла (один раз за сессию) и просит пересобрать через `asset_viewer`.
-- **Тест-разбор** — кнопка рядом с «Редактором»: плоский вид сверху, деталь
-  под курсором берётся мышью и вытаскивается как из пазла, счётчик «снято N из
-  M». Режим для проверки механики разборки; ассет он не трогает — сдвиги
-  хранятся отдельно и сбрасываются кнопкой «Собрать обратно», двойным кликом
-  по детали или выходом из режима.
-- Python вызывается как `py` (не `python`). Оболочка — PowerShell 5.1:
-  `&&` не работает, использовать `;`.
+- **Always take the prompt from disk.** Before every `flow_generate` — a fresh
+  `Read` of the file in `Prompts/`, then send its text verbatim. The user edits
+  these files by hand, so the copy in context goes stale. The `promptguard.py`
+  hook compares the prompt against the files and asks for confirmation when
+  they differ.
+- **Flow quota is finite.** Every `flow_generate` spends the user's
+  generations. Do not run them "just to try", do not restart on a hunch — two
+  retries at most, and only with an explanation of why.
+- **A reference is mandatory**: `flow_generate(reference_images=[...])` pastes
+  the picture into the composer, waits for it to upload and only then presses
+  "Create".
+- **If the user gave no picture — draw the source yourself.** No need to ask
+  for one. Take `Prompts/1 Devices View Generator.txt` verbatim, append which
+  device is needed, generate a batch, **look at it and pick the best
+  specimen**, crop it out of the sheet **into a square** (device centred, white
+  margins) and put it in `work/<device>/source.png`. From there that square is
+  an ordinary style anchor: it goes as a reference into the burger, into the
+  layout and into any extra generation, and the finished assembly is checked
+  against it.
+- **Debug Chrome** lives on ports 9222/9223/9224; port 9222 is often taken by
+  Lens Studio on this machine — the scripts detect that and move to the next one.
+- **If debug Chrome is not running, bring it up yourself, do not wait for the
+  user.** `flow_check` returned `ready: false` because the debug port is
+  missing (no CDP, "port not responding") — call `flow_setup` right away: it
+  starts a separate Chrome process with the `ChromeDebugProfile` profile, the
+  user's normal Chrome does not have to be closed. If the `flow-images` MCP is
+  unavailable, the same effect comes from `Image Geneartor MCP/start_chrome_debug.bat`
+  (which runs `py run.py --setup-only`) — run it in the background, the bat
+  ends on `pause`. Once it is up — `flow_check` again. The only thing worth
+  stopping and asking the user about is what they do by hand: signing in to
+  Google and opening the Flow project.
+- **`bg_remove` keeps white inside the object** (`keep_holes`), so the cutouts
+  for the screen and keys stay white. They are punched out by eye:
+  `bg_inspect` draws a map with numbered blobs → look at it → `bg_punch` by the
+  numbers of the real holes. Parts that are already extracted are finished off
+  with `asset_punch`.
+- **A white fringe along the contour** survives any cutout. `bg_shrink(px=2)`
+  removes it — it eats 2 px inward along the whole boundary with transparency.
+  Strictly the last step, after every punch.
+- **Checking by eye is mandatory** at three steps: picking the best generation,
+  picking parts off the contact sheet, and the final assembly. Never hand over
+  an asset that has not been looked at.
+- **A batch out of Flow is material, not a final answer.** Parts can be taken
+  freely from different layouts; a single missing or broken part can be
+  regenerated with your own prompt using the user's source picture as a
+  reference; a non-essential part that ruins the assembly gets dropped — say so
+  when it does. Details are in the skill.
+- **Every extracted part piles up in `Parts Library/`.** Each piece out of
+  `asset_extract` lands there — both the ones that went into the atlas and the
+  rejects. A hook maintains it automatically (`Parts Library/library.py hook`
+  on `asset_extract` and `asset_pack`); nothing has to be copied by hand.
+  It all lies in one heap, not split per device — two folders, `used/` and
+  `unused/`, with the device visible in the file name
+  (`discman_part_003_2b1f2fe1.png`). Next to them sits the `index.json` registry
+  (device, size, where it came from, `id`, `type`) and the contact sheets
+  `_contact_used_NN.png` / `_contact_unused_NN.png`, 96 parts per sheet.
+  **Before regenerating a part, look at the unused contact sheet first**: the
+  shell, board or screen you need has often already been cut from a neighbouring
+  device, and no generation is required. Commands:
+  `py "Parts Library/library.py" stats`, `scan` (re-walk work/ and assets/),
+  `rebuild` (recompute the marks), `sheet`.
+- **Every part has a `type`** — a shared classification, the same across all
+  devices. The registry of types lives in `PART_TYPES.md` in the root: read it
+  first and take a fitting type from there, and only if nothing fits, add a new
+  row to the table and then use it.
+- **The viewer can edit the asset.** The "Editor" button: change layer (↑↓),
+  trash and ✕ (cut a part out of the asset; layers are then renumbered
+  consecutively with no gaps), type editing, Ctrl+Z, "Save device.json".
+  Geometry is edited three ways: the `X`/`Y`/`W`/`H`/`R` fields in the list row
+  (R is rotation in degrees), dragging the part around the scene, and the arrow
+  keys (1 px, 10 with Shift). The "Type schema" checkbox draws callouts with
+  types; a type's colour is derived from the hash of its name.
+- **"Save" writes to the same file it was opened from**, no file explorer
+  dialog pops up any more. Two paths: for a dropped asset the viewer holds a
+  file handle and writes straight into it; for `OPEN_*.html` the path to
+  `device.json` is baked in at packaging time, and the page hands the JSON to
+  the panel server (`POST /api/save-device`), which puts the file back in place
+  **and immediately rebuilds `OPEN_*.html`**. The server only writes inside
+  `assets/` and `work/`, only into existing `.json` files, and only for
+  requests from `file://` or localhost. If the panel is not running, the viewer
+  falls back to the file picker dialog (once per session) and asks for a rebuild
+  through `asset_viewer`.
+- **Teardown test** — the button next to "Editor": a flat top-down view where
+  the part under the cursor is grabbed with the mouse and pulled out like a
+  jigsaw piece, with a "removed N of M" counter. It is a mode for checking the
+  disassembly mechanic; it does not touch the asset — the offsets are kept
+  separately and are reset by the "Reassemble" button, by double-clicking a
+  part, or by leaving the mode.
+- Python is invoked as `py` (not `python`). The shell is PowerShell 5.1:
+  `&&` does not work, use `;`.
 
-## Проверенный эталон
+## Verified reference asset
 
-`assets/nokia_3310/` — собранный ассет из 7 слоёв, сделан по этому конвейеру
-из `Чинила/3.jpeg`. Годится как образец структуры `device.json` и как тест
-для `viewer.html`.
+`assets/nokia_3310/` — an assembled 7-layer asset built through this pipeline.
+Good as a template for the `device.json` structure and as a test case for
+`viewer.html`.

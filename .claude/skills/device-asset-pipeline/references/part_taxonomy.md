@@ -1,89 +1,89 @@
-# Комплекты деталей по типам устройств
+# Part kits by device type
 
-Порядок в таблицах — снизу вверх, то есть `layer` 0 → N. Это же порядок
-разборки в игре, только наоборот: игрок снимает сверху вниз.
+The order in the tables is bottom-up, that is `layer` 0 → N. It is also the
+teardown order in the game, only reversed: the player removes from the top down.
 
-Обязательные детали помечены **жирным** — без них ассет неполный, так и
-скажи пользователю, если такой детали не нашлось ни на одной из 4 картинок.
+Mandatory parts are marked in **bold** — without them the asset is incomplete;
+say so to the user if such a part turned up on none of the 4 pictures.
 
-## Телефон-кнопочный (Nokia-подобный)
+## Keypad phone (Nokia-like)
 
-| layer | id | name | Как узнать на раскладке |
+| layer | id | name | How to spot it on the layout |
 |---|---|---|---|
-| 0 | **back_cover** | Back Cover | сплошная задняя крышка, часто с текстурой/логотипом |
-| 1 | **rear_chassis** | Rear Chassis | корпус-ванна с отсеком под батарею, видны рёбра и защёлки |
-| 2 | **battery** | Battery | прямоугольник со скруглениями, наклейка, контакты |
-| 3 | **main_pcb** | Main Board | зелёная плата с чипами, разъёмом SIM |
-| 4 | keypad_membrane | Keypad Membrane | светлая мембрана с куполами под клавиши |
-| 5 | **keypad** | Keypad | резиновая клавиатура с цифрами |
-| 6 | **screen** | LCD Screen | прямоугольный дисплей, часто со шлейфом |
-| 7 | **front_shell** | Front Shell | передняя панель с вырезом под экран и дырками клавиш |
+| 0 | **back_cover** | Back Cover | a solid back cover, often with a texture/logo |
+| 1 | **rear_chassis** | Rear Chassis | tub-shaped body with the battery compartment, ribs and latches visible |
+| 2 | **battery** | Battery | rounded rectangle, label, contacts |
+| 3 | **main_pcb** | Main Board | green board with chips and a SIM socket |
+| 4 | keypad_membrane | Keypad Membrane | light membrane with domes under the keys |
+| 5 | **keypad** | Keypad | rubber keypad with digits |
+| 6 | **screen** | LCD Screen | rectangular display, often with a ribbon |
+| 7 | **front_shell** | Front Shell | front panel with the screen cutout and key holes |
 
-Мелочь по желанию: `speaker`, `microphone`, `vibro_motor`, `antenna`,
+Optional small stuff: `speaker`, `microphone`, `vibro_motor`, `antenna`,
 `camera_module`, `flex_cable`, `sim_tray`, `screw`.
 
-## Телефон-раскладушка (флип)
+## Clamshell phone (flip)
 
-Две половины на шарнире. Собирается **раскрытой**, силуэт общий, стык закрыт
-шарниром. Слои идут сквозной нумерацией через обе половины.
+Two halves on a hinge. Assembled **open**, one shared silhouette, the joint
+covered by the hinge. Layers are numbered straight through both halves.
 
-| layer | id | name | Как узнать на раскладке |
+| layer | id | name | How to spot it on the layout |
 |---|---|---|---|
-| 0 | **lid_back_cover** | Lid Back Cover | внешняя крышка флипа, часто с логотипом и внешним экраном |
-| 1 | **rear_chassis** | Rear Chassis | ванна нижней половины с отсеком под батарею |
-| 2 | **battery** | Battery | прямоугольник с контактами |
-| 3 | **main_pcb** | Main Board | плата нижней половины |
-| 4 | speaker | Speaker | бочонок или таблетка динамика |
-| 5 | **hinge** | Hinge | ось-шарнир: цилиндр или пара втулок; связывает половины |
-| 6 | flex_cable | Hinge Flex | длинный шлейф, идёт из нижней половины в верхнюю |
-| 7 | lid_chassis | Lid Chassis | рама внутри флипа, держит матрицу |
-| 8 | **lcd_screen** | LCD Screen | модуль дисплея со шлейфом |
-| 9 | keypad_membrane | Keypad Membrane | подложка под клавиатурой |
-| 10 | **keypad** | Keypad | клавиатура с цифрами |
-| 11 | **front_bezel** | Front Bezel | лицевая рамка нижней половины с окном под клавиатуру |
-| 12 | **lid_front_shell** | Lid Front Shell | лицевая крышка флипа с окном под экран |
+| 0 | **lid_back_cover** | Lid Back Cover | outer lid of the flip, often with a logo and an external screen |
+| 1 | **rear_chassis** | Rear Chassis | tub of the lower half with the battery compartment |
+| 2 | **battery** | Battery | rectangle with contacts |
+| 3 | **main_pcb** | Main Board | board of the lower half |
+| 4 | speaker | Speaker | a barrel or a disc of a speaker |
+| 5 | **hinge** | Hinge | the hinge axle: a cylinder or a pair of bushings; ties the halves together |
+| 6 | flex_cable | Hinge Flex | a long ribbon running from the lower half into the upper one |
+| 7 | lid_chassis | Lid Chassis | frame inside the flip, holds the matrix |
+| 8 | **lcd_screen** | LCD Screen | display module with a ribbon |
+| 9 | keypad_membrane | Keypad Membrane | backing under the keypad |
+| 10 | **keypad** | Keypad | keypad with digits |
+| 11 | **front_bezel** | Front Bezel | front bezel of the lower half with the keypad window |
+| 12 | **lid_front_shell** | Lid Front Shell | front lid of the flip with the screen window |
 
-`hinge` обязателен: без него половины на сборке распадаются на два предмета.
-Нет его в пачках — догенерировать по шагу 8.
+`hinge` is mandatory: without it the halves fall apart into two objects in the
+assembly. Not in any batch — generate it per step 8.
 
-Ширина верхней и нижней половин должна совпадать. Не совпала — брак подбора.
+The widths of the upper and lower halves must match. They do not — bad pick.
 
-## Смартфон
+## Smartphone
 
 `back_glass` → `mid_frame` → `battery` → `main_pcb` → `shield_plate` →
 `camera_module` → `display_module` → `front_glass`
 
-## Плеер / диктофон
+## Player / dictaphone
 
-`back_cover` → `chassis` → `battery` → `main_pcb` → `mechanism` (лентопротяг
-или привод) → `buttons` → `front_shell`
+`back_cover` → `chassis` → `battery` → `main_pcb` → `mechanism` (tape transport
+or drive) → `buttons` → `front_shell`
 
-## Портативная консоль
+## Handheld console
 
-`back_cover` → `chassis` → `battery` → `main_pcb` → `buttons_pad` (d-pad и
-кнопки отдельными деталями, если различимы) → `screen` → `front_shell`
+`back_cover` → `chassis` → `battery` → `main_pcb` → `buttons_pad` (d-pad and
+buttons as separate parts, if they can be told apart) → `screen` → `front_shell`
 
-## Пульт ДУ
+## Remote control
 
-`back_cover` → `battery` (часто две) → `contact_membrane` → `main_pcb` →
+`back_cover` → `battery` (often two) → `contact_membrane` → `main_pcb` →
 `buttons` → `front_shell`
 
-## Фотоаппарат
+## Camera
 
 `back_cover` → `chassis` → `battery` → `main_pcb` → `sensor_module` →
 `lens_assembly` → `top_plate` → `front_shell`
 
-## Правила именования
+## Naming rules
 
-- `id` — только латиница, snake_case, уникален в пределах устройства.
-- Несколько одинаковых деталей — суффикс номером: `screw_1`, `screw_2`.
-- `name` — человекочитаемое по-английски, с большой буквы: `Main Board`.
-- Не выдумывай экзотических имён: игра ищет детали по устойчивым id.
+- `id` — Latin letters only, snake_case, unique within the device.
+- Several identical parts — a numbered suffix: `screw_1`, `screw_2`.
+- `name` — human-readable English, capitalised: `Main Board`.
+- Do not invent exotic names: the game looks parts up by stable ids.
 
-## Признаки, что деталь брать НЕ надо
+## Signs that a part should NOT be taken
 
-- Собранное устройство целиком (часто попадает в раскладку как «эталон»).
-- Две слипшиеся детали в одном силуэте.
-- Деталь, показанная изнанкой, когда есть вариант с лицевой стороны.
-- Обрывки текста, стрелок, рамок, теней.
-- Дубль детали, которая уже взята, но хуже качеством.
+- The whole assembled device (it often lands in the layout as a "reference").
+- Two parts fused into one silhouette.
+- A part shown from the back when there is a front-side variant.
+- Fragments of text, arrows, frames, shadows.
+- A duplicate of a part already taken, but of worse quality.

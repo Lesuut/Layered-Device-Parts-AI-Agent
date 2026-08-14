@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 """
-Автоматизация Google Flow (labs.google/fx/tools/flow) в УЖЕ ОТКРЫТОМ Chrome.
+Automating Google Flow (labs.google/fx/tools/flow) in an ALREADY OPEN Chrome.
 
-Скрипт не запускает свой браузер и не создаёт новый профиль — он цепляется
-к работающему Chrome через CDP (протокол отладки), находит вкладку с Flow,
-вставляет промт, жмёт генерацию, ждёт картинки и качает их в папку.
-Все куки/логин Google берутся из твоего обычного профиля.
+The script does not start its own browser and does not create a new profile — it
+attaches to a running Chrome over CDP (the debug protocol), finds the Flow tab,
+pastes the prompt, presses generate, waits for the pictures and downloads them into a folder.
+All the Google cookies/login come from your normal profile.
 
-ОДИН РАЗ: Chrome должен быть запущен с портом отладки.
-  1. Закрыть Chrome полностью (иконка в трее тоже).
-  2. Запустить start_chrome_debug.bat  (лежит рядом со скриптом)
-  3. Открыть свой проект Flow в этом Chrome.
+ONE TIME: Chrome has to be started with a debug port.
+  1. Close Chrome completely (the tray icon too).
+  2. Run start_chrome_debug.bat  (it sits next to the script)
+  3. Open your Flow project in that Chrome.
 
-Запуск:
-  python flow_gen.py --prompt "текст промта"
+Usage:
+  python flow_gen.py --prompt "prompt text"
   python flow_gen.py --prompt "..." --out "C:\\images" --count 4
-  python flow_gen.py --prompt "..." --ref ref.png   # референс: вставка + ожидание
-  python flow_gen.py --list-tabs          # посмотреть, к чему подключились
-  python flow_gen.py --prompts-file p.txt # пачка промтов через строку ---
+  python flow_gen.py --prompt "..." --ref ref.png   # reference: paste + wait
+  python flow_gen.py --list-tabs          # see what we attached to
+  python flow_gen.py --prompts-file p.txt # a batch of prompts separated by a --- line
 
-Установка:
-  pip install playwright        # 'playwright install' НЕ нужен: свой браузер не поднимаем
+Installation:
+  pip install playwright        # 'playwright install' is NOT needed: we start no browser of our own
 """
 
 from __future__ import annotations
@@ -48,10 +48,10 @@ from playwright.sync_api import (
 )
 
 # ---------------------------------------------------------------------------
-# Настройки поиска элементов (Flow меняет вёрстку — правится тут)
+# Element lookup settings (Flow changes its markup — fix it here)
 # ---------------------------------------------------------------------------
 
-FLOW_URL_MARK = "labs.google"          # по чему узнаём нужную вкладку
+FLOW_URL_MARK = "labs.google"          # what we recognise the right tab by
 FLOW_PATH_MARK = "/tools/flow"
 
 PROMPT_SELECTORS = [
@@ -64,8 +64,8 @@ PROMPT_SELECTORS = [
     "textarea",
 ]
 
-# Кнопка генерации во Flow: без aria-label, внутри — material-иконка-лигатура
-# "arrow_forward" и подпись "Создать". Пока промт пуст, она disabled.
+# The generate button in Flow: no aria-label, inside is a material icon ligature
+# "arrow_forward" and the caption "Создать". While the prompt is empty it is disabled.
 SUBMIT_SELECTORS = [
     'button:has-text("arrow_forward")',
     'button:has(i:text-is("arrow_forward"))',
@@ -76,16 +76,16 @@ SUBMIT_SELECTORS = [
     'button[type="submit"]',
 ]
 
-# кнопки, которые похожи, но НЕ запускают генерацию
+# buttons that look similar but do NOT start generation
 SUBMIT_EXCLUDE_TEXT = ("add_2", "Агент", "Agent", "more_vert", "add\n")
 
 IMG_URL_BLACKLIST = re.compile(
     r"(googleusercontent\.com/a/|/avatar|favicon|sprite|logo|icon)", re.I
 )
 
-# Референс во Flow появляется миниатюрой в самом композере (рядом с полем ввода).
-# Пока файл заливается, кнопка генерации остаётся disabled.
-REF_THUMB_MAX_SIDE = 220        # px: больше — это уже результат генерации, не чип
+# A reference appears in Flow as a thumbnail in the composer itself (next to the input).
+# While the file is uploading, the generate button stays disabled.
+REF_THUMB_MAX_SIDE = 220        # px: anything bigger is a generation result, not a chip
 REF_ALLOWED_EXT = (".png", ".jpg", ".jpeg", ".webp", ".gif")
 
 JS_COLLECT_IMAGES = """
@@ -126,9 +126,9 @@ async (url) => {
 """
 
 
-# Синтетическая вставка файла: собираем File из base64, кладём в DataTransfer
-# и шлём настоящий ClipboardEvent('paste') — то же событие, что и Ctrl+V,
-# но без зависимости от системного буфера обмена.
+# Synthetic file paste: we build a File out of base64, put it into a DataTransfer
+# and fire a real ClipboardEvent('paste') — the same event as Ctrl+V,
+# but without depending on the system clipboard.
 JS_PASTE_FILE = """
 ([b64, mime, name, selector]) => {
   const bin = atob(b64);
@@ -148,7 +148,7 @@ JS_PASTE_FILE = """
   const ev = new ClipboardEvent('paste', {
     clipboardData: dt, bubbles: true, cancelable: true, composed: true,
   });
-  // В части сборок clipboardData из конструктора не долетает — подстраховка.
+  // In some builds clipboardData from the constructor does not make it through — a fallback.
   if (!ev.clipboardData || ev.clipboardData.files.length === 0) {
     try { Object.defineProperty(ev, 'clipboardData', { value: dt }); } catch (e) {}
   }
@@ -157,7 +157,7 @@ JS_PASTE_FILE = """
 }
 """
 
-# Резерв: drag&drop того же файла в зону композера.
+# Fallback: drag&drop of the same file into the composer area.
 JS_DROP_FILE = """
 ([b64, mime, name, selector]) => {
   const bin = atob(b64);
@@ -182,7 +182,7 @@ JS_DROP_FILE = """
 }
 """
 
-# Миниатюры-чипы: маленькие картинки (референсы), а не результаты генерации.
+# Thumbnail chips: small pictures (references), not generation results.
 JS_COLLECT_THUMBS = """
 (maxSide) => {
   const out = [];
@@ -201,7 +201,7 @@ JS_COLLECT_THUMBS = """
 }
 """
 
-# Идёт ли на странице загрузка/обработка (спиннеры, прогресс-бары).
+# Whether the page is loading/processing (spinners, progress bars).
 JS_IS_BUSY = """
 () => {
   const sel = '[role="progressbar"], [aria-busy="true"], progress, ' +
@@ -216,7 +216,7 @@ JS_IS_BUSY = """
 
 
 def _init_stream(stream):
-    """UTF-8 на выводе: в консоли Windows иначе падает на кириллице (cp1251)."""
+    """UTF-8 on output: the Windows console otherwise chokes on non-ASCII (cp1251)."""
     try:
         stream.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
@@ -229,26 +229,26 @@ _init_stream(sys.stdout)
 
 
 def log(msg: str) -> None:
-    """Лог идёт в stderr: stdout занят протоколом MCP, туда писать нельзя."""
+    """The log goes to stderr: stdout is taken by the MCP protocol, nothing may be written there."""
     print(f"[{datetime.now():%H:%M:%S}] {msg}", file=sys.stderr, flush=True)
 
 
 # ---------------------------------------------------------------------------
-# Подключение к уже запущенному Chrome
+# Attaching to an already running Chrome
 # ---------------------------------------------------------------------------
 
 DEFAULT_PORTS = (9222, 9223, 9224)
 
 HOWTO = f"""
-Не нашёл Chrome с открытым портом отладки.
+No Chrome with an open debug port was found.
 
-Что сделать:
-  1. Полностью закрыть Chrome (проверь трей и Диспетчер задач: chrome.exe).
-  2. Запустить RUN_TEST.bat (или start_chrome_debug.bat) рядом с этим скриптом
-     — поднимет Chrome с портом {DEFAULT_PORTS[0]}.
-  3. Открыть в нём проект Flow и повторить запуск скрипта.
+What to do:
+  1. Close Chrome completely (check the tray and Task Manager: chrome.exe).
+  2. Run RUN_TEST.bat (or start_chrome_debug.bat) next to this script
+     — it brings Chrome up with port {DEFAULT_PORTS[0]}.
+  3. Open the Flow project in it and run the script again.
 
-Проверка вручную: открой http://localhost:{DEFAULT_PORTS[0]}/json/version
+Manual check: open http://localhost:{DEFAULT_PORTS[0]}/json/version
 """
 
 
@@ -261,8 +261,8 @@ def probe_cdp(endpoint: str, timeout: float = 2.0) -> dict | None:
 
 
 def is_chrome_cdp(info: dict) -> bool:
-    """Отфильтровать чужие приложения на том же порту (напр. Lens Studio),
-    которые тоже отвечают на /json/version, но не являются Chrome."""
+    """Filter out other applications on the same port (Lens Studio, for instance)
+    that also answer on /json/version but are not Chrome."""
     browser = str(info.get("Browser", ""))
     return bool(info.get("webSocketDebuggerUrl")) and re.match(
         r"(Headless)?Chrom(e|ium)/", browser
@@ -270,7 +270,7 @@ def is_chrome_cdp(info: dict) -> bool:
 
 
 def resolve_endpoint(explicit: str | None) -> str:
-    """Найти живой CDP-эндпоинт: явный, либо перебор стандартных портов."""
+    """Find a live CDP endpoint: an explicit one, or by trying the standard ports."""
     candidates = [explicit] if explicit else [f"http://localhost:{p}" for p in DEFAULT_PORTS]
     for ep in candidates:
         if not ep:
@@ -281,21 +281,21 @@ def resolve_endpoint(explicit: str | None) -> str:
         if not info:
             continue
         if not is_chrome_cdp(info) and not explicit:
-            log(f"Пропускаю {ep}: это не Chrome ({info.get('Browser', '?')})")
+            log(f"Skipping {ep}: this is not Chrome ({info.get('Browser', '?')})")
             continue
-        log(f"Подключение: {ep}  ({info.get('Browser', '?')})")
+        log(f"Connecting: {ep}  ({info.get('Browser', '?')})")
         return ep
     raise SystemExit(HOWTO)
 
 
 class AttachedChrome:
-    """Подключение к живому Chrome. Браузер НИКОГДА не закрывается скриптом."""
+    """Attaching to a live Chrome. The browser is NEVER closed by the script."""
 
     def __init__(self, endpoint: str, action_timeout: int) -> None:
         self._pw = sync_playwright().start()
         self._browser = self._pw.chromium.connect_over_cdp(endpoint)
         if not self._browser.contexts:
-            raise SystemExit("В браузере нет ни одного контекста/вкладки")
+            raise SystemExit("The browser has no contexts/tabs at all")
         self.contexts: list[BrowserContext] = list(self._browser.contexts)
         for ctx in self.contexts:
             ctx.set_default_timeout(action_timeout * 1000)
@@ -306,32 +306,32 @@ class AttachedChrome:
     def find_flow_page(self, url: str | None) -> Page:
         pages = self.all_pages()
         if not pages:
-            raise SystemExit("Нет открытых вкладок")
+            raise SystemExit("No open tabs")
 
-        # 1) точное совпадение с переданным --url
+        # 1) an exact match with the --url that was passed
         if url:
             base = url.split("?")[0].rstrip("/")
             for p in pages:
                 if p.url.split("?")[0].rstrip("/") == base:
-                    log(f"Нашёл вкладку с нужным URL: {p.url}")
+                    log(f"Found a tab with the requested URL: {p.url}")
                     return self._focus(p)
 
-        # 2) любая вкладка Flow
+        # 2) any Flow tab
         for p in pages:
             if FLOW_URL_MARK in p.url and FLOW_PATH_MARK in p.url:
-                log(f"Нашёл вкладку Flow: {p.url}")
+                log(f"Found a Flow tab: {p.url}")
                 return self._focus(p)
 
-        # 3) открыть новую вкладку в существующем окне (если знаем URL)
+        # 3) open a new tab in the existing window (if we know the URL)
         if url:
-            log("Вкладка Flow не найдена — открываю новую в текущем Chrome")
+            log("No Flow tab found — opening a new one in the current Chrome")
             page = self.contexts[0].new_page()
             page.goto(url, wait_until="domcontentloaded")
             return self._focus(page)
 
         raise SystemExit(
-            "Вкладка Flow не найдена. Открой проект Flow в Chrome "
-            "или передай --url https://labs.google/fx/ru/tools/flow/project/..."
+            "No Flow tab found. Open a Flow project in Chrome "
+            "or pass --url https://labs.google/fx/ru/tools/flow/project/..."
         )
 
     @staticmethod
@@ -343,7 +343,7 @@ class AttachedChrome:
         return page
 
     def detach(self) -> None:
-        """Отцепиться, не трогая сам браузер."""
+        """Detach without touching the browser itself."""
         try:
             self._pw.stop()
         except Exception:
@@ -351,7 +351,7 @@ class AttachedChrome:
 
 
 # ---------------------------------------------------------------------------
-# Работа со страницей Flow
+# Working with the Flow page
 # ---------------------------------------------------------------------------
 
 
@@ -367,15 +367,15 @@ def find_prompt_box(page: Page, timeout: int):
             except Exception as exc:
                 last_err = exc
         page.wait_for_timeout(500)
-    raise RuntimeError(f"Не нашёл поле ввода промта. Последняя ошибка: {last_err}")
+    raise RuntimeError(f"Could not find the prompt input. Last error: {last_err}")
 
 
 def flatten_prompt(prompt: str) -> str:
-    """Свести промт в одну строку.
+    """Flatten the prompt into a single line.
 
-    В композере Flow Enter = отправка, поэтому набирать текст с переводами
-    строки нельзя: запрос уйдёт на первой же пустой строке. Абзацы склеиваем
-    через ' | ', обычные переносы — через пробел, смысл промта не меняется.
+    In the Flow composer Enter = submit, so the text must not be typed with line
+    breaks: the request would go off on the first empty line. Paragraphs are joined
+    with ' | ', ordinary breaks with a space; the meaning of the prompt is unchanged.
     """
     paragraphs = [
         " ".join(line.strip() for line in block.splitlines() if line.strip())
@@ -392,20 +392,20 @@ def type_prompt(page: Page, prompt: str, timeout: int) -> None:
     page.keyboard.press("Delete")
     box.type(flat, delay=8)
     if flat != prompt:
-        log("Промт свёрнут в одну строку (Enter в композере = отправка)")
-    log(f"Промт вставлен ({len(flat)} символов)")
+        log("The prompt was flattened into one line (Enter in the composer = submit)")
+    log(f"Prompt pasted ({len(flat)} characters)")
 
 
 # ---------------------------------------------------------------------------
-# Референсы: вставка картинки в композер до генерации
+# References: pasting a picture into the composer before generation
 # ---------------------------------------------------------------------------
 
 
 def load_reference(src: str | Path) -> tuple[bytes, str, str]:
-    """Привести источник картинки к (байты, mime, имя файла).
+    """Reduce a picture source to (bytes, mime, file name).
 
-    Принимает: путь к файлу, data:-URI, http(s)-ссылку или голый base64 —
-    чтобы модель могла отдать картинку в любом удобном ей виде.
+    Accepts: a file path, a data: URI, an http(s) link or bare base64 — so the model
+    can hand the picture over in whatever form suits it.
     """
     text = str(src).strip().strip('"').strip("'")
 
@@ -424,22 +424,22 @@ def load_reference(src: str | Path) -> tuple[bytes, str, str]:
     path = Path(text)
     if path.exists() and path.is_file():
         data = path.read_bytes()
-        # Сигнатура файла надёжнее mimetypes: на Windows он берёт типы из
-        # реестра и, например, для .webp может вернуть image/png.
+        # The file signature is more reliable than mimetypes: on Windows it takes types
+        # from the registry and may return image/png for .webp, for instance.
         mime = sniff_mime(data)
         if mime == "application/octet-stream":
             mime = mimetypes.guess_type(path.name)[0] or "image/png"
         return data, mime, path.name
 
-    # последний вариант: голый base64 без префикса
+    # last option: bare base64 with no prefix
     if len(text) > 64 and re.fullmatch(r"[A-Za-z0-9+/=\s]+", text or " "):
         try:
             data = base64.b64decode(text, validate=True)
         except (binascii.Error, ValueError) as exc:
-            raise FileNotFoundError(f"Референс не распознан: {text[:60]}...") from exc
+            raise FileNotFoundError(f"Reference not recognised: {text[:60]}...") from exc
         return data, sniff_mime(data), "ref.png"
 
-    raise FileNotFoundError(f"Файл референса не найден: {text}")
+    raise FileNotFoundError(f"Reference file not found: {text}")
 
 
 def sniff_mime(data: bytes) -> str:
@@ -455,7 +455,7 @@ def sniff_mime(data: bytes) -> str:
 
 
 def _temp_ref_file(data: bytes, name: str) -> Path:
-    """Положить байты во временный файл — нужен для системного буфера и upload."""
+    """Put the bytes into a temporary file — needed for the system clipboard and upload."""
     import tempfile
 
     suffix = Path(name).suffix.lower()
@@ -483,9 +483,9 @@ $data.SetImage($img)
 
 
 def copy_image_to_clipboard(path: Path) -> None:
-    """Положить картинку в системный буфер обмена Windows (PNG + Bitmap)."""
+    """Put the picture into the Windows system clipboard (PNG + Bitmap)."""
     if sys.platform != "win32":
-        raise RuntimeError("Системный буфер поддержан только на Windows")
+        raise RuntimeError("The system clipboard is only supported on Windows")
     script = PS_COPY_IMAGE.replace("{path}", str(path).replace("'", "''"))
     proc = subprocess.run(
         ["powershell", "-NoProfile", "-STA", "-NonInteractive", "-Command", script],
@@ -498,10 +498,10 @@ def copy_image_to_clipboard(path: Path) -> None:
 
 
 def press_real_paste(page: Page) -> None:
-    """Настоящий Ctrl+V из системного буфера.
+    """A genuine Ctrl+V from the system clipboard.
 
-    Обычный keyboard.press('Control+V') через CDP не запускает команду вставки
-    в редакторе — нужен Input.dispatchKeyEvent с commands: ['paste'].
+    A plain keyboard.press('Control+V') over CDP does not trigger the paste command
+    in the editor — Input.dispatchKeyEvent with commands: ['paste'] is needed.
     """
     cdp = page.context.new_cdp_session(page)
     try:
@@ -543,11 +543,11 @@ def wait_ref_uploaded(
     stable_polls: int = 3,
     thumb_max: int = REF_THUMB_MAX_SIDE,
 ) -> str | None:
-    """Дождаться, пока референс догрузится на сайт.
+    """Wait for the reference to finish uploading to the site.
 
-    Готовность = появился новый чип-миниатюра, он отрисован (naturalWidth>0),
-    спиннеров нет и набор чипов не меняется несколько опросов подряд.
-    Возвращает url чипа или None, если ничего не появилось.
+    Ready = a new thumbnail chip appeared, it is rendered (naturalWidth>0),
+    there are no spinners and the set of chips is unchanged for several polls in a row.
+    Returns the chip url or None if nothing appeared.
     """
     deadline = time.time() + timeout
     stable = 0
@@ -570,7 +570,7 @@ def wait_ref_uploaded(
             stable += 1
             if stable >= stable_polls:
                 last_new = sorted(new)[-1]
-                log(f"Референс догрузился ({len(new)} миниатюр на композере)")
+                log(f"Reference finished uploading ({len(new)} thumbnails in the composer)")
                 return last_new
         else:
             stable = 0
@@ -589,17 +589,17 @@ def attach_reference(
     action_timeout: int = 60,
     thumb_max: int = REF_THUMB_MAX_SIDE,
 ) -> dict:
-    """Вставить картинку-референс в композер Flow и дождаться её загрузки.
+    """Paste a reference picture into the Flow composer and wait for it to upload.
 
-    Стратегии по порядку (`method='auto'`):
-      paste     — синтетический ClipboardEvent с файлом (быстро, без буфера ОС);
-      clipboard — картинка в системный буфер + настоящий Ctrl+V через CDP;
-      drop      — синтетический drag&drop файла в композер;
-      upload    — прямая подстановка файла в input[type=file].
+    Strategies in order (`method='auto'`):
+      paste     — a synthetic ClipboardEvent with the file (fast, no OS clipboard);
+      clipboard — the picture into the system clipboard + a genuine Ctrl+V over CDP;
+      drop      — a synthetic drag&drop of the file into the composer;
+      upload    — putting the file straight into input[type=file].
     """
     data, mime, name = load_reference(src)
     b64 = base64.b64encode(data).decode("ascii")
-    log(f"Референс: {name} ({len(data) // 1024} KB, {mime})")
+    log(f"Reference: {name} ({len(data) // 1024} KB, {mime})")
 
     box = find_prompt_box(page, action_timeout)
     try:
@@ -607,7 +607,7 @@ def attach_reference(
     except Exception:
         pass
 
-    # Метка на поле ввода: по ней JS находит цель для paste/drop.
+    # A mark on the input field: the JS finds the paste/drop target by it.
     try:
         box.evaluate("el => el.setAttribute('data-flowref', '1')")
         target_sel = '[data-flowref="1"]'
@@ -634,35 +634,35 @@ def attach_reference(
                     except Exception:
                         pass
                     press_real_paste(page)
-                    log("  Ctrl+V из системного буфера отправлен")
+                    log("  Ctrl+V from the system clipboard sent")
 
                 elif strategy == "drop":
                     page.evaluate(JS_DROP_FILE, [b64, mime, name, target_sel])
-                    log("  drag&drop отправлен")
+                    log("  drag&drop sent")
 
                 elif strategy == "upload":
                     tmp = tmp or _temp_ref_file(data, name)
                     inputs = page.locator('input[type="file"]')
                     if not inputs.count():
-                        raise RuntimeError("input[type=file] на странице нет")
+                        raise RuntimeError("there is no input[type=file] on the page")
                     inputs.last.set_input_files(str(tmp))
-                    log("  файл подставлен в input[type=file]")
+                    log("  the file was put into input[type=file]")
 
                 else:
-                    raise ValueError(f"Неизвестный метод вставки: {strategy}")
+                    raise ValueError(f"Unknown paste method: {strategy}")
 
             except Exception as exc:
                 msg = str(exc).splitlines()[0]
                 errors.append(f"{strategy}: {msg}")
-                log(f"  метод «{strategy}» не сработал: {msg}")
+                log(f"  method '{strategy}' did not work: {msg}")
                 continue
 
             thumb = wait_ref_uploaded(page, baseline, timeout, thumb_max=thumb_max)
             if thumb:
                 return {"ok": True, "method": strategy, "thumb": thumb, "name": name}
 
-            errors.append(f"{strategy}: миниатюра не появилась за {timeout} с")
-            log(f"  метод «{strategy}»: миниатюра так и не появилась")
+            errors.append(f"{strategy}: the thumbnail did not appear within {timeout} s")
+            log(f"  method '{strategy}': the thumbnail never appeared")
 
         return {"ok": False, "method": None, "errors": errors, "name": name}
 
@@ -691,7 +691,7 @@ def attach_references(
 ) -> list[dict]:
     results = []
     for i, ref in enumerate(refs, 1):
-        log(f"=== Референс {i} ===")
+        log(f"=== Reference {i} ===")
         results.append(
             attach_reference(page, ref, method, timeout, action_timeout, thumb_max)
         )
@@ -699,7 +699,7 @@ def attach_references(
 
 
 def _submit_candidates(page: Page):
-    """Все видимые кнопки-кандидаты на 'генерировать', с их локаторами."""
+    """Every visible candidate button for 'generate', with their locators."""
     seen: set[str] = set()
     for sel in SUBMIT_SELECTORS:
         loc = page.locator(sel)
@@ -725,7 +725,7 @@ def _submit_candidates(page: Page):
 
 
 def find_submit(page: Page, wait_enabled: int = 0):
-    """Найти кнопку генерации. wait_enabled — сколько сек ждать, пока станет активной."""
+    """Find the generate button. wait_enabled — how many seconds to wait for it to become active."""
     deadline = time.time() + max(wait_enabled, 0)
     first_seen: tuple[str, object, str] | None = None
 
@@ -741,7 +741,7 @@ def find_submit(page: Page, wait_enabled: int = 0):
             break
         page.wait_for_timeout(500)
 
-    return first_seen  # найдена, но так и не активна (или None)
+    return first_seen  # found, but never became active (or None)
 
 
 def clear_prompt(page: Page, timeout: int) -> None:
@@ -761,13 +761,13 @@ def click_generate(page: Page, wait_enabled: int = 15) -> None:
         try:
             if item.is_enabled():
                 item.click()
-                log(f"Нажал кнопку генерации [{text.replace(chr(10), ' | ')}] ({sel})")
+                log(f"Pressed the generate button [{text.replace(chr(10), ' | ')}] ({sel})")
                 return
-            log(f"Кнопка [{text.replace(chr(10), ' | ')}] осталась неактивной — жму Enter")
+            log(f"The button [{text.replace(chr(10), ' | ')}] stayed inactive — pressing Enter")
         except Exception as exc:
-            log(f"Клик не прошёл ({exc}) — жму Enter")
+            log(f"The click did not go through ({exc}) — pressing Enter")
     else:
-        log("Кнопку не нашёл — жму Enter")
+        log("Could not find the button — pressing Enter")
     page.keyboard.press("Enter")
 
 
@@ -793,7 +793,7 @@ def wait_for_new_images(
     min_side: int,
     stable_polls: int = 3,
 ) -> list[str]:
-    """Ждать count новых картинок и стабилизации набора (чтобы не поймать превью)."""
+    """Wait for count new pictures and for the set to settle (so we do not catch a preview)."""
     baseline = set(baseline)
     deadline = time.time() + timeout
     stable = 0
@@ -805,31 +805,31 @@ def wait_for_new_images(
         if new == prev_new and len(new) >= count:
             stable += 1
             if stable >= stable_polls:
-                log(f"Готово: {len(new)} новых картинок")
+                log(f"Done: {len(new)} new pictures")
                 return new[:count] if count > 0 else new
         else:
             stable = 0
 
         if new != prev_new:
-            log(f"Новых картинок: {len(new)}/{count}")
+            log(f"New pictures: {len(new)}/{count}")
         prev_new = new
         page.wait_for_timeout(2000)
 
     if prev_new:
-        log(f"Таймаут, но нашлось {len(prev_new)} картинок — качаю их")
+        log(f"Timeout, but {len(prev_new)} pictures turned up — downloading them")
         return prev_new
-    raise TimeoutError("Не дождался сгенерированных картинок")
+    raise TimeoutError("Never got the generated pictures")
 
 
 # ---------------------------------------------------------------------------
-# Скачивание
+# Downloading
 # ---------------------------------------------------------------------------
 
 
-# --- скачивание через меню карточки: more_vert -> Скачать -> 1K/2K/4K --------
+# --- downloading through the card menu: more_vert -> Download -> 1K/2K/4K -----
 
-# Пометить карточку, содержащую картинку с данным src, атрибутом data-flowdl.
-# Так её можно взять обычным CSS-селектором без экранирования URL.
+# Mark the card holding the picture with the given src using a data-flowdl attribute.
+# That way it can be taken with a plain CSS selector, with no URL escaping.
 JS_MARK_CARD = """
 (url) => {
   for (const el of document.querySelectorAll('[data-flowdl]')) el.removeAttribute('data-flowdl');
@@ -839,8 +839,8 @@ JS_MARK_CARD = """
   }
   if (!img) return null;
 
-  // Кнопки favorite/redo/more_vert живут в оверлее карточки, который
-  // появляется по hover. Ищем предка с role="button", иначе самый крупный.
+  // The favorite/redo/more_vert buttons live in the card overlay, which
+  // appears on hover. We look for an ancestor with role="button", otherwise the largest one.
   let node = img, best = null;
   for (let i = 0; i < 10 && node; i++) {
     node = node.parentElement;
@@ -849,7 +849,7 @@ JS_MARK_CARD = """
     if (r.width < 200 || r.height < 150) continue;
     if (!best) best = node;
     if (node.getAttribute('role') === 'button') { best = node; break; }
-    if (r.width > 900) break;  // ушли в сетку целиком
+    if (r.width > 900) break;  // we went into the whole grid
   }
   if (!best) return null;
 
@@ -868,8 +868,8 @@ DOWNLOAD_ITEM_SEL = (
 QUALITY_LABELS = {"1k": "1K", "2k": "2K", "4k": "4K"}
 
 
-# Тосты «Повышение разрешения завершено» висят в правом верхнем углу и
-# перекрывают карточки третьей колонки — hover до них не доходит.
+# The "Upscaling finished" toasts hang in the top right corner and cover the
+# cards of the third column — hover does not reach them.
 JS_DISMISS_TOASTS = """
 () => {
   let n = 0;
@@ -891,7 +891,7 @@ JS_HIT_TEST = """
   const card = document.querySelector('[data-flowdl="1"]');
   if (!card) return null;
   const top = document.elementFromPoint(x, y);
-  if (!top) return { inside: false, what: 'ничего (вне окна)' };
+  if (!top) return { inside: false, what: 'nothing (outside the window)' };
   return {
     inside: card.contains(top) || top === card,
     what: (top.innerText || top.tagName).trim().replace(/\\n/g, ' '),
@@ -901,8 +901,8 @@ JS_HIT_TEST = """
 
 
 def dismiss_toasts(page: Page) -> None:
-    """Убрать всплывающие уведомления с пути курсора."""
-    # сначала штатная кнопка «Закрыть», если есть
+    """Get the popup notifications out of the cursor's path."""
+    # the regular "Close" button first, if there is one
     try:
         close_btns = page.locator('li button:has-text("Закрыть"), li button:has-text("Close")')
         for i in range(min(close_btns.count(), 5)):
@@ -911,7 +911,7 @@ def dismiss_toasts(page: Page) -> None:
                 btn.click(timeout=1500)
     except Exception:
         pass
-    # затем снимаем перехват мыши у оставшихся
+    # then remove mouse interception from the rest
     try:
         page.evaluate(JS_DISMISS_TOASTS)
     except Exception:
@@ -919,7 +919,7 @@ def dismiss_toasts(page: Page) -> None:
 
 
 def close_menus(page: Page, timeout: int = 3000) -> None:
-    """Закрыть открытые меню и дождаться их исчезновения."""
+    """Close the open menus and wait for them to disappear."""
     deadline = time.time() + timeout / 1000
     while time.time() < deadline:
         try:
@@ -932,9 +932,9 @@ def close_menus(page: Page, timeout: int = 3000) -> None:
 
 
 def find_more_button_in(page: Page, rect: dict, margin: int = 12):
-    """Кнопка more_vert, попадающая внутрь прямоугольника карточки.
+    """The more_vert button that falls inside the card rectangle.
 
-    В шапке страницы тоже есть more_vert, поэтому фильтруем по геометрии.
+    There is a more_vert in the page header too, so we filter by geometry.
     """
     loc = page.locator(MORE_BTN_SEL)
     for i in range(loc.count()):
@@ -964,19 +964,19 @@ def download_via_ui(
     quality: str,
     timeout: int,
 ) -> Path | None:
-    """Скачать картинку меню Flow в нужном разрешении. None — если не вышло."""
+    """Download a picture from the Flow menu at the required resolution. None — if it did not work."""
     label = QUALITY_LABELS.get(quality, "2K")
 
     rect = page.evaluate(JS_MARK_CARD, url)
     if not rect:
-        log(f"  [{index}] карточка для картинки не найдена")
+        log(f"  [{index}] no card found for the picture")
         return None
 
     more = None
     for attempt in range(1, 4):
         close_menus(page)
         dismiss_toasts(page)
-        page.wait_for_timeout(300)  # доскроллиться / закрыть прошлое меню
+        page.wait_for_timeout(300)  # finish scrolling / close the previous menu
 
         rect = page.evaluate(
             "() => { const e = document.querySelector('[data-flowdl=\"1\"]');"
@@ -988,29 +988,29 @@ def download_via_ui(
 
         cx, cy = rect["x"] + rect["w"] / 2, rect["y"] + rect["h"] / 2
 
-        # что реально лежит под точкой наведения
+        # what actually lies under the hover point
         blocker = page.evaluate(JS_HIT_TEST, [cx, cy])
         if blocker and not blocker["inside"]:
-            log(f"  [{index}] карточку перекрывает: {blocker['what'][:50]} — сдвигаю")
+            log(f"  [{index}] the card is covered by: {blocker['what'][:50]} — moving it aside")
             page.mouse.wheel(0, 140 if attempt == 1 else -140)
             page.wait_for_timeout(500)
             continue
 
-        # курсор сначала уводим, иначе mouseenter не срабатывает повторно
+        # move the cursor away first, otherwise mouseenter does not fire again
         page.mouse.move(5, 5)
         page.wait_for_timeout(150)
         page.mouse.move(cx, cy, steps=8)
         page.wait_for_timeout(250)
-        page.mouse.move(cx + 4, cy + 4)  # шевеление добивает hover-состояние
+        page.mouse.move(cx + 4, cy + 4)  # a wiggle finishes off the hover state
         page.wait_for_timeout(600)
 
         more = find_more_button_in(page, rect)
         if more is not None:
             break
-        log(f"  [{index}] оверлей карточки не появился (попытка {attempt}/3)")
+        log(f"  [{index}] the card overlay did not appear (attempt {attempt}/3)")
 
     if more is None:
-        log(f"  [{index}] кнопка «Ещё» на карточке не появилась")
+        log(f"  [{index}] the 'More' button on the card did not appear")
         return None
     more.click()
     page.wait_for_timeout(600)
@@ -1020,11 +1020,11 @@ def download_via_ui(
     dl_item.hover()
     page.wait_for_timeout(700)
 
-    # пункт подменю: "2K | Увеличенное разрешение"
+    # submenu item: "2K | Увеличенное разрешение"
     quality_item = page.locator(f'[role="menuitem"]:has-text("{label}")').last
     quality_item.wait_for(state="visible", timeout=10_000)
 
-    log(f"  [{index}] жму «{label}» (апскейл может занять до {timeout} с)")
+    log(f"  [{index}] pressing '{label}' (upscaling can take up to {timeout} s)")
     try:
         with page.expect_download(timeout=timeout * 1000) as dl_info:
             quality_item.click()
@@ -1034,7 +1034,7 @@ def download_via_ui(
         download.save_as(str(path))
         return path
     except Exception as exc:
-        log(f"  [{index}] загрузка через меню не удалась: {str(exc).splitlines()[0]}")
+        log(f"  [{index}] downloading through the menu failed: {str(exc).splitlines()[0]}")
         return None
     finally:
         try:
@@ -1059,7 +1059,7 @@ def ext_from(content_type: str, url: str, default: str = ".png") -> str:
 
 
 def fetch_bytes(page: Page, url: str) -> tuple[bytes, str]:
-    """blob:/data: — читаем в самой странице; http(s) — через куки её контекста."""
+    """blob:/data: — read inside the page itself; http(s) — through its context cookies."""
     if url.startswith(("blob:", "data:")):
         res = page.evaluate(JS_FETCH_AS_B64, url)
         return base64.b64decode(res["b64"]), res.get("type", "")
@@ -1071,7 +1071,7 @@ def fetch_bytes(page: Page, url: str) -> tuple[bytes, str]:
 
 
 def upgrade_url(url: str) -> str:
-    """googleusercontent: снять даунсайз-суффикс (=w512-h512 -> =s0)."""
+    """googleusercontent: strip the downsize suffix (=w512-h512 -> =s0)."""
     if "googleusercontent.com" in url:
         return re.sub(r"=[-\w]+$", "=s0", url)
     return url
@@ -1090,40 +1090,40 @@ def download_all(
     seen_hashes: set[str] = set()
 
     for i, url in enumerate(urls, 1):
-        # основной путь: меню карточки -> Скачать -> 2K (с апскейлом)
+        # the main path: card menu -> Download -> 2K (with upscaling)
         if quality in QUALITY_LABELS:
             try:
                 path = download_via_ui(page, url, out_dir, prefix, i, quality, ui_timeout)
             except Exception as exc:
-                log(f"  [{i}] ошибка UI-скачивания: {str(exc).splitlines()[0]}")
+                log(f"  [{i}] UI download error: {str(exc).splitlines()[0]}")
                 path = None
             if path:
                 seen_hashes.add(hashlib.sha1(path.read_bytes()).hexdigest())
                 saved.append(path)
-                log(f"  [{i}] сохранено: {path.name} ({path.stat().st_size // 1024} KB)")
+                log(f"  [{i}] saved: {path.name} ({path.stat().st_size // 1024} KB)")
                 continue
-            log(f"  [{i}] откатываюсь на прямое скачивание из src")
+            log(f"  [{i}] falling back to a direct download from src")
 
         for candidate in dict.fromkeys([upgrade_url(url), url]):
             try:
                 data, ctype = fetch_bytes(page, candidate)
             except Exception as exc:
-                log(f"  [{i}] не скачалось ({exc}) — пробую другой вариант URL")
+                log(f"  [{i}] did not download ({exc}) — trying another URL variant")
                 continue
 
             digest = hashlib.sha1(data).hexdigest()
             if digest in seen_hashes:
-                log(f"  [{i}] дубликат, пропускаю")
+                log(f"  [{i}] duplicate, skipping")
                 break
             seen_hashes.add(digest)
 
             path = out_dir / f"{prefix}_{i:02d}{ext_from(ctype, candidate)}"
             path.write_bytes(data)
             saved.append(path)
-            log(f"  [{i}] сохранено: {path.name} ({len(data) // 1024} KB)")
+            log(f"  [{i}] saved: {path.name} ({len(data) // 1024} KB)")
             break
         else:
-            log(f"  [{i}] ПРОПУЩЕНО: {url[:120]}")
+            log(f"  [{i}] SKIPPED: {url[:120]}")
 
     return saved
 
@@ -1139,7 +1139,7 @@ def read_prompts(args: argparse.Namespace) -> list[str]:
         return [p.strip() for p in text.split("\n---\n") if p.strip()]
     if args.prompt:
         return [args.prompt]
-    raise SystemExit("Нужен --prompt или --prompts-file")
+    raise SystemExit("--prompt or --prompts-file is required")
 
 
 def slugify(text: str, limit: int = 40) -> str:
@@ -1148,19 +1148,19 @@ def slugify(text: str, limit: int = 40) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Высокоуровневый API (его же зовёт MCP-сервер)
+# The high-level API (the MCP server calls the same one)
 # ---------------------------------------------------------------------------
 
 
 def image_size(path: Path) -> tuple[int, int] | None:
-    """Размеры JPEG/PNG без внешних зависимостей."""
+    """JPEG/PNG dimensions with no external dependencies."""
     try:
         data = path.read_bytes()
     except Exception:
         return None
     if data[:8] == b"\x89PNG\r\n\x1a\n" and len(data) > 24:
         return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
-    if data[:2] == b"\xff\xd8":  # JPEG: ищем SOFn
+    if data[:2] == b"\xff\xd8":  # JPEG: look for SOFn
         i = 2
         while i + 9 < len(data):
             if data[i] != 0xFF:
@@ -1195,12 +1195,12 @@ def generate_images(
     ref_required: bool = True,
     ref_thumb_max: int = REF_THUMB_MAX_SIDE,
 ) -> dict:
-    """Полный цикл: промт -> (референсы) -> генерация -> ожидание -> скачивание.
+    """The full cycle: prompt -> (references) -> generation -> waiting -> downloading.
 
-    Блокирует выполнение, пока все `count` картинок не будут сохранены.
-    Если переданы `references`, картинки вставляются в композер (как Ctrl+V),
-    скрипт ждёт окончания их загрузки на сайт и только потом жмёт «генерировать».
-    Возвращает словарь с путями и метаданными — им пользуется MCP-сервер.
+    Blocks until all `count` pictures have been saved.
+    If `references` are passed, the pictures get pasted into the composer (like Ctrl+V),
+    the script waits for them to finish uploading to the site and only then presses "generate".
+    Returns a dict with the paths and metadata — the MCP server uses it.
     """
     started = time.time()
     chrome = AttachedChrome(resolve_endpoint(cdp), action_timeout)
@@ -1211,7 +1211,7 @@ def generate_images(
             return {
                 "ok": False,
                 "error": "not_logged_in",
-                "message": "Chrome открыт на странице входа Google. Нужен ручной вход.",
+                "message": "Chrome is on the Google sign-in page. A manual sign-in is needed.",
                 "images": [],
             }
 
@@ -1222,8 +1222,8 @@ def generate_images(
                 "ok": False,
                 "error": "no_prompt_box",
                 "message": (
-                    f"{exc} Похоже, открыт лендинг Flow, а не проект — "
-                    f"открой проект в этой вкладке ({page.url})."
+                    f"{exc} It looks like the Flow landing page is open, not a project — "
+                    f"open the project in this tab ({page.url})."
                 ),
                 "images": [],
             }
@@ -1249,16 +1249,16 @@ def generate_images(
                     "ok": False,
                     "error": "reference_upload_failed",
                     "message": (
-                        f"Не удалось вставить {len(failed)} из {len(refs)} референсов "
-                        "— генерация не запускалась. "
+                        f"Could not paste {len(failed)} of {len(refs)} references "
+                        "— generation was not started. "
                         + "; ".join("/".join(f.get("errors", [])) for f in failed)[:400]
                     ),
                     "references": ref_results,
                     "images": [],
                 }
 
-        # Базовый набор снимаем ПОСЛЕ вставки референсов: иначе миниатюра
-        # референса может попасть в «новые картинки».
+        # The baseline set is taken AFTER pasting the references: otherwise a reference
+        # thumbnail could end up among the "new pictures".
         baseline = set(collect_images(page, min_side))
         click_generate(page, wait_enabled=30 if refs else 15)
 
@@ -1306,9 +1306,9 @@ def generate_images(
             ],
             "images": images,
             "message": (
-                f"Сохранено {len(saved)} из {count} картинок в {folder}"
+                f"Saved {len(saved)} of {count} pictures into {folder}"
                 if len(saved) == count
-                else f"ВНИМАНИЕ: сохранено только {len(saved)} из {count}. Папка: {folder}"
+                else f"WARNING: only {len(saved)} of {count} were saved. Folder: {folder}"
             ),
         }
     finally:
@@ -1324,9 +1324,9 @@ def paste_references(
     action_timeout: int = 60,
     ref_thumb_max: int = REF_THUMB_MAX_SIDE,
 ) -> dict:
-    """Только вставить референсы в композер Flow, без генерации.
+    """Only paste the references into the Flow composer, without generating.
 
-    Нужно, чтобы проверить, что вставка работает, не тратя квоту.
+    Useful for checking that pasting works without spending quota.
     """
     chrome = AttachedChrome(resolve_endpoint(cdp), action_timeout)
     try:
@@ -1344,8 +1344,8 @@ def paste_references(
                 "ok": False,
                 "error": "no_prompt_box",
                 "message": (
-                    f"{exc} Похоже, открыт лендинг Flow, а не проект — "
-                    f"открой проект в этой вкладке ({page.url})."
+                    f"{exc} It looks like the Flow landing page is open, not a project — "
+                    f"open the project in this tab ({page.url})."
                 ),
             }
         ok = all(r["ok"] for r in results) and bool(results)
@@ -1353,9 +1353,9 @@ def paste_references(
             "ok": ok,
             "references": results,
             "message": (
-                "Референсы на месте, композер готов к генерации"
+                "The references are in place, the composer is ready to generate"
                 if ok
-                else "Часть референсов не вставилась — смотри errors"
+                else "Some references were not pasted — see errors"
             ),
         }
     finally:
@@ -1363,7 +1363,7 @@ def paste_references(
 
 
 def check_environment(cdp: str | None = None) -> dict:
-    """Готов ли Chrome: порт отладки, вкладка Flow, логин."""
+    """Is Chrome ready: debug port, Flow tab, login."""
     try:
         endpoint = resolve_endpoint(cdp)
     except SystemExit as exc:
@@ -1383,9 +1383,9 @@ def check_environment(cdp: str | None = None) -> dict:
                 "ok" if flow else ("login_required" if login else "no_flow_tab")
             ),
             "message": (
-                f"Готово. Проект Flow: {flow[0]['url']}"
+                f"Ready. Flow project: {flow[0]['url']}"
                 if flow
-                else "Открой проект Flow в отладочном Chrome (или залогинься)."
+                else "Open a Flow project in the debug Chrome (or sign in)."
             ),
         }
     finally:
@@ -1394,64 +1394,64 @@ def check_environment(cdp: str | None = None) -> dict:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Генерация картинок в Google Flow через уже открытый Chrome"
+        description="Generating pictures in Google Flow through an already open Chrome"
     )
-    p.add_argument("--prompt", help="Текст промта")
-    p.add_argument("--prompts-file", help="Файл с промтами, разделитель — строка '---'")
-    p.add_argument("--url", help="URL проекта Flow (если вкладка ещё не открыта)")
-    p.add_argument("--out", default="output", help="Папка для картинок")
-    p.add_argument("--count", type=int, default=4, help="Сколько картинок ждать (0 = все новые)")
-    p.add_argument("--cdp", help=f"CDP endpoint или порт (по умолчанию перебор {DEFAULT_PORTS})")
-    p.add_argument("--list-tabs", action="store_true", help="Показать вкладки и выйти")
+    p.add_argument("--prompt", help="The prompt text")
+    p.add_argument("--prompts-file", help="A file of prompts, separated by a '---' line")
+    p.add_argument("--url", help="URL of the Flow project (if the tab is not open yet)")
+    p.add_argument("--out", default="output", help="Folder for the pictures")
+    p.add_argument("--count", type=int, default=4, help="How many pictures to wait for (0 = all new ones)")
+    p.add_argument("--cdp", help=f"CDP endpoint or port (by default it tries {DEFAULT_PORTS})")
+    p.add_argument("--list-tabs", action="store_true", help="Show the tabs and exit")
     p.add_argument(
         "--dry-run",
         action="store_true",
-        help="Проверить селекторы: вставить промт, найти кнопку, НЕ генерировать",
+        help="Check the selectors: paste the prompt, find the button, do NOT generate",
     )
-    p.add_argument("--gen-timeout", type=int, default=600, help="Ожидание генерации, сек")
-    p.add_argument("--action-timeout", type=int, default=60, help="Таймаут действий, сек")
-    p.add_argument("--min-side", type=int, default=256, help="Мин. сторона картинки, px")
+    p.add_argument("--gen-timeout", type=int, default=600, help="Waiting for generation, sec")
+    p.add_argument("--action-timeout", type=int, default=60, help="Action timeout, sec")
+    p.add_argument("--min-side", type=int, default=256, help="Min. picture side, px")
     p.add_argument(
         "--quality",
         choices=["2k", "1k", "4k", "src"],
         default="2k",
-        help="Разрешение: 2k (апскейл, по умолчанию), 1k, 4k (нужен тариф), "
-        "src — быстрый прямой забор из <img> без меню",
+        help="Resolution: 2k (upscaled, the default), 1k, 4k (needs a paid plan), "
+        "src — a fast direct grab from <img> with no menu",
     )
     p.add_argument(
-        "--ui-timeout", type=int, default=180, help="Ожидание апскейла+загрузки, сек"
+        "--ui-timeout", type=int, default=180, help="Waiting for upscale+download, sec"
     )
     p.add_argument(
         "--ref",
         action="append",
         default=[],
         metavar="PATH",
-        help="Картинка-референс: путь к файлу, data:-URI или ссылка. "
-        "Можно указать несколько раз. Вставляется в композер до генерации",
+        help="A reference picture: a file path, a data: URI or a link. "
+        "Can be given several times. Pasted into the composer before generation",
     )
     p.add_argument(
         "--ref-method",
         choices=["auto", "paste", "clipboard", "drop", "upload"],
         default="auto",
-        help="Как вставлять референс: auto — перебор, clipboard — настоящий Ctrl+V "
-        "через системный буфер Windows",
+        help="How to paste the reference: auto — try each in turn, clipboard — a genuine Ctrl+V "
+        "through the Windows system clipboard",
     )
     p.add_argument(
-        "--ref-timeout", type=int, default=90, help="Ожидание загрузки референса, сек"
+        "--ref-timeout", type=int, default=90, help="Waiting for the reference to upload, sec"
     )
     p.add_argument(
         "--ref-thumb-max",
         type=int,
         default=REF_THUMB_MAX_SIDE,
-        help=f"Макс. сторона миниатюры референса, px ({REF_THUMB_MAX_SIDE}). "
-        "Поднять, если Flow рисует чип крупнее и загрузка «не детектится»",
+        help=f"Max. side of the reference thumbnail, px ({REF_THUMB_MAX_SIDE}). "
+        "Raise it if Flow draws a bigger chip and the upload 'is not detected'",
     )
     p.add_argument(
         "--ref-optional",
         action="store_true",
-        help="Генерировать даже если референс не вставился (по умолчанию — стоп)",
+        help="Generate even if the reference was not pasted (stop by default)",
     )
-    p.add_argument("--settle", type=int, default=3, help="Пауза перед стартом, сек")
+    p.add_argument("--settle", type=int, default=3, help="Pause before the start, sec")
     return p.parse_args()
 
 
@@ -1473,11 +1473,11 @@ def main() -> int:
         page.wait_for_timeout(args.settle * 1000)
 
         if "accounts.google.com" in page.url:
-            input("Нужен вход в Google. Залогинься в браузере и нажми Enter здесь...")
+            input("A Google sign-in is needed. Sign in in the browser and press Enter here...")
 
         total = 0
         for idx, prompt in enumerate(prompts, 1):
-            log(f"=== Промт {idx}/{len(prompts)} ===")
+            log(f"=== Prompt {idx}/{len(prompts)} ===")
 
             type_prompt(page, prompt, args.action_timeout)
 
@@ -1493,25 +1493,25 @@ def main() -> int:
                 )
                 ref_failed = any(not r["ok"] for r in results)
                 if ref_failed and not args.ref_optional and not args.dry_run:
-                    log("ОШИБКА: референс не вставился — генерацию не запускаю "
-                        "(--ref-optional, чтобы всё равно генерировать)")
+                    log("ERROR: the reference was not pasted — not starting generation "
+                        "(--ref-optional to generate anyway)")
                     clear_prompt(page, args.action_timeout)
                     continue
 
-            # базовый набор — после референсов, иначе миниатюра попадёт в «новые»
+            # the baseline set — after the references, otherwise a thumbnail lands among the "new" ones
             baseline = set(collect_images(page, args.min_side))
-            log(f"Картинок на странице до генерации: {len(baseline)}")
+            log(f"Pictures on the page before generation: {len(baseline)}")
 
             if args.dry_run:
                 found = find_submit(page, wait_enabled=10)
                 if found:
                     sel, item, text = found
-                    state = "активна" if item.is_enabled() else "НЕАКТИВНА"
-                    log(f"DRY-RUN: кнопка [{text.replace(chr(10), ' | ')}] {state}, селектор {sel}")
+                    state = "active" if item.is_enabled() else "INACTIVE"
+                    log(f"DRY-RUN: button [{text.replace(chr(10), ' | ')}] {state}, selector {sel}")
                 else:
-                    log("DRY-RUN: кнопка НЕ найдена (будет Enter)")
+                    log("DRY-RUN: the button was NOT found (Enter will be used)")
                 clear_prompt(page, args.action_timeout)
-                log("DRY-RUN: поле очищено, генерация не запускалась")
+                log("DRY-RUN: the field was cleared, generation was not started")
                 continue
 
             click_generate(page, wait_enabled=30 if args.ref else 15)
@@ -1521,7 +1521,7 @@ def main() -> int:
                     page, baseline, args.count, args.gen_timeout, args.min_side
                 )
             except (TimeoutError, PWTimeout) as exc:
-                log(f"ОШИБКА: {exc}")
+                log(f"ERROR: {exc}")
                 continue
 
             stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -1530,12 +1530,12 @@ def main() -> int:
                 page, urls, folder, "img", quality=args.quality, ui_timeout=args.ui_timeout
             )
             total += len(saved)
-            log(f"Промт {idx}: сохранено {len(saved)} шт. -> {folder}")
+            log(f"Prompt {idx}: saved {len(saved)} -> {folder}")
 
-        log(f"ИТОГО: {total} картинок в {out_root}")
+        log(f"TOTAL: {total} pictures in {out_root}")
         return 0
     finally:
-        chrome.detach()  # браузер остаётся открытым
+        chrome.detach()  # the browser stays open
 
 
 if __name__ == "__main__":
