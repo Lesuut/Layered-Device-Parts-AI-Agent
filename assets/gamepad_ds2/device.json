@@ -1,0 +1,679 @@
+{
+  "device": "gamepad_ds2",
+  "generated": "2026-08-13T03:31:31",
+  "texture": "texture.png",
+  "texture_size": [
+    1365,
+    2157
+  ],
+  "canvas": [
+    1100,
+    700
+  ],
+  "part_count": 13,
+  "parts": [
+    {
+      "id": "bottom_shell",
+      "name": "Bottom Shell",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 1015,
+        "h": 581
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          1018,
+          3
+        ],
+        [
+          1018,
+          584
+        ],
+        [
+          3,
+          584
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.001391,
+        0.745788,
+        0.270746
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        550.0,
+        330.0
+      ],
+      "size": [
+        1015.0,
+        581.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_001.png"
+    },
+    {
+      "id": "rumble_motor",
+      "name": "Rumble Motor",
+      "type": "mechanism",
+      "frame": {
+        "x": 3,
+        "y": 1983,
+        "w": 317,
+        "h": 171
+      },
+      "corners": [
+        [
+          3,
+          1983
+        ],
+        [
+          320,
+          1983
+        ],
+        [
+          320,
+          2154
+        ],
+        [
+          3,
+          2154
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.919332,
+        0.234432,
+        0.998609
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        195.0,
+        480.0
+      ],
+      "size": [
+        200.0,
+        108.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_021.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 1174,
+        "w": 820,
+        "h": 538
+      },
+      "corners": [
+        [
+          3,
+          1174
+        ],
+        [
+          823,
+          1174
+        ],
+        [
+          823,
+          1712
+        ],
+        [
+          3,
+          1712
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.544274,
+        0.60293,
+        0.793695
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        545.0,
+        258.0
+      ],
+      "size": [
+        560.0,
+        205.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_003.png"
+    },
+    {
+      "id": "membrane_main",
+      "name": "Button Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 3,
+        "y": 1718,
+        "w": 896,
+        "h": 259
+      },
+      "corners": [
+        [
+          3,
+          1718
+        ],
+        [
+          899,
+          1718
+        ],
+        [
+          899,
+          1977
+        ],
+        [
+          3,
+          1977
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.796477,
+        0.658608,
+        0.916551
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        550.0,
+        255.0
+      ],
+      "size": [
+        640.0,
+        190.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_004.png"
+    },
+    {
+      "id": "membrane_dpad",
+      "name": "D-Pad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 905,
+        "y": 1718,
+        "w": 254,
+        "h": 255
+      },
+      "corners": [
+        [
+          905,
+          1718
+        ],
+        [
+          1159,
+          1718
+        ],
+        [
+          1159,
+          1973
+        ],
+        [
+          905,
+          1973
+        ]
+      ],
+      "uv": [
+        0.663004,
+        0.796477,
+        0.849084,
+        0.914696
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        269.0,
+        246.0
+      ],
+      "size": [
+        200.0,
+        201.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_019.png"
+    },
+    {
+      "id": "top_shell",
+      "name": "Top Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 590,
+        "w": 953,
+        "h": 578
+      },
+      "corners": [
+        [
+          3,
+          590
+        ],
+        [
+          956,
+          590
+        ],
+        [
+          956,
+          1168
+        ],
+        [
+          3,
+          1168
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.273528,
+        0.700366,
+        0.541493
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        550.0,
+        330.0
+      ],
+      "size": [
+        953.0,
+        578.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\top_shell.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 1165,
+        "y": 1718,
+        "w": 194,
+        "h": 193
+      },
+      "corners": [
+        [
+          1165,
+          1718
+        ],
+        [
+          1359,
+          1718
+        ],
+        [
+          1359,
+          1911
+        ],
+        [
+          1165,
+          1911
+        ]
+      ],
+      "uv": [
+        0.85348,
+        0.796477,
+        0.995604,
+        0.885953
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        269.0,
+        246.0
+      ],
+      "size": [
+        194.0,
+        193.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_022.png"
+    },
+    {
+      "id": "btn_triangle",
+      "name": "Triangle",
+      "type": "button",
+      "frame": {
+        "x": 676,
+        "y": 1983,
+        "w": 94,
+        "h": 94
+      },
+      "corners": [
+        [
+          676,
+          1983
+        ],
+        [
+          770,
+          1983
+        ],
+        [
+          770,
+          2077
+        ],
+        [
+          676,
+          2077
+        ]
+      ],
+      "uv": [
+        0.495238,
+        0.919332,
+        0.564103,
+        0.962911
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        828.0,
+        179.0
+      ],
+      "size": [
+        66.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_032.png"
+    },
+    {
+      "id": "btn_square",
+      "name": "Square",
+      "type": "button",
+      "frame": {
+        "x": 776,
+        "y": 1983,
+        "w": 93,
+        "h": 94
+      },
+      "corners": [
+        [
+          776,
+          1983
+        ],
+        [
+          869,
+          1983
+        ],
+        [
+          869,
+          2077
+        ],
+        [
+          776,
+          2077
+        ]
+      ],
+      "uv": [
+        0.568498,
+        0.919332,
+        0.63663,
+        0.962911
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        755.0,
+        246.0
+      ],
+      "size": [
+        66.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_035.png"
+    },
+    {
+      "id": "btn_circle",
+      "name": "Circle",
+      "type": "button",
+      "frame": {
+        "x": 875,
+        "y": 1983,
+        "w": 94,
+        "h": 94
+      },
+      "corners": [
+        [
+          875,
+          1983
+        ],
+        [
+          969,
+          1983
+        ],
+        [
+          969,
+          2077
+        ],
+        [
+          875,
+          2077
+        ]
+      ],
+      "uv": [
+        0.641026,
+        0.919332,
+        0.70989,
+        0.962911
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        906.0,
+        246.0
+      ],
+      "size": [
+        66.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_036.png"
+    },
+    {
+      "id": "btn_cross",
+      "name": "Cross",
+      "type": "button",
+      "frame": {
+        "x": 975,
+        "y": 1983,
+        "w": 95,
+        "h": 94
+      },
+      "corners": [
+        [
+          975,
+          1983
+        ],
+        [
+          1070,
+          1983
+        ],
+        [
+          1070,
+          2077
+        ],
+        [
+          975,
+          2077
+        ]
+      ],
+      "uv": [
+        0.714286,
+        0.919332,
+        0.783883,
+        0.962911
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        828.0,
+        316.0
+      ],
+      "size": [
+        66.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_037.png"
+    },
+    {
+      "id": "stick_left",
+      "name": "Left Stick",
+      "type": "stick",
+      "frame": {
+        "x": 326,
+        "y": 1983,
+        "w": 169,
+        "h": 170
+      },
+      "corners": [
+        [
+          326,
+          1983
+        ],
+        [
+          495,
+          1983
+        ],
+        [
+          495,
+          2153
+        ],
+        [
+          326,
+          2153
+        ]
+      ],
+      "uv": [
+        0.238828,
+        0.919332,
+        0.362637,
+        0.998146
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        411.0,
+        381.0
+      ],
+      "size": [
+        130.0,
+        131.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_023.png"
+    },
+    {
+      "id": "stick_right",
+      "name": "Right Stick",
+      "type": "stick",
+      "frame": {
+        "x": 501,
+        "y": 1983,
+        "w": 169,
+        "h": 170
+      },
+      "corners": [
+        [
+          501,
+          1983
+        ],
+        [
+          670,
+          1983
+        ],
+        [
+          670,
+          2153
+        ],
+        [
+          501,
+          2153
+        ]
+      ],
+      "uv": [
+        0.367033,
+        0.919332,
+        0.490842,
+        0.998146
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        693.0,
+        381.0
+      ],
+      "size": [
+        130.0,
+        131.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gamepad_ds2\\parts\\part_023.png"
+    }
+  ]
+}

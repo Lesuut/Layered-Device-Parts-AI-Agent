@@ -1,0 +1,475 @@
+{
+  "device": "nokia_2110",
+  "generated": "2026-08-13T02:17:22",
+  "texture": "texture.png",
+  "texture_size": [
+    1451,
+    1395
+  ],
+  "canvas": [
+    500,
+    1400
+  ],
+  "part_count": 9,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 344,
+        "y": 3,
+        "w": 341,
+        "h": 902
+      },
+      "corners": [
+        [
+          344,
+          3
+        ],
+        [
+          685,
+          3
+        ],
+        [
+          685,
+          905
+        ],
+        [
+          344,
+          905
+        ]
+      ],
+      "uv": [
+        0.237078,
+        0.002151,
+        0.472088,
+        0.648746
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        850.0
+      ],
+      "size": [
+        318.0,
+        855.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_003_rot.png"
+    },
+    {
+      "id": "antenna",
+      "name": "Antenna",
+      "type": "antenna",
+      "frame": {
+        "x": 1357,
+        "y": 3,
+        "w": 88,
+        "h": 745
+      },
+      "corners": [
+        [
+          1357,
+          3
+        ],
+        [
+          1445,
+          3
+        ],
+        [
+          1445,
+          748
+        ],
+        [
+          1357,
+          748
+        ]
+      ],
+      "uv": [
+        0.935217,
+        0.002151,
+        0.995865,
+        0.536201
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        350.0
+      ],
+      "size": [
+        34.0,
+        250.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_018_rot.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 359,
+        "y": 947,
+        "w": 325,
+        "h": 410
+      },
+      "corners": [
+        [
+          359,
+          947
+        ],
+        [
+          684,
+          947
+        ],
+        [
+          684,
+          1357
+        ],
+        [
+          359,
+          1357
+        ]
+      ],
+      "uv": [
+        0.247416,
+        0.678853,
+        0.471399,
+        0.97276
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        1050.0
+      ],
+      "size": [
+        230.0,
+        290.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_006.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 335,
+        "h": 938
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          338,
+          3
+        ],
+        [
+          338,
+          941
+        ],
+        [
+          3,
+          941
+        ]
+      ],
+      "uv": [
+        0.002068,
+        0.002151,
+        0.232943,
+        0.674552
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        850.0
+      ],
+      "size": [
+        300.0,
+        830.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_001.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 1019,
+        "y": 3,
+        "w": 332,
+        "h": 820
+      },
+      "corners": [
+        [
+          1019,
+          3
+        ],
+        [
+          1351,
+          3
+        ],
+        [
+          1351,
+          823
+        ],
+        [
+          1019,
+          823
+        ]
+      ],
+      "uv": [
+        0.702274,
+        0.002151,
+        0.931082,
+        0.589964
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        800.0
+      ],
+      "size": [
+        280.0,
+        700.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_002.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 1134,
+        "y": 947,
+        "w": 82,
+        "h": 122
+      },
+      "corners": [
+        [
+          1134,
+          947
+        ],
+        [
+          1216,
+          947
+        ],
+        [
+          1216,
+          1069
+        ],
+        [
+          1134,
+          1069
+        ]
+      ],
+      "uv": [
+        0.78153,
+        0.678853,
+        0.838043,
+        0.766308
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        480.0
+      ],
+      "size": [
+        60.0,
+        90.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_014.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 690,
+        "y": 947,
+        "w": 438,
+        "h": 275
+      },
+      "corners": [
+        [
+          690,
+          947
+        ],
+        [
+          1128,
+          947
+        ],
+        [
+          1128,
+          1222
+        ],
+        [
+          690,
+          1222
+        ]
+      ],
+      "uv": [
+        0.475534,
+        0.678853,
+        0.777395,
+        0.875986
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        246.0,
+        685.0
+      ],
+      "size": [
+        225.0,
+        138.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts_b\\part_004.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 947,
+        "w": 350,
+        "h": 445
+      },
+      "corners": [
+        [
+          3,
+          947
+        ],
+        [
+          353,
+          947
+        ],
+        [
+          353,
+          1392
+        ],
+        [
+          3,
+          1392
+        ]
+      ],
+      "uv": [
+        0.002068,
+        0.678853,
+        0.24328,
+        0.997849
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        248.0,
+        968.0
+      ],
+      "size": [
+        252.0,
+        352.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts_b\\part_007.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 691,
+        "y": 3,
+        "w": 322,
+        "h": 864
+      },
+      "corners": [
+        [
+          691,
+          3
+        ],
+        [
+          1013,
+          3
+        ],
+        [
+          1013,
+          867
+        ],
+        [
+          691,
+          867
+        ]
+      ],
+      "uv": [
+        0.476223,
+        0.002151,
+        0.698139,
+        0.621505
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        850.0
+      ],
+      "size": [
+        322.0,
+        864.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_2110\\parts\\part_011_rot.png"
+    }
+  ]
+}

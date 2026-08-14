@@ -1,0 +1,628 @@
+{
+  "device": "ipod_classic",
+  "generated": "2026-08-13T01:37:38",
+  "texture": "texture.png",
+  "texture_size": [
+    1371,
+    1559
+  ],
+  "canvas": [
+    700,
+    1100
+  ],
+  "part_count": 12,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 465,
+        "h": 852
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          468,
+          3
+        ],
+        [
+          468,
+          855
+        ],
+        [
+          3,
+          855
+        ]
+      ],
+      "uv": [
+        0.002188,
+        0.001924,
+        0.341357,
+        0.548428
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        550.0
+      ],
+      "size": [
+        585.0,
+        955.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_039.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 3,
+        "y": 861,
+        "w": 320,
+        "h": 607
+      },
+      "corners": [
+        [
+          3,
+          861
+        ],
+        [
+          323,
+          861
+        ],
+        [
+          323,
+          1468
+        ],
+        [
+          3,
+          1468
+        ]
+      ],
+      "uv": [
+        0.002188,
+        0.552277,
+        0.235594,
+        0.941629
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        555.0
+      ],
+      "size": [
+        520.0,
+        870.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_003.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 329,
+        "y": 861,
+        "w": 254,
+        "h": 402
+      },
+      "corners": [
+        [
+          329,
+          861
+        ],
+        [
+          583,
+          861
+        ],
+        [
+          583,
+          1263
+        ],
+        [
+          329,
+          1263
+        ]
+      ],
+      "uv": [
+        0.239971,
+        0.552277,
+        0.425237,
+        0.810135
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        660.0
+      ],
+      "size": [
+        300.0,
+        475.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_037.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 474,
+        "y": 3,
+        "w": 393,
+        "h": 827
+      },
+      "corners": [
+        [
+          474,
+          3
+        ],
+        [
+          867,
+          3
+        ],
+        [
+          867,
+          830
+        ],
+        [
+          474,
+          830
+        ]
+      ],
+      "uv": [
+        0.345733,
+        0.001924,
+        0.632385,
+        0.532393
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        540.0
+      ],
+      "size": [
+        400.0,
+        842.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_040.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 1219,
+        "y": 861,
+        "w": 146,
+        "h": 161
+      },
+      "corners": [
+        [
+          1219,
+          861
+        ],
+        [
+          1365,
+          861
+        ],
+        [
+          1365,
+          1022
+        ],
+        [
+          1219,
+          1022
+        ]
+      ],
+      "uv": [
+        0.889132,
+        0.552277,
+        0.995624,
+        0.655548
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        110.0,
+        250.0
+      ],
+      "size": [
+        90.0,
+        100.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_043.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 589,
+        "y": 861,
+        "w": 366,
+        "h": 309
+      },
+      "corners": [
+        [
+          589,
+          861
+        ],
+        [
+          955,
+          861
+        ],
+        [
+          955,
+          1170
+        ],
+        [
+          589,
+          1170
+        ]
+      ],
+      "uv": [
+        0.429613,
+        0.552277,
+        0.696572,
+        0.750481
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        351.0,
+        294.0
+      ],
+      "size": [
+        455.0,
+        380.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_006.png"
+    },
+    {
+      "id": "click_wheel",
+      "name": "Click Wheel",
+      "type": "button_pad",
+      "frame": {
+        "x": 961,
+        "y": 861,
+        "w": 252,
+        "h": 251
+      },
+      "corners": [
+        [
+          961,
+          861
+        ],
+        [
+          1213,
+          861
+        ],
+        [
+          1213,
+          1112
+        ],
+        [
+          961,
+          1112
+        ]
+      ],
+      "uv": [
+        0.700948,
+        0.552277,
+        0.884756,
+        0.713278
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        349.0,
+        772.0
+      ],
+      "size": [
+        372.0,
+        371.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_009.png"
+    },
+    {
+      "id": "btn_prev",
+      "name": "Previous Button",
+      "type": "button",
+      "frame": {
+        "x": 3,
+        "y": 1474,
+        "w": 67,
+        "h": 82
+      },
+      "corners": [
+        [
+          3,
+          1474
+        ],
+        [
+          70,
+          1474
+        ],
+        [
+          70,
+          1556
+        ],
+        [
+          3,
+          1556
+        ]
+      ],
+      "uv": [
+        0.002188,
+        0.945478,
+        0.051058,
+        0.998076
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        162.0,
+        524.0
+      ],
+      "size": [
+        106.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_015.png"
+    },
+    {
+      "id": "btn_menu",
+      "name": "Menu Button",
+      "type": "button",
+      "frame": {
+        "x": 76,
+        "y": 1474,
+        "w": 68,
+        "h": 82
+      },
+      "corners": [
+        [
+          76,
+          1474
+        ],
+        [
+          144,
+          1474
+        ],
+        [
+          144,
+          1556
+        ],
+        [
+          76,
+          1556
+        ]
+      ],
+      "uv": [
+        0.055434,
+        0.945478,
+        0.105033,
+        0.998076
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        287.0,
+        524.0
+      ],
+      "size": [
+        106.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_016.png"
+    },
+    {
+      "id": "btn_play",
+      "name": "Play Button",
+      "type": "button",
+      "frame": {
+        "x": 150,
+        "y": 1474,
+        "w": 68,
+        "h": 82
+      },
+      "corners": [
+        [
+          150,
+          1474
+        ],
+        [
+          218,
+          1474
+        ],
+        [
+          218,
+          1556
+        ],
+        [
+          150,
+          1556
+        ]
+      ],
+      "uv": [
+        0.109409,
+        0.945478,
+        0.159008,
+        0.998076
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        412.0,
+        524.0
+      ],
+      "size": [
+        106.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_017.png"
+    },
+    {
+      "id": "btn_next",
+      "name": "Next Button",
+      "type": "button",
+      "frame": {
+        "x": 224,
+        "y": 1474,
+        "w": 68,
+        "h": 82
+      },
+      "corners": [
+        [
+          224,
+          1474
+        ],
+        [
+          292,
+          1474
+        ],
+        [
+          292,
+          1556
+        ],
+        [
+          224,
+          1556
+        ]
+      ],
+      "uv": [
+        0.163384,
+        0.945478,
+        0.212983,
+        0.998076
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        538.0,
+        524.0
+      ],
+      "size": [
+        106.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_018.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 873,
+        "y": 3,
+        "w": 402,
+        "h": 654
+      },
+      "corners": [
+        [
+          873,
+          3
+        ],
+        [
+          1275,
+          3
+        ],
+        [
+          1275,
+          657
+        ],
+        [
+          873,
+          657
+        ]
+      ],
+      "uv": [
+        0.636761,
+        0.001924,
+        0.929978,
+        0.421424
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        550.0
+      ],
+      "size": [
+        603.0,
+        981.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\ipod_classic\\parts\\part_001.png"
+    }
+  ]
+}

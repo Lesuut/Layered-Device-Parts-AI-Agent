@@ -1,0 +1,883 @@
+{
+  "device": "gameboy_advance",
+  "generated": "2026-08-12T02:23:09",
+  "texture": "texture.png",
+  "texture_size": [
+    1703,
+    2089
+  ],
+  "canvas": [
+    1050,
+    700
+  ],
+  "part_count": 17,
+  "parts": [
+    {
+      "id": "battery_door",
+      "name": "Battery Door",
+      "type": "housing_part",
+      "frame": {
+        "x": 3,
+        "y": 1578,
+        "w": 417,
+        "h": 293
+      },
+      "corners": [
+        [
+          3,
+          1578
+        ],
+        [
+          420,
+          1578
+        ],
+        [
+          420,
+          1871
+        ],
+        [
+          3,
+          1871
+        ]
+      ],
+      "uv": [
+        0.001762,
+        0.755385,
+        0.246624,
+        0.895644
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        445.0
+      ],
+      "size": [
+        417.0,
+        293.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_014.png"
+    },
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 907,
+        "h": 522
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          910,
+          3
+        ],
+        [
+          910,
+          525
+        ],
+        [
+          3,
+          525
+        ]
+      ],
+      "uv": [
+        0.001762,
+        0.001436,
+        0.534351,
+        0.251316
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        350.0
+      ],
+      "size": [
+        907.0,
+        522.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_002.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 265,
+        "y": 1877,
+        "w": 190,
+        "h": 191
+      },
+      "corners": [
+        [
+          265,
+          1877
+        ],
+        [
+          455,
+          1877
+        ],
+        [
+          455,
+          2068
+        ],
+        [
+          265,
+          2068
+        ]
+      ],
+      "uv": [
+        0.155608,
+        0.898516,
+        0.267176,
+        0.989947
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        470.0
+      ],
+      "size": [
+        120.0,
+        120.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts_b\\part_016.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 3,
+        "y": 1877,
+        "w": 256,
+        "h": 209
+      },
+      "corners": [
+        [
+          3,
+          1877
+        ],
+        [
+          259,
+          1877
+        ],
+        [
+          259,
+          2086
+        ],
+        [
+          3,
+          2086
+        ]
+      ],
+      "uv": [
+        0.001762,
+        0.898516,
+        0.152085,
+        0.998564
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        760.0,
+        470.0
+      ],
+      "size": [
+        130.0,
+        106.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_015.png"
+    },
+    {
+      "id": "power_switch",
+      "name": "Power Switch",
+      "type": "button",
+      "frame": {
+        "x": 1021,
+        "y": 1877,
+        "w": 268,
+        "h": 84
+      },
+      "corners": [
+        [
+          1021,
+          1877
+        ],
+        [
+          1289,
+          1877
+        ],
+        [
+          1289,
+          1961
+        ],
+        [
+          1021,
+          1961
+        ]
+      ],
+      "uv": [
+        0.59953,
+        0.898516,
+        0.7569,
+        0.938727
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        400.0,
+        555.0
+      ],
+      "size": [
+        140.0,
+        44.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_016.png"
+    },
+    {
+      "id": "trigger_l",
+      "name": "L Trigger",
+      "type": "trigger",
+      "frame": {
+        "x": 426,
+        "y": 1578,
+        "w": 315,
+        "h": 254
+      },
+      "corners": [
+        [
+          426,
+          1578
+        ],
+        [
+          741,
+          1578
+        ],
+        [
+          741,
+          1832
+        ],
+        [
+          426,
+          1832
+        ]
+      ],
+      "uv": [
+        0.250147,
+        0.755385,
+        0.435115,
+        0.876975
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        200.0,
+        178.0
+      ],
+      "size": [
+        160.0,
+        129.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_010.png"
+    },
+    {
+      "id": "trigger_r",
+      "name": "R Trigger",
+      "type": "trigger",
+      "frame": {
+        "x": 747,
+        "y": 1578,
+        "w": 316,
+        "h": 253
+      },
+      "corners": [
+        [
+          747,
+          1578
+        ],
+        [
+          1063,
+          1578
+        ],
+        [
+          1063,
+          1831
+        ],
+        [
+          747,
+          1831
+        ]
+      ],
+      "uv": [
+        0.438638,
+        0.755385,
+        0.624193,
+        0.876496
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        855.0,
+        178.0
+      ],
+      "size": [
+        160.0,
+        128.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_012.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 1059,
+        "w": 831,
+        "h": 513
+      },
+      "corners": [
+        [
+          3,
+          1059
+        ],
+        [
+          834,
+          1059
+        ],
+        [
+          834,
+          1572
+        ],
+        [
+          3,
+          1572
+        ]
+      ],
+      "uv": [
+        0.001762,
+        0.506941,
+        0.489724,
+        0.752513
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        350.0
+      ],
+      "size": [
+        831.0,
+        513.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_003.png"
+    },
+    {
+      "id": "membrane_dpad",
+      "name": "D-Pad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 1069,
+        "y": 1578,
+        "w": 225,
+        "h": 221
+      },
+      "corners": [
+        [
+          1069,
+          1578
+        ],
+        [
+          1294,
+          1578
+        ],
+        [
+          1294,
+          1799
+        ],
+        [
+          1069,
+          1799
+        ]
+      ],
+      "uv": [
+        0.627716,
+        0.755385,
+        0.759836,
+        0.861178
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        188.0,
+        306.0
+      ],
+      "size": [
+        130.0,
+        128.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts_b\\part_012.png"
+    },
+    {
+      "id": "membrane_ab",
+      "name": "A/B Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 1300,
+        "y": 1578,
+        "w": 222,
+        "h": 220
+      },
+      "corners": [
+        [
+          1300,
+          1578
+        ],
+        [
+          1522,
+          1578
+        ],
+        [
+          1522,
+          1798
+        ],
+        [
+          1300,
+          1798
+        ]
+      ],
+      "uv": [
+        0.763359,
+        0.755385,
+        0.893717,
+        0.860699
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        862.0,
+        305.0
+      ],
+      "size": [
+        150.0,
+        148.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts_b\\part_015.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 1255,
+        "y": 1059,
+        "w": 442,
+        "h": 323
+      },
+      "corners": [
+        [
+          1255,
+          1059
+        ],
+        [
+          1697,
+          1059
+        ],
+        [
+          1697,
+          1382
+        ],
+        [
+          1255,
+          1382
+        ]
+      ],
+      "uv": [
+        0.736935,
+        0.506941,
+        0.996477,
+        0.661561
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        323.0
+      ],
+      "size": [
+        404.0,
+        295.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts_b\\part_004.png"
+    },
+    {
+      "id": "screen_lens",
+      "name": "Screen Lens",
+      "type": "display",
+      "frame": {
+        "x": 840,
+        "y": 1059,
+        "w": 409,
+        "h": 333
+      },
+      "corners": [
+        [
+          840,
+          1059
+        ],
+        [
+          1249,
+          1059
+        ],
+        [
+          1249,
+          1392
+        ],
+        [
+          840,
+          1392
+        ]
+      ],
+      "uv": [
+        0.493247,
+        0.506941,
+        0.733412,
+        0.666348
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        323.0
+      ],
+      "size": [
+        430.0,
+        350.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts_b\\part_005.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 531,
+        "w": 918,
+        "h": 522
+      },
+      "corners": [
+        [
+          3,
+          531
+        ],
+        [
+          921,
+          531
+        ],
+        [
+          921,
+          1053
+        ],
+        [
+          3,
+          1053
+        ]
+      ],
+      "uv": [
+        0.001762,
+        0.254189,
+        0.54081,
+        0.504069
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        525.0,
+        350.0
+      ],
+      "size": [
+        918.0,
+        522.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_001.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 461,
+        "y": 1877,
+        "w": 184,
+        "h": 187
+      },
+      "corners": [
+        [
+          461,
+          1877
+        ],
+        [
+          645,
+          1877
+        ],
+        [
+          645,
+          2064
+        ],
+        [
+          461,
+          2064
+        ]
+      ],
+      "uv": [
+        0.270699,
+        0.898516,
+        0.378743,
+        0.988033
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        188.0,
+        306.0
+      ],
+      "size": [
+        130.0,
+        132.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 13,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_005.png"
+    },
+    {
+      "id": "button_b",
+      "name": "Button B",
+      "type": "button",
+      "frame": {
+        "x": 928,
+        "y": 1877,
+        "w": 87,
+        "h": 90
+      },
+      "corners": [
+        [
+          928,
+          1877
+        ],
+        [
+          1015,
+          1877
+        ],
+        [
+          1015,
+          1967
+        ],
+        [
+          928,
+          1967
+        ]
+      ],
+      "uv": [
+        0.544921,
+        0.898516,
+        0.596007,
+        0.941599
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        821.0,
+        319.0
+      ],
+      "size": [
+        60.0,
+        62.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 14,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_007.png"
+    },
+    {
+      "id": "button_a",
+      "name": "Button A",
+      "type": "button",
+      "frame": {
+        "x": 651,
+        "y": 1877,
+        "w": 88,
+        "h": 91
+      },
+      "corners": [
+        [
+          651,
+          1877
+        ],
+        [
+          739,
+          1877
+        ],
+        [
+          739,
+          1968
+        ],
+        [
+          651,
+          1968
+        ]
+      ],
+      "uv": [
+        0.382267,
+        0.898516,
+        0.43394,
+        0.942078
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        902.0,
+        292.0
+      ],
+      "size": [
+        60.0,
+        62.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 15,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_006.png"
+    },
+    {
+      "id": "select_start",
+      "name": "Select / Start",
+      "type": "button_pad",
+      "frame": {
+        "x": 745,
+        "y": 1877,
+        "w": 177,
+        "h": 91
+      },
+      "corners": [
+        [
+          745,
+          1877
+        ],
+        [
+          922,
+          1877
+        ],
+        [
+          922,
+          1968
+        ],
+        [
+          745,
+          1968
+        ]
+      ],
+      "uv": [
+        0.437463,
+        0.898516,
+        0.541398,
+        0.942078
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        454.0
+      ],
+      "size": [
+        80.0,
+        42.0
+      ],
+      "scale": 1.0,
+      "rotation": 90.0,
+      "layer": 16,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_advance\\parts\\part_009.png"
+    }
+  ]
+}

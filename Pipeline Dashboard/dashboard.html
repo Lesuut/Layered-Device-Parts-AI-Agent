@@ -188,7 +188,7 @@ const STAGE_RU = {
   marked: 'метки дыр', punched: 'дыры пробиты', parts: 'нарезано', build: 'сборка',
 };
 const $ = id => document.getElementById(id);
-let lastVersion = -1, seenFeed = 0;
+let lastVersion = -1, seenFeed = 0, seenCards = 0, session = null;
 
 function timeStr(ts) {
   return ts ? new Date(ts * 1000).toLocaleTimeString('ru-RU', { hour12: false }) : '';
@@ -262,19 +262,32 @@ function renderGallery(images) {
   grid.querySelectorAll('.card').forEach(c => {
     if (!alive.has(c.dataset.p)) c.remove();
   });
+
+  // новая картинка приезжает в конец — крутим к ней, чтобы свежее было видно
+  if (images.length > seenCards) {
+    const box = $('stage');
+    requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
+  }
+  seenCards = images.length;
 }
 
 function renderFeed(feed) {
   const box = $('feedList');
+  const grew = feed.length > seenFeed;
   box.innerHTML = '';
-  feed.slice().reverse().forEach((f, i) => {
+  // хронологически: свежее внизу, как в терминале
+  feed.forEach((f, i) => {
     const el = document.createElement('div');
-    el.className = 'row' + (feed.length > seenFeed && i === 0 ? ' fresh' : '');
+    el.className = 'row' + (grew && i === feed.length - 1 ? ' fresh' : '');
     el.innerHTML = '<div>' + f.text + '</div>'
       + '<div class="w">' + timeStr(f.ts) + (f.detail ? ' · <span class="d">' + f.detail + '</span>' : '') + '</div>';
     box.appendChild(el);
   });
   seenFeed = feed.length;
+  if (grew) {
+    const sec = $('feed');
+    requestAnimationFrame(() => { sec.scrollTop = sec.scrollHeight; });
+  }
 }
 
 function paint(s) {
@@ -302,6 +315,10 @@ async function tick() {
     const s = await r.json();
     $('link').classList.add('on');
     $('linkText').textContent = 'на связи';
+    // стартовала новая сессия — страница начинает с нуля, а не домешивает
+    // новые события к старой ленте
+    if (session !== null && s.session !== session) { location.reload(); return; }
+    session = s.session;
     if (s.version !== lastVersion) { lastVersion = s.version; paint(s); }
   } catch (e) {
     $('link').classList.remove('on');

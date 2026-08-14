@@ -38,6 +38,18 @@
     ],
     "PostToolUse": [
       {
+        "matcher": "mcp__asset-builder__asset_extract|mcp__asset-builder__asset_pack",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py \"C:\\Users\\Artem\\Desktop\\Device  Generator\\Библиотека деталей\\library.py\" hook",
+            "timeout": 60,
+            "async": true,
+            "statusMessage": "Складываю детали в библиотеку"
+          }
+        ]
+      },
+      {
         "matcher": "mcp__flow-images__.*|mcp__bg-remover__.*|mcp__asset-builder__.*|Read|Bash|PowerShell",
         "hooks": [
           {

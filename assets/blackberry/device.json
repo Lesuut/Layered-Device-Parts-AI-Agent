@@ -1,0 +1,424 @@
+{
+  "device": "blackberry",
+  "generated": "2026-08-13T03:43:36",
+  "texture": "texture.png",
+  "texture_size": [
+    1365,
+    1848
+  ],
+  "canvas": [
+    600,
+    950
+  ],
+  "part_count": 8,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 475,
+        "y": 3,
+        "w": 398,
+        "h": 800
+      },
+      "corners": [
+        [
+          475,
+          3
+        ],
+        [
+          873,
+          3
+        ],
+        [
+          873,
+          803
+        ],
+        [
+          475,
+          803
+        ]
+      ],
+      "uv": [
+        0.347985,
+        0.001623,
+        0.63956,
+        0.434524
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        531.0
+      ],
+      "size": [
+        490.0,
+        733.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\part_016.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Mid Frame",
+      "type": "chassis",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 466,
+        "h": 859
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          469,
+          3
+        ],
+        [
+          469,
+          862
+        ],
+        [
+          3,
+          862
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.001623,
+        0.34359,
+        0.46645
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        531.0
+      ],
+      "size": [
+        462.0,
+        710.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\part_002.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 404,
+        "y": 868,
+        "w": 271,
+        "h": 451
+      },
+      "corners": [
+        [
+          404,
+          868
+        ],
+        [
+          675,
+          868
+        ],
+        [
+          675,
+          1319
+        ],
+        [
+          404,
+          1319
+        ]
+      ],
+      "uv": [
+        0.295971,
+        0.469697,
+        0.494505,
+        0.713745
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        660.0
+      ],
+      "size": [
+        240.0,
+        400.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\part_019.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 868,
+        "w": 395,
+        "h": 680
+      },
+      "corners": [
+        [
+          3,
+          868
+        ],
+        [
+          398,
+          868
+        ],
+        [
+          398,
+          1548
+        ],
+        [
+          3,
+          1548
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.469697,
+        0.291575,
+        0.837662
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        500.0
+      ],
+      "size": [
+        390.0,
+        620.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\pcb_rot.png"
+    },
+    {
+      "id": "display",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 681,
+        "y": 868,
+        "w": 595,
+        "h": 360
+      },
+      "corners": [
+        [
+          681,
+          868
+        ],
+        [
+          1276,
+          868
+        ],
+        [
+          1276,
+          1228
+        ],
+        [
+          681,
+          1228
+        ]
+      ],
+      "uv": [
+        0.498901,
+        0.469697,
+        0.934799,
+        0.664502
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        383.0
+      ],
+      "size": [
+        380.0,
+        212.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\display_lcd.png"
+    },
+    {
+      "id": "keypad",
+      "name": "QWERTY Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 1554,
+        "w": 480,
+        "h": 291
+      },
+      "corners": [
+        [
+          3,
+          1554
+        ],
+        [
+          483,
+          1554
+        ],
+        [
+          483,
+          1845
+        ],
+        [
+          3,
+          1845
+        ]
+      ],
+      "uv": [
+        0.002198,
+        0.840909,
+        0.353846,
+        0.998377
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        711.0
+      ],
+      "size": [
+        460.0,
+        279.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\part_021.png"
+    },
+    {
+      "id": "nav_row",
+      "name": "Navigation Keys",
+      "type": "button_pad",
+      "frame": {
+        "x": 489,
+        "y": 1554,
+        "w": 453,
+        "h": 102
+      },
+      "corners": [
+        [
+          489,
+          1554
+        ],
+        [
+          942,
+          1554
+        ],
+        [
+          942,
+          1656
+        ],
+        [
+          489,
+          1656
+        ]
+      ],
+      "uv": [
+        0.358242,
+        0.840909,
+        0.69011,
+        0.896104
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        551.0
+      ],
+      "size": [
+        440.0,
+        99.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\part_020.png"
+    },
+    {
+      "id": "front_panel",
+      "name": "Front Panel",
+      "type": "housing_front",
+      "frame": {
+        "x": 879,
+        "y": 3,
+        "w": 480,
+        "h": 727
+      },
+      "corners": [
+        [
+          879,
+          3
+        ],
+        [
+          1359,
+          3
+        ],
+        [
+          1359,
+          730
+        ],
+        [
+          879,
+          730
+        ]
+      ],
+      "uv": [
+        0.643956,
+        0.001623,
+        0.995604,
+        0.395022
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        530.0
+      ],
+      "size": [
+        480.0,
+        727.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\blackberry\\parts\\front_panel.png"
+    }
+  ]
+}

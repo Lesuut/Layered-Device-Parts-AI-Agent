@@ -1,0 +1,577 @@
+{
+  "device": "nokia_3210",
+  "generated": "2026-08-13T02:29:27",
+  "texture": "texture.png",
+  "texture_size": [
+    1401,
+    1598
+  ],
+  "canvas": [
+    500,
+    1000
+  ],
+  "part_count": 11,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 351,
+        "h": 783
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          354,
+          3
+        ],
+        [
+          354,
+          786
+        ],
+        [
+          3,
+          786
+        ]
+      ],
+      "uv": [
+        0.002141,
+        0.001877,
+        0.252677,
+        0.491865
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        480.0
+      ],
+      "size": [
+        352.0,
+        784.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_026.png"
+    },
+    {
+      "id": "rear_chassis",
+      "name": "Rear Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 360,
+        "y": 3,
+        "w": 369,
+        "h": 783
+      },
+      "corners": [
+        [
+          360,
+          3
+        ],
+        [
+          729,
+          3
+        ],
+        [
+          729,
+          786
+        ],
+        [
+          360,
+          786
+        ]
+      ],
+      "uv": [
+        0.256959,
+        0.001877,
+        0.520343,
+        0.491865
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        480.0
+      ],
+      "size": [
+        360.0,
+        770.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_025.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 336,
+        "y": 792,
+        "w": 268,
+        "h": 453
+      },
+      "corners": [
+        [
+          336,
+          792
+        ],
+        [
+          604,
+          792
+        ],
+        [
+          604,
+          1245
+        ],
+        [
+          336,
+          1245
+        ]
+      ],
+      "uv": [
+        0.239829,
+        0.49562,
+        0.431121,
+        0.779099
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        620.0
+      ],
+      "size": [
+        230.0,
+        390.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_028_rot.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 1113,
+        "y": 3,
+        "w": 282,
+        "h": 747
+      },
+      "corners": [
+        [
+          1113,
+          3
+        ],
+        [
+          1395,
+          3
+        ],
+        [
+          1395,
+          750
+        ],
+        [
+          1113,
+          750
+        ]
+      ],
+      "uv": [
+        0.794433,
+        0.001877,
+        0.995717,
+        0.469337
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        470.0
+      ],
+      "size": [
+        280.0,
+        740.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_024_rot.png"
+    },
+    {
+      "id": "mid_frame",
+      "name": "Mid Frame",
+      "type": "chassis",
+      "frame": {
+        "x": 3,
+        "y": 792,
+        "w": 327,
+        "h": 642
+      },
+      "corners": [
+        [
+          3,
+          792
+        ],
+        [
+          330,
+          792
+        ],
+        [
+          330,
+          1434
+        ],
+        [
+          3,
+          1434
+        ]
+      ],
+      "uv": [
+        0.002141,
+        0.49562,
+        0.235546,
+        0.897372
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        500.0
+      ],
+      "size": [
+        330.0,
+        645.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_002.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 338,
+        "y": 1440,
+        "w": 136,
+        "h": 114
+      },
+      "corners": [
+        [
+          338,
+          1440
+        ],
+        [
+          474,
+          1440
+        ],
+        [
+          474,
+          1554
+        ],
+        [
+          338,
+          1554
+        ]
+      ],
+      "uv": [
+        0.241256,
+        0.901126,
+        0.33833,
+        0.972466
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        249.0,
+        180.0
+      ],
+      "size": [
+        70.0,
+        60.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_031.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 610,
+        "y": 792,
+        "w": 339,
+        "h": 334
+      },
+      "corners": [
+        [
+          610,
+          792
+        ],
+        [
+          949,
+          792
+        ],
+        [
+          949,
+          1126
+        ],
+        [
+          610,
+          1126
+        ]
+      ],
+      "uv": [
+        0.435403,
+        0.49562,
+        0.677373,
+        0.704631
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        267.0,
+        380.0
+      ],
+      "size": [
+        310.0,
+        226.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\lcd_trim.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 955,
+        "y": 792,
+        "w": 312,
+        "h": 295
+      },
+      "corners": [
+        [
+          955,
+          792
+        ],
+        [
+          1267,
+          792
+        ],
+        [
+          1267,
+          1087
+        ],
+        [
+          955,
+          1087
+        ]
+      ],
+      "uv": [
+        0.681656,
+        0.49562,
+        0.904354,
+        0.680225
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        249.0,
+        704.0
+      ],
+      "size": [
+        300.0,
+        230.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_008.png"
+    },
+    {
+      "id": "btn_nav",
+      "name": "Navigation Key",
+      "type": "button",
+      "frame": {
+        "x": 480,
+        "y": 1440,
+        "w": 144,
+        "h": 52
+      },
+      "corners": [
+        [
+          480,
+          1440
+        ],
+        [
+          624,
+          1440
+        ],
+        [
+          624,
+          1492
+        ],
+        [
+          480,
+          1492
+        ]
+      ],
+      "uv": [
+        0.342612,
+        0.901126,
+        0.445396,
+        0.933667
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        249.0,
+        517.0
+      ],
+      "size": [
+        170.0,
+        62.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_007.png"
+    },
+    {
+      "id": "nav_pad",
+      "name": "Soft Key Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 1440,
+        "w": 329,
+        "h": 155
+      },
+      "corners": [
+        [
+          3,
+          1440
+        ],
+        [
+          332,
+          1440
+        ],
+        [
+          332,
+          1595
+        ],
+        [
+          3,
+          1595
+        ]
+      ],
+      "uv": [
+        0.002141,
+        0.901126,
+        0.236974,
+        0.998123
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        249.0,
+        514.0
+      ],
+      "size": [
+        200.0,
+        95.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_005.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 735,
+        "y": 3,
+        "w": 372,
+        "h": 783
+      },
+      "corners": [
+        [
+          735,
+          3
+        ],
+        [
+          1107,
+          3
+        ],
+        [
+          1107,
+          786
+        ],
+        [
+          735,
+          786
+        ]
+      ],
+      "uv": [
+        0.524625,
+        0.001877,
+        0.79015,
+        0.491865
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        480.0
+      ],
+      "size": [
+        372.0,
+        783.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_3210\\parts\\part_001.png"
+    }
+  ]
+}

@@ -1,0 +1,679 @@
+{
+  "device": "sharp_gx30",
+  "generated": "2026-08-12T20:56:09",
+  "texture": "texture.png",
+  "texture_size": [
+    1465,
+    1674
+  ],
+  "canvas": [
+    700,
+    1350
+  ],
+  "part_count": 13,
+  "parts": [
+    {
+      "id": "lid_back_cover",
+      "name": "Lid Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 302,
+        "h": 673
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          305,
+          3
+        ],
+        [
+          305,
+          676
+        ],
+        [
+          3,
+          676
+        ]
+      ],
+      "uv": [
+        0.002048,
+        0.001792,
+        0.208191,
+        0.403823
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        330.0
+      ],
+      "size": [
+        302.0,
+        673.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_024.png"
+    },
+    {
+      "id": "rear_chassis",
+      "name": "Rear Chassis",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 682,
+        "w": 323,
+        "h": 555
+      },
+      "corners": [
+        [
+          3,
+          682
+        ],
+        [
+          326,
+          682
+        ],
+        [
+          326,
+          1237
+        ],
+        [
+          3,
+          1237
+        ]
+      ],
+      "uv": [
+        0.002048,
+        0.407407,
+        0.222526,
+        0.738949
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1000.0
+      ],
+      "size": [
+        323.0,
+        555.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_001.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 282,
+        "y": 1243,
+        "w": 269,
+        "h": 397
+      },
+      "corners": [
+        [
+          282,
+          1243
+        ],
+        [
+          551,
+          1243
+        ],
+        [
+          551,
+          1640
+        ],
+        [
+          282,
+          1640
+        ]
+      ],
+      "uv": [
+        0.192491,
+        0.742533,
+        0.376109,
+        0.979689
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1070.0
+      ],
+      "size": [
+        236.0,
+        348.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_016.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 961,
+        "y": 3,
+        "w": 292,
+        "h": 603
+      },
+      "corners": [
+        [
+          961,
+          3
+        ],
+        [
+          1253,
+          3
+        ],
+        [
+          1253,
+          606
+        ],
+        [
+          961,
+          606
+        ]
+      ],
+      "uv": [
+        0.655973,
+        0.001792,
+        0.85529,
+        0.362007
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1000.0
+      ],
+      "size": [
+        206.0,
+        413.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_002.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 661,
+        "y": 1243,
+        "w": 181,
+        "h": 126
+      },
+      "corners": [
+        [
+          661,
+          1243
+        ],
+        [
+          842,
+          1243
+        ],
+        [
+          842,
+          1369
+        ],
+        [
+          661,
+          1369
+        ]
+      ],
+      "uv": [
+        0.451195,
+        0.742533,
+        0.574744,
+        0.817802
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        790.0
+      ],
+      "size": [
+        181.0,
+        126.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_065.png"
+    },
+    {
+      "id": "camera_module",
+      "name": "Camera Module",
+      "type": "optics",
+      "frame": {
+        "x": 557,
+        "y": 1243,
+        "w": 98,
+        "h": 151
+      },
+      "corners": [
+        [
+          557,
+          1243
+        ],
+        [
+          655,
+          1243
+        ],
+        [
+          655,
+          1394
+        ],
+        [
+          557,
+          1394
+        ]
+      ],
+      "uv": [
+        0.380205,
+        0.742533,
+        0.447099,
+        0.832736
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        145.0
+      ],
+      "size": [
+        98.0,
+        151.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_040.png"
+    },
+    {
+      "id": "lid_chassis",
+      "name": "Lid Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 311,
+        "y": 3,
+        "w": 343,
+        "h": 659
+      },
+      "corners": [
+        [
+          311,
+          3
+        ],
+        [
+          654,
+          3
+        ],
+        [
+          654,
+          662
+        ],
+        [
+          311,
+          662
+        ]
+      ],
+      "uv": [
+        0.212287,
+        0.001792,
+        0.446416,
+        0.39546
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        335.0
+      ],
+      "size": [
+        300.0,
+        576.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_017.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 660,
+        "y": 3,
+        "w": 295,
+        "h": 612
+      },
+      "corners": [
+        [
+          660,
+          3
+        ],
+        [
+          955,
+          3
+        ],
+        [
+          955,
+          615
+        ],
+        [
+          660,
+          615
+        ]
+      ],
+      "uv": [
+        0.450512,
+        0.001792,
+        0.651877,
+        0.367384
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        357.0
+      ],
+      "size": [
+        222.0,
+        414.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_004.png"
+    },
+    {
+      "id": "keypad_membrane",
+      "name": "Keypad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 967,
+        "y": 682,
+        "w": 284,
+        "h": 466
+      },
+      "corners": [
+        [
+          967,
+          682
+        ],
+        [
+          1251,
+          682
+        ],
+        [
+          1251,
+          1148
+        ],
+        [
+          967,
+          1148
+        ]
+      ],
+      "uv": [
+        0.660068,
+        0.407407,
+        0.853925,
+        0.685783
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1015.0
+      ],
+      "size": [
+        214.0,
+        352.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_047.png"
+    },
+    {
+      "id": "nav_module",
+      "name": "Navigation Module",
+      "type": "button_pad",
+      "frame": {
+        "x": 1257,
+        "y": 682,
+        "w": 202,
+        "h": 436
+      },
+      "corners": [
+        [
+          1257,
+          682
+        ],
+        [
+          1459,
+          682
+        ],
+        [
+          1459,
+          1118
+        ],
+        [
+          1257,
+          1118
+        ]
+      ],
+      "uv": [
+        0.85802,
+        0.407407,
+        0.995904,
+        0.667861
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        900.0
+      ],
+      "size": [
+        132.0,
+        285.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_023.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 1243,
+        "w": 273,
+        "h": 428
+      },
+      "corners": [
+        [
+          3,
+          1243
+        ],
+        [
+          276,
+          1243
+        ],
+        [
+          276,
+          1671
+        ],
+        [
+          3,
+          1671
+        ]
+      ],
+      "uv": [
+        0.002048,
+        0.742533,
+        0.188396,
+        0.998208
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1055.0
+      ],
+      "size": [
+        213.0,
+        334.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_005.png"
+    },
+    {
+      "id": "front_bezel",
+      "name": "Front Bezel",
+      "type": "housing_front",
+      "frame": {
+        "x": 656,
+        "y": 682,
+        "w": 305,
+        "h": 496
+      },
+      "corners": [
+        [
+          656,
+          682
+        ],
+        [
+          961,
+          682
+        ],
+        [
+          961,
+          1178
+        ],
+        [
+          656,
+          1178
+        ]
+      ],
+      "uv": [
+        0.447782,
+        0.407407,
+        0.655973,
+        0.703704
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        1000.0
+      ],
+      "size": [
+        320.0,
+        520.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_022.png"
+    },
+    {
+      "id": "lid_front_shell",
+      "name": "Lid Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 332,
+        "y": 682,
+        "w": 318,
+        "h": 551
+      },
+      "corners": [
+        [
+          332,
+          682
+        ],
+        [
+          650,
+          682
+        ],
+        [
+          650,
+          1233
+        ],
+        [
+          332,
+          1233
+        ]
+      ],
+      "uv": [
+        0.226621,
+        0.407407,
+        0.443686,
+        0.736559
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        320.0
+      ],
+      "size": [
+        318.0,
+        551.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sharp_gx30\\parts\\part_003.png"
+    }
+  ]
+}

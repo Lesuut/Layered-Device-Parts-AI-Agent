@@ -1,0 +1,679 @@
+{
+  "device": "gameboy_pocket",
+  "generated": "2026-08-12T00:59:00",
+  "texture": "texture.png",
+  "texture_size": [
+    1511,
+    1502
+  ],
+  "canvas": [
+    600,
+    900
+  ],
+  "part_count": 13,
+  "parts": [
+    {
+      "id": "battery_door",
+      "name": "Battery Door",
+      "type": "housing_part",
+      "frame": {
+        "x": 375,
+        "y": 819,
+        "w": 318,
+        "h": 285
+      },
+      "corners": [
+        [
+          375,
+          819
+        ],
+        [
+          693,
+          819
+        ],
+        [
+          693,
+          1104
+        ],
+        [
+          375,
+          1104
+        ]
+      ],
+      "uv": [
+        0.24818,
+        0.545273,
+        0.458637,
+        0.73502
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        620.0
+      ],
+      "size": [
+        318.0,
+        285.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_006.png"
+    },
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 528,
+        "h": 810
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          531,
+          3
+        ],
+        [
+          531,
+          813
+        ],
+        [
+          3,
+          813
+        ]
+      ],
+      "uv": [
+        0.001985,
+        0.001997,
+        0.351423,
+        0.541278
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        450.0
+      ],
+      "size": [
+        528.0,
+        810.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_001.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 699,
+        "y": 819,
+        "w": 239,
+        "h": 259
+      },
+      "corners": [
+        [
+          699,
+          819
+        ],
+        [
+          938,
+          819
+        ],
+        [
+          938,
+          1078
+        ],
+        [
+          699,
+          1078
+        ]
+      ],
+      "uv": [
+        0.462608,
+        0.545273,
+        0.620781,
+        0.71771
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        400.0,
+        660.0
+      ],
+      "size": [
+        120.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_007.png"
+    },
+    {
+      "id": "lcd_flex",
+      "name": "LCD Flex Cable",
+      "type": "cable",
+      "frame": {
+        "x": 3,
+        "y": 1201,
+        "w": 810,
+        "h": 196
+      },
+      "corners": [
+        [
+          3,
+          1201
+        ],
+        [
+          813,
+          1201
+        ],
+        [
+          813,
+          1397
+        ],
+        [
+          3,
+          1397
+        ]
+      ],
+      "uv": [
+        0.001985,
+        0.799601,
+        0.538054,
+        0.930093
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        380.0
+      ],
+      "size": [
+        300.0,
+        73.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_008.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 537,
+        "y": 3,
+        "w": 467,
+        "h": 797
+      },
+      "corners": [
+        [
+          537,
+          3
+        ],
+        [
+          1004,
+          3
+        ],
+        [
+          1004,
+          800
+        ],
+        [
+          537,
+          800
+        ]
+      ],
+      "uv": [
+        0.355394,
+        0.001997,
+        0.664461,
+        0.532623
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        450.0
+      ],
+      "size": [
+        467.0,
+        797.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_002.png"
+    },
+    {
+      "id": "membrane_dpad",
+      "name": "D-Pad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 1189,
+        "y": 1201,
+        "w": 171,
+        "h": 170
+      },
+      "corners": [
+        [
+          1189,
+          1201
+        ],
+        [
+          1360,
+          1201
+        ],
+        [
+          1360,
+          1371
+        ],
+        [
+          1189,
+          1371
+        ]
+      ],
+      "uv": [
+        0.786896,
+        0.799601,
+        0.900066,
+        0.912783
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        154.0,
+        590.0
+      ],
+      "size": [
+        130.0,
+        129.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_026.png"
+    },
+    {
+      "id": "membrane_ab",
+      "name": "A/B Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 1004,
+        "y": 1201,
+        "w": 179,
+        "h": 178
+      },
+      "corners": [
+        [
+          1004,
+          1201
+        ],
+        [
+          1183,
+          1201
+        ],
+        [
+          1183,
+          1379
+        ],
+        [
+          1004,
+          1379
+        ]
+      ],
+      "uv": [
+        0.664461,
+        0.799601,
+        0.782925,
+        0.918109
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        437.0,
+        583.0
+      ],
+      "size": [
+        135.0,
+        134.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_012.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 3,
+        "y": 819,
+        "w": 366,
+        "h": 376
+      },
+      "corners": [
+        [
+          3,
+          819
+        ],
+        [
+          369,
+          819
+        ],
+        [
+          369,
+          1195
+        ],
+        [
+          3,
+          1195
+        ]
+      ],
+      "uv": [
+        0.001985,
+        0.545273,
+        0.244209,
+        0.795606
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        279.0
+      ],
+      "size": [
+        275.0,
+        282.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_004.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 1010,
+        "y": 3,
+        "w": 495,
+        "h": 792
+      },
+      "corners": [
+        [
+          1010,
+          3
+        ],
+        [
+          1505,
+          3
+        ],
+        [
+          1505,
+          795
+        ],
+        [
+          1010,
+          795
+        ]
+      ],
+      "uv": [
+        0.668432,
+        0.001997,
+        0.996029,
+        0.529294
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        450.0
+      ],
+      "size": [
+        495.0,
+        792.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_003.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 819,
+        "y": 1201,
+        "w": 179,
+        "h": 179
+      },
+      "corners": [
+        [
+          819,
+          1201
+        ],
+        [
+          998,
+          1201
+        ],
+        [
+          998,
+          1380
+        ],
+        [
+          819,
+          1380
+        ]
+      ],
+      "uv": [
+        0.542025,
+        0.799601,
+        0.66049,
+        0.918775
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        154.0,
+        590.0
+      ],
+      "size": [
+        130.0,
+        130.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_009.png"
+    },
+    {
+      "id": "button_b",
+      "name": "Button B",
+      "type": "button",
+      "frame": {
+        "x": 3,
+        "y": 1403,
+        "w": 97,
+        "h": 96
+      },
+      "corners": [
+        [
+          3,
+          1403
+        ],
+        [
+          100,
+          1403
+        ],
+        [
+          100,
+          1499
+        ],
+        [
+          3,
+          1499
+        ]
+      ],
+      "uv": [
+        0.001985,
+        0.934088,
+        0.066181,
+        0.998003
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        398.0,
+        601.0
+      ],
+      "size": [
+        60.0,
+        60.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_021.png"
+    },
+    {
+      "id": "button_a",
+      "name": "Button A",
+      "type": "button",
+      "frame": {
+        "x": 1366,
+        "y": 1201,
+        "w": 97,
+        "h": 97
+      },
+      "corners": [
+        [
+          1366,
+          1201
+        ],
+        [
+          1463,
+          1201
+        ],
+        [
+          1463,
+          1298
+        ],
+        [
+          1366,
+          1298
+        ]
+      ],
+      "uv": [
+        0.904037,
+        0.799601,
+        0.968233,
+        0.864181
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        477.0,
+        566.0
+      ],
+      "size": [
+        60.0,
+        60.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_014.png"
+    },
+    {
+      "id": "select_start",
+      "name": "Select / Start",
+      "type": "button_pad",
+      "frame": {
+        "x": 106,
+        "y": 1403,
+        "w": 336,
+        "h": 66
+      },
+      "corners": [
+        [
+          106,
+          1403
+        ],
+        [
+          442,
+          1403
+        ],
+        [
+          442,
+          1469
+        ],
+        [
+          106,
+          1469
+        ]
+      ],
+      "uv": [
+        0.070152,
+        0.934088,
+        0.292522,
+        0.978029
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        272.0,
+        705.0
+      ],
+      "size": [
+        166.0,
+        34.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\gameboy_pocket\\parts\\part_010.png"
+    }
+  ]
+}

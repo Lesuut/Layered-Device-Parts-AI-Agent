@@ -1,0 +1,526 @@
+{
+  "device": "discman",
+  "generated": "2026-08-12T21:56:14",
+  "texture": "texture.png",
+  "texture_size": [
+    2470,
+    2599
+  ],
+  "canvas": [
+    620,
+    620
+  ],
+  "part_count": 10,
+  "parts": [
+    {
+      "id": "bottom_case",
+      "name": "Bottom Case",
+      "type": "housing_rear",
+      "frame": {
+        "x": 1203,
+        "y": 1673,
+        "w": 540,
+        "h": 513
+      },
+      "corners": [
+        [
+          1203,
+          1673
+        ],
+        [
+          1743,
+          1673
+        ],
+        [
+          1743,
+          2186
+        ],
+        [
+          1203,
+          2186
+        ]
+      ],
+      "uv": [
+        0.487045,
+        0.643709,
+        0.705668,
+        0.841093
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        302.0
+      ],
+      "size": [
+        520.0,
+        496.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_008.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 2261,
+        "y": 1673,
+        "w": 203,
+        "h": 348
+      },
+      "corners": [
+        [
+          2261,
+          1673
+        ],
+        [
+          2464,
+          1673
+        ],
+        [
+          2464,
+          2021
+        ],
+        [
+          2261,
+          2021
+        ]
+      ],
+      "uv": [
+        0.915385,
+        0.643709,
+        0.997571,
+        0.777607
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        420.0
+      ],
+      "size": [
+        170.0,
+        300.0
+      ],
+      "scale": 1.0,
+      "rotation": 90.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_007.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 1749,
+        "y": 1673,
+        "w": 506,
+        "h": 426
+      },
+      "corners": [
+        [
+          1749,
+          1673
+        ],
+        [
+          2255,
+          1673
+        ],
+        [
+          2255,
+          2099
+        ],
+        [
+          1749,
+          2099
+        ]
+      ],
+      "uv": [
+        0.708097,
+        0.643709,
+        0.912955,
+        0.807618
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        270.0
+      ],
+      "size": [
+        400.0,
+        337.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_006.png"
+    },
+    {
+      "id": "cd_mechanism",
+      "name": "CD Mechanism",
+      "type": "mechanism",
+      "frame": {
+        "x": 1679,
+        "y": 3,
+        "w": 665,
+        "h": 690
+      },
+      "corners": [
+        [
+          1679,
+          3
+        ],
+        [
+          2344,
+          3
+        ],
+        [
+          2344,
+          693
+        ],
+        [
+          1679,
+          693
+        ]
+      ],
+      "uv": [
+        0.679757,
+        0.001154,
+        0.948988,
+        0.266641
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        240.0
+      ],
+      "size": [
+        430.0,
+        446.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_022.png"
+    },
+    {
+      "id": "cd_disc",
+      "name": "CD Disc",
+      "type": "media",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 1670,
+        "h": 1664
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          1673,
+          3
+        ],
+        [
+          1673,
+          1667
+        ],
+        [
+          3,
+          1667
+        ]
+      ],
+      "uv": [
+        0.001215,
+        0.001154,
+        0.677328,
+        0.641401
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        255.0
+      ],
+      "size": [
+        400.0,
+        399.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts_disc\\part_001.png"
+    },
+    {
+      "id": "button_membrane",
+      "name": "Button Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 3,
+        "y": 2308,
+        "w": 523,
+        "h": 288
+      },
+      "corners": [
+        [
+          3,
+          2308
+        ],
+        [
+          526,
+          2308
+        ],
+        [
+          526,
+          2596
+        ],
+        [
+          3,
+          2596
+        ]
+      ],
+      "uv": [
+        0.001215,
+        0.888034,
+        0.212955,
+        0.998846
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        450.0
+      ],
+      "size": [
+        430.0,
+        195.0
+      ],
+      "scale": 1.0,
+      "rotation": 180.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_002.png"
+    },
+    {
+      "id": "lcd_display",
+      "name": "LCD Display",
+      "type": "display",
+      "frame": {
+        "x": 1078,
+        "y": 2308,
+        "w": 212,
+        "h": 124
+      },
+      "corners": [
+        [
+          1078,
+          2308
+        ],
+        [
+          1290,
+          2308
+        ],
+        [
+          1290,
+          2432
+        ],
+        [
+          1078,
+          2432
+        ]
+      ],
+      "uv": [
+        0.436437,
+        0.888034,
+        0.522267,
+        0.935745
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        312.0,
+        514.0
+      ],
+      "size": [
+        182.0,
+        61.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_011_lcd.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 668,
+        "y": 1673,
+        "w": 529,
+        "h": 519
+      },
+      "corners": [
+        [
+          668,
+          1673
+        ],
+        [
+          1197,
+          1673
+        ],
+        [
+          1197,
+          2192
+        ],
+        [
+          668,
+          2192
+        ]
+      ],
+      "uv": [
+        0.270445,
+        0.643709,
+        0.484615,
+        0.843401
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        300.0
+      ],
+      "size": [
+        529.0,
+        519.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_003.png"
+    },
+    {
+      "id": "top_lid",
+      "name": "Disc Lid",
+      "type": "housing_part",
+      "frame": {
+        "x": 3,
+        "y": 1673,
+        "w": 659,
+        "h": 629
+      },
+      "corners": [
+        [
+          3,
+          1673
+        ],
+        [
+          662,
+          1673
+        ],
+        [
+          662,
+          2302
+        ],
+        [
+          3,
+          2302
+        ]
+      ],
+      "uv": [
+        0.001215,
+        0.643709,
+        0.268016,
+        0.885725
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        267.0
+      ],
+      "size": [
+        522.0,
+        455.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_021.png"
+    },
+    {
+      "id": "control_panel",
+      "name": "Control Panel",
+      "type": "button_pad",
+      "frame": {
+        "x": 532,
+        "y": 2308,
+        "w": 540,
+        "h": 195
+      },
+      "corners": [
+        [
+          532,
+          2308
+        ],
+        [
+          1072,
+          2308
+        ],
+        [
+          1072,
+          2503
+        ],
+        [
+          532,
+          2503
+        ]
+      ],
+      "uv": [
+        0.215385,
+        0.888034,
+        0.434008,
+        0.963063
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        310.0,
+        464.0
+      ],
+      "size": [
+        529.0,
+        191.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\discman\\parts\\part_004.png"
+    }
+  ]
+}

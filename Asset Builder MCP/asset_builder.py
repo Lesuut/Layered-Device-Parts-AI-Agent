@@ -697,6 +697,9 @@ def build_standalone_viewer(
     payload = {
         "device": data,
         "texture": "data:image/png;base64," + base64.b64encode(tex_file.read_bytes()).decode(),
+        # откуда взят ассет: кнопка «Сохранить» во вьювере пишет правки обратно
+        # ровно сюда — через локальный сервер панели, без окна проводника
+        "json_path": str(Path(json_path).resolve()),
     }
     # ensure_ascii=True не нужен, но '<' внутри строки сломал бы разбор тега
     blob = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")

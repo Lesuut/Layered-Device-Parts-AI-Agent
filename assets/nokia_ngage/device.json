@@ -1,0 +1,475 @@
+{
+  "device": "nokia_ngage",
+  "generated": "2026-08-13T03:13:16",
+  "texture": "texture.png",
+  "texture_size": [
+    1470,
+    1727
+  ],
+  "canvas": [
+    700,
+    1000
+  ],
+  "part_count": 9,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 974,
+        "y": 3,
+        "w": 490,
+        "h": 786
+      },
+      "corners": [
+        [
+          974,
+          3
+        ],
+        [
+          1464,
+          3
+        ],
+        [
+          1464,
+          789
+        ],
+        [
+          974,
+          789
+        ]
+      ],
+      "uv": [
+        0.662585,
+        0.001737,
+        0.995918,
+        0.456862
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        500.0
+      ],
+      "size": [
+        490.0,
+        786.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_001.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 827,
+        "y": 970,
+        "w": 332,
+        "h": 281
+      },
+      "corners": [
+        [
+          827,
+          970
+        ],
+        [
+          1159,
+          970
+        ],
+        [
+          1159,
+          1251
+        ],
+        [
+          827,
+          1251
+        ]
+      ],
+      "uv": [
+        0.562585,
+        0.561668,
+        0.788435,
+        0.724378
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        640.0
+      ],
+      "size": [
+        249.0,
+        211.0
+      ],
+      "scale": 1.0,
+      "rotation": 90.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_012.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 456,
+        "h": 961
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          459,
+          3
+        ],
+        [
+          459,
+          964
+        ],
+        [
+          3,
+          964
+        ]
+      ],
+      "uv": [
+        0.002041,
+        0.001737,
+        0.312245,
+        0.558193
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        490.0
+      ],
+      "size": [
+        340.0,
+        700.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_003.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 211,
+        "y": 1524,
+        "w": 82,
+        "h": 117
+      },
+      "corners": [
+        [
+          211,
+          1524
+        ],
+        [
+          293,
+          1524
+        ],
+        [
+          293,
+          1641
+        ],
+        [
+          211,
+          1641
+        ]
+      ],
+      "uv": [
+        0.143537,
+        0.882455,
+        0.19932,
+        0.950203
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        215.0
+      ],
+      "size": [
+        82.0,
+        117.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_013.png"
+    },
+    {
+      "id": "display",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 3,
+        "y": 970,
+        "w": 432,
+        "h": 548
+      },
+      "corners": [
+        [
+          3,
+          970
+        ],
+        [
+          435,
+          970
+        ],
+        [
+          435,
+          1518
+        ],
+        [
+          3,
+          1518
+        ]
+      ],
+      "uv": [
+        0.002041,
+        0.561668,
+        0.295918,
+        0.878981
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        348.0,
+        509.0
+      ],
+      "size": [
+        340.0,
+        300.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\display_lcd.png"
+    },
+    {
+      "id": "keypad_membrane",
+      "name": "Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 1165,
+        "y": 970,
+        "w": 274,
+        "h": 252
+      },
+      "corners": [
+        [
+          1165,
+          970
+        ],
+        [
+          1439,
+          970
+        ],
+        [
+          1439,
+          1222
+        ],
+        [
+          1165,
+          1222
+        ]
+      ],
+      "uv": [
+        0.792517,
+        0.561668,
+        0.978912,
+        0.707585
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        355.0,
+        745.0
+      ],
+      "size": [
+        300.0,
+        170.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_010.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 441,
+        "y": 970,
+        "w": 380,
+        "h": 327
+      },
+      "corners": [
+        [
+          441,
+          970
+        ],
+        [
+          821,
+          970
+        ],
+        [
+          821,
+          1297
+        ],
+        [
+          441,
+          1297
+        ]
+      ],
+      "uv": [
+        0.3,
+        0.561668,
+        0.558503,
+        0.751013
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        349.0,
+        254.0
+      ],
+      "size": [
+        300.0,
+        258.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_005.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 1524,
+        "w": 202,
+        "h": 200
+      },
+      "corners": [
+        [
+          3,
+          1524
+        ],
+        [
+          205,
+          1524
+        ],
+        [
+          205,
+          1724
+        ],
+        [
+          3,
+          1724
+        ]
+      ],
+      "uv": [
+        0.002041,
+        0.882455,
+        0.139456,
+        0.998263
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        325.0,
+        748.0
+      ],
+      "size": [
+        200.0,
+        198.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\part_009.png"
+    },
+    {
+      "id": "front_panel",
+      "name": "Front Panel",
+      "type": "housing_front",
+      "frame": {
+        "x": 465,
+        "y": 3,
+        "w": 503,
+        "h": 793
+      },
+      "corners": [
+        [
+          465,
+          3
+        ],
+        [
+          968,
+          3
+        ],
+        [
+          968,
+          796
+        ],
+        [
+          465,
+          796
+        ]
+      ],
+      "uv": [
+        0.316327,
+        0.001737,
+        0.658503,
+        0.460915
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        350.0,
+        500.0
+      ],
+      "size": [
+        503.0,
+        793.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_ngage\\parts\\front_panel.png"
+    }
+  ]
+}

@@ -15,9 +15,11 @@ chrome-debug-profile/
 Thumbs.db
 desktop.ini
 .DS_Store
+*.stackdump
 
-# Asset builder intermediate build dirs (пересобираются из деталей)
-work/*/build/
+# Промежуточные файлы конвейера — сотни МБ, пересобираются из исходников.
+# Готовые ассеты лежат в assets/ и трекаются.
+work/
 
 # Лента событий панели — своя на каждую сессию
 Pipeline Dashboard/state/

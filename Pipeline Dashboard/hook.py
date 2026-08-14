@@ -31,6 +31,11 @@ EVENTS = STATE_DIR / "events.jsonl"
 # переставала быть валидным JSON и молча пропадала — шаг навсегда оставался
 # «в работе». Отдельный файл на событие исключает саму гонку.
 EVENT_DIR = STATE_DIR / "events.d"
+# id текущей сессии. Нужен, потому что сессий может быть открыто несколько:
+# старая продолжает писать события в ту же папку и без метки замусоривала бы
+# панель новой. Каждое событие помечается своей сессией, сервер показывает
+# только последнюю.
+SESSION_FILE = STATE_DIR / "session.json"
 
 # Ответы MCP бывают по сотне килобайт (asset_extract) — панели из них нужны
 # только пути и пара чисел, поэтому режем.
@@ -78,9 +83,22 @@ def trim_input(value) -> dict:
     return out
 
 
-def append(record: dict) -> None:
+def session_id(data: dict) -> str:
+    """Чья это сессия. Claude Code кладёт session_id в payload любого хука;
+    файл — запасной вариант для событий, где его вдруг не оказалось."""
+    sid = data.get("session_id")
+    if sid:
+        return str(sid)
+    try:
+        return str(json.loads(SESSION_FILE.read_text(encoding="utf-8")).get("id") or "")
+    except Exception:
+        return ""
+
+
+def append(record: dict, session: str = "") -> None:
     EVENT_DIR.mkdir(parents=True, exist_ok=True)
     record["ts"] = time.time()
+    record["session"] = session
     # имя задаёт порядок при равных ts; pid разводит одновременные хуки
     name = f"{time.time_ns():020d}-{os.getpid()}.json"
     tmp = EVENT_DIR / (name + ".part")
@@ -107,14 +125,17 @@ def main() -> int:
         STATE_DIR.mkdir(parents=True, exist_ok=True)
         shutil.rmtree(EVENT_DIR, ignore_errors=True)  # каждая сессия — своя лента
         EVENTS.unlink(missing_ok=True)
-        append({"event": "SessionStart", "session": data.get("session_id")})
+        sid = str(data.get("session_id") or time.time_ns())
+        SESSION_FILE.write_text(json.dumps({"id": sid, "ts": time.time()}),
+                                encoding="utf-8")
+        append({"event": "SessionStart"}, sid)
         start_server(open_browser=True)
         print(json.dumps({"suppressOutput": True}, ensure_ascii=False))
         return 0
 
     if mode == "stop":
         # ход закончен: что бы ни осталось «в работе», оно уже отработало
-        append({"event": "Stop", "phase": "stop"})
+        append({"event": "Stop", "phase": "stop"}, session_id(data))
         return 0
 
     tool = data.get("tool_name") or ""
@@ -129,7 +150,7 @@ def main() -> int:
     }
     if mode != "pre":
         record["response"] = clip(data.get("tool_response") or "", MAX_RESPONSE)
-    append(record)
+    append(record, session_id(data))
     return 0
 
 

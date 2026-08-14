@@ -1,0 +1,424 @@
+{
+  "device": "nokia_5110",
+  "generated": "2026-08-13T01:57:26",
+  "texture": "texture.png",
+  "texture_size": [
+    1718,
+    1839
+  ],
+  "canvas": [
+    520,
+    1500
+  ],
+  "part_count": 8,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 411,
+        "y": 3,
+        "w": 479,
+        "h": 1181
+      },
+      "corners": [
+        [
+          411,
+          3
+        ],
+        [
+          890,
+          3
+        ],
+        [
+          890,
+          1184
+        ],
+        [
+          411,
+          1184
+        ]
+      ],
+      "uv": [
+        0.239232,
+        0.001631,
+        0.518044,
+        0.643828
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        800.0
+      ],
+      "size": [
+        400.0,
+        1215.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_008_rot.png"
+    },
+    {
+      "id": "antenna",
+      "name": "Antenna",
+      "type": "antenna",
+      "frame": {
+        "x": 1617,
+        "y": 3,
+        "w": 95,
+        "h": 759
+      },
+      "corners": [
+        [
+          1617,
+          3
+        ],
+        [
+          1712,
+          3
+        ],
+        [
+          1712,
+          762
+        ],
+        [
+          1617,
+          762
+        ]
+      ],
+      "uv": [
+        0.941211,
+        0.001631,
+        0.996508,
+        0.414356
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        368.0,
+        150.0
+      ],
+      "size": [
+        30.0,
+        290.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_002.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 287,
+        "y": 1238,
+        "w": 409,
+        "h": 466
+      },
+      "corners": [
+        [
+          287,
+          1238
+        ],
+        [
+          696,
+          1238
+        ],
+        [
+          696,
+          1704
+        ],
+        [
+          287,
+          1704
+        ]
+      ],
+      "uv": [
+        0.167055,
+        0.673192,
+        0.405122,
+        0.926591
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        1050.0
+      ],
+      "size": [
+        300.0,
+        340.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_007.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 896,
+        "y": 3,
+        "w": 385,
+        "h": 946
+      },
+      "corners": [
+        [
+          896,
+          3
+        ],
+        [
+          1281,
+          3
+        ],
+        [
+          1281,
+          949
+        ],
+        [
+          896,
+          949
+        ]
+      ],
+      "uv": [
+        0.521537,
+        0.001631,
+        0.745634,
+        0.516041
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        800.0
+      ],
+      "size": [
+        350.0,
+        860.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\pcb_rot.png"
+    },
+    {
+      "id": "keypad_membrane",
+      "name": "Keypad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 3,
+        "y": 1238,
+        "w": 278,
+        "h": 598
+      },
+      "corners": [
+        [
+          3,
+          1238
+        ],
+        [
+          281,
+          1238
+        ],
+        [
+          281,
+          1836
+        ],
+        [
+          3,
+          1836
+        ]
+      ],
+      "uv": [
+        0.001746,
+        0.673192,
+        0.163562,
+        0.998369
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        908.0
+      ],
+      "size": [
+        330.0,
+        800.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_022_rot.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 1287,
+        "y": 3,
+        "w": 324,
+        "h": 806
+      },
+      "corners": [
+        [
+          1287,
+          3
+        ],
+        [
+          1611,
+          3
+        ],
+        [
+          1611,
+          809
+        ],
+        [
+          1287,
+          809
+        ]
+      ],
+      "uv": [
+        0.749127,
+        0.001631,
+        0.937718,
+        0.439913
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        908.0
+      ],
+      "size": [
+        352.0,
+        848.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_003_rot.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 702,
+        "y": 1238,
+        "w": 364,
+        "h": 432
+      },
+      "corners": [
+        [
+          702,
+          1238
+        ],
+        [
+          1066,
+          1238
+        ],
+        [
+          1066,
+          1670
+        ],
+        [
+          702,
+          1670
+        ]
+      ],
+      "uv": [
+        0.408615,
+        0.673192,
+        0.620489,
+        0.908102
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        601.0
+      ],
+      "size": [
+        314.0,
+        301.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\lcd_trim.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 402,
+        "h": 1229
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          405,
+          3
+        ],
+        [
+          405,
+          1232
+        ],
+        [
+          3,
+          1232
+        ]
+      ],
+      "uv": [
+        0.001746,
+        0.001631,
+        0.235739,
+        0.669929
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        800.0
+      ],
+      "size": [
+        402.0,
+        1229.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nokia_5110\\parts\\part_001_rot.png"
+    }
+  ]
+}

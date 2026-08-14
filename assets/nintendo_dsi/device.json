@@ -1,0 +1,730 @@
+{
+  "device": "nintendo_dsi",
+  "generated": "2026-08-12T03:29:26",
+  "texture": "texture.png",
+  "texture_size": [
+    1418,
+    1759
+  ],
+  "canvas": [
+    780,
+    850
+  ],
+  "part_count": 14,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 783,
+        "h": 601
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          786,
+          3
+        ],
+        [
+          786,
+          604
+        ],
+        [
+          3,
+          604
+        ]
+      ],
+      "uv": [
+        0.002116,
+        0.001706,
+        0.554302,
+        0.343377
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        390.0,
+        600.0
+      ],
+      "size": [
+        702.0,
+        539.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_017.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 3,
+        "y": 1572,
+        "w": 298,
+        "h": 184
+      },
+      "corners": [
+        [
+          3,
+          1572
+        ],
+        [
+          301,
+          1572
+        ],
+        [
+          301,
+          1756
+        ],
+        [
+          3,
+          1756
+        ]
+      ],
+      "uv": [
+        0.002116,
+        0.89369,
+        0.212271,
+        0.998294
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        590.0,
+        690.0
+      ],
+      "size": [
+        230.0,
+        142.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_004.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 493,
+        "y": 610,
+        "w": 639,
+        "h": 520
+      },
+      "corners": [
+        [
+          493,
+          610
+        ],
+        [
+          1132,
+          610
+        ],
+        [
+          1132,
+          1130
+        ],
+        [
+          493,
+          1130
+        ]
+      ],
+      "uv": [
+        0.347673,
+        0.346788,
+        0.798307,
+        0.64241
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        390.0,
+        620.0
+      ],
+      "size": [
+        560.0,
+        456.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_009.png"
+    },
+    {
+      "id": "cart_slot",
+      "name": "Cartridge Slot",
+      "type": "misc",
+      "frame": {
+        "x": 307,
+        "y": 1572,
+        "w": 258,
+        "h": 175
+      },
+      "corners": [
+        [
+          307,
+          1572
+        ],
+        [
+          565,
+          1572
+        ],
+        [
+          565,
+          1747
+        ],
+        [
+          307,
+          1747
+        ]
+      ],
+      "uv": [
+        0.216502,
+        0.89369,
+        0.398449,
+        0.993178
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        200.0,
+        740.0
+      ],
+      "size": [
+        180.0,
+        122.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_008.png"
+    },
+    {
+      "id": "membrane_dpad",
+      "name": "D-Pad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 864,
+        "y": 1572,
+        "w": 140,
+        "h": 138
+      },
+      "corners": [
+        [
+          864,
+          1572
+        ],
+        [
+          1004,
+          1572
+        ],
+        [
+          1004,
+          1710
+        ],
+        [
+          864,
+          1710
+        ]
+      ],
+      "uv": [
+        0.609309,
+        0.89369,
+        0.708039,
+        0.972143
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        127.0,
+        578.0
+      ],
+      "size": [
+        105.0,
+        104.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_022.png"
+    },
+    {
+      "id": "membrane_abxy",
+      "name": "A/B/X/Y Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 571,
+        "y": 1572,
+        "w": 145,
+        "h": 149
+      },
+      "corners": [
+        [
+          571,
+          1572
+        ],
+        [
+          716,
+          1572
+        ],
+        [
+          716,
+          1721
+        ],
+        [
+          571,
+          1721
+        ]
+      ],
+      "uv": [
+        0.40268,
+        0.89369,
+        0.504937,
+        0.978397
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        667.0,
+        570.0
+      ],
+      "size": [
+        110.0,
+        113.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_021.png"
+    },
+    {
+      "id": "lcd_bottom",
+      "name": "Touch Screen",
+      "type": "display",
+      "frame": {
+        "x": 792,
+        "y": 3,
+        "w": 484,
+        "h": 536
+      },
+      "corners": [
+        [
+          792,
+          3
+        ],
+        [
+          1276,
+          3
+        ],
+        [
+          1276,
+          539
+        ],
+        [
+          792,
+          539
+        ]
+      ],
+      "uv": [
+        0.558533,
+        0.001706,
+        0.899859,
+        0.306424
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        389.0,
+        655.0
+      ],
+      "size": [
+        350.0,
+        388.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_001.png"
+    },
+    {
+      "id": "lcd_top",
+      "name": "Top Screen",
+      "type": "display",
+      "frame": {
+        "x": 3,
+        "y": 610,
+        "w": 484,
+        "h": 536
+      },
+      "corners": [
+        [
+          3,
+          610
+        ],
+        [
+          487,
+          610
+        ],
+        [
+          487,
+          1146
+        ],
+        [
+          3,
+          1146
+        ]
+      ],
+      "uv": [
+        0.002116,
+        0.346788,
+        0.343441,
+        0.651507
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        381.0,
+        312.0
+      ],
+      "size": [
+        373.0,
+        413.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_001.png"
+    },
+    {
+      "id": "screen_bezel",
+      "name": "Screen Bezel",
+      "type": "housing_part",
+      "frame": {
+        "x": 711,
+        "y": 1152,
+        "w": 667,
+        "h": 362
+      },
+      "corners": [
+        [
+          711,
+          1152
+        ],
+        [
+          1378,
+          1152
+        ],
+        [
+          1378,
+          1514
+        ],
+        [
+          711,
+          1514
+        ]
+      ],
+      "uv": [
+        0.50141,
+        0.654918,
+        0.971791,
+        0.860716
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        390.0,
+        250.0
+      ],
+      "size": [
+        702.0,
+        381.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_003.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 1152,
+        "w": 702,
+        "h": 414
+      },
+      "corners": [
+        [
+          3,
+          1152
+        ],
+        [
+          705,
+          1152
+        ],
+        [
+          705,
+          1566
+        ],
+        [
+          3,
+          1566
+        ]
+      ],
+      "uv": [
+        0.002116,
+        0.654918,
+        0.497179,
+        0.890279
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        390.0,
+        600.0
+      ],
+      "size": [
+        702.0,
+        414.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_006.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 722,
+        "y": 1572,
+        "w": 136,
+        "h": 139
+      },
+      "corners": [
+        [
+          722,
+          1572
+        ],
+        [
+          858,
+          1572
+        ],
+        [
+          858,
+          1711
+        ],
+        [
+          722,
+          1711
+        ]
+      ],
+      "uv": [
+        0.509168,
+        0.89369,
+        0.605078,
+        0.972712
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        127.0,
+        578.0
+      ],
+      "size": [
+        100.0,
+        102.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_016.png"
+    },
+    {
+      "id": "buttons_abxy",
+      "name": "A/B/X/Y Buttons",
+      "type": "button_pad",
+      "frame": {
+        "x": 1010,
+        "y": 1572,
+        "w": 131,
+        "h": 115
+      },
+      "corners": [
+        [
+          1010,
+          1572
+        ],
+        [
+          1141,
+          1572
+        ],
+        [
+          1141,
+          1687
+        ],
+        [
+          1010,
+          1687
+        ]
+      ],
+      "uv": [
+        0.712271,
+        0.89369,
+        0.804654,
+        0.959068
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        667.0,
+        570.0
+      ],
+      "size": [
+        110.0,
+        96.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_013.png"
+    },
+    {
+      "id": "trigger_l",
+      "name": "L Trigger",
+      "type": "trigger",
+      "frame": {
+        "x": 1147,
+        "y": 1572,
+        "w": 132,
+        "h": 104
+      },
+      "corners": [
+        [
+          1147,
+          1572
+        ],
+        [
+          1279,
+          1572
+        ],
+        [
+          1279,
+          1676
+        ],
+        [
+          1147,
+          1676
+        ]
+      ],
+      "uv": [
+        0.808886,
+        0.89369,
+        0.901975,
+        0.952814
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        150.0,
+        410.0
+      ],
+      "size": [
+        110.0,
+        87.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_019.png"
+    },
+    {
+      "id": "trigger_r",
+      "name": "R Trigger",
+      "type": "trigger",
+      "frame": {
+        "x": 1285,
+        "y": 1572,
+        "w": 127,
+        "h": 104
+      },
+      "corners": [
+        [
+          1285,
+          1572
+        ],
+        [
+          1412,
+          1572
+        ],
+        [
+          1412,
+          1676
+        ],
+        [
+          1285,
+          1676
+        ]
+      ],
+      "uv": [
+        0.906206,
+        0.89369,
+        0.995769,
+        0.952814
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        630.0,
+        410.0
+      ],
+      "size": [
+        106.0,
+        87.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 13,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\nintendo_dsi\\parts\\part_020.png"
+    }
+  ]
+}

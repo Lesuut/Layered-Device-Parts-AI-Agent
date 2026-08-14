@@ -1,0 +1,730 @@
+{
+  "device": "walkman",
+  "generated": "2026-08-12T03:03:08",
+  "texture": "texture.png",
+  "texture_size": [
+    1379,
+    1453
+  ],
+  "canvas": [
+    750,
+    570
+  ],
+  "part_count": 14,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 3,
+        "y": 504,
+        "w": 659,
+        "h": 376
+      },
+      "corners": [
+        [
+          3,
+          504
+        ],
+        [
+          662,
+          504
+        ],
+        [
+          662,
+          880
+        ],
+        [
+          3,
+          880
+        ]
+      ],
+      "uv": [
+        0.002175,
+        0.346869,
+        0.480058,
+        0.605643
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        375.0,
+        285.0
+      ],
+      "size": [
+        657.0,
+        375.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_005.png"
+    },
+    {
+      "id": "battery_door",
+      "name": "Battery Door",
+      "type": "housing_part",
+      "frame": {
+        "x": 667,
+        "y": 886,
+        "w": 394,
+        "h": 242
+      },
+      "corners": [
+        [
+          667,
+          886
+        ],
+        [
+          1061,
+          886
+        ],
+        [
+          1061,
+          1128
+        ],
+        [
+          667,
+          1128
+        ]
+      ],
+      "uv": [
+        0.483684,
+        0.609773,
+        0.769398,
+        0.776325
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        200.0,
+        390.0
+      ],
+      "size": [
+        370.0,
+        227.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_006.png"
+    },
+    {
+      "id": "battery_1",
+      "name": "Battery 1",
+      "type": "battery",
+      "frame": {
+        "x": 3,
+        "y": 1260,
+        "w": 336,
+        "h": 108
+      },
+      "corners": [
+        [
+          3,
+          1260
+        ],
+        [
+          339,
+          1260
+        ],
+        [
+          339,
+          1368
+        ],
+        [
+          3,
+          1368
+        ]
+      ],
+      "uv": [
+        0.002175,
+        0.867171,
+        0.24583,
+        0.9415
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        200.0,
+        360.0
+      ],
+      "size": [
+        300.0,
+        96.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_007.png"
+    },
+    {
+      "id": "battery_2",
+      "name": "Battery 2",
+      "type": "battery",
+      "frame": {
+        "x": 345,
+        "y": 1260,
+        "w": 337,
+        "h": 106
+      },
+      "corners": [
+        [
+          345,
+          1260
+        ],
+        [
+          682,
+          1260
+        ],
+        [
+          682,
+          1366
+        ],
+        [
+          345,
+          1366
+        ]
+      ],
+      "uv": [
+        0.250181,
+        0.867171,
+        0.494561,
+        0.940124
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        200.0,
+        415.0
+      ],
+      "size": [
+        300.0,
+        95.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_010.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 668,
+        "y": 504,
+        "w": 705,
+        "h": 370
+      },
+      "corners": [
+        [
+          668,
+          504
+        ],
+        [
+          1373,
+          504
+        ],
+        [
+          1373,
+          874
+        ],
+        [
+          668,
+          874
+        ]
+      ],
+      "uv": [
+        0.484409,
+        0.346869,
+        0.995649,
+        0.601514
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        375.0,
+        290.0
+      ],
+      "size": [
+        657.0,
+        345.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_003.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 886,
+        "w": 658,
+        "h": 368
+      },
+      "corners": [
+        [
+          3,
+          886
+        ],
+        [
+          661,
+          886
+        ],
+        [
+          661,
+          1254
+        ],
+        [
+          3,
+          1254
+        ]
+      ],
+      "uv": [
+        0.002175,
+        0.609773,
+        0.479333,
+        0.863042
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        375.0,
+        300.0
+      ],
+      "size": [
+        600.0,
+        335.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_004.png"
+    },
+    {
+      "id": "flex_cable",
+      "name": "Flex Cable",
+      "type": "cable",
+      "frame": {
+        "x": 3,
+        "y": 1374,
+        "w": 511,
+        "h": 76
+      },
+      "corners": [
+        [
+          3,
+          1374
+        ],
+        [
+          514,
+          1374
+        ],
+        [
+          514,
+          1450
+        ],
+        [
+          3,
+          1450
+        ]
+      ],
+      "uv": [
+        0.002175,
+        0.94563,
+        0.372734,
+        0.997935
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        480.0,
+        420.0
+      ],
+      "size": [
+        300.0,
+        45.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_008.png"
+    },
+    {
+      "id": "drive_belt",
+      "name": "Drive Belt",
+      "type": "mechanism",
+      "frame": {
+        "x": 1196,
+        "y": 886,
+        "w": 172,
+        "h": 112
+      },
+      "corners": [
+        [
+          1196,
+          886
+        ],
+        [
+          1368,
+          886
+        ],
+        [
+          1368,
+          998
+        ],
+        [
+          1196,
+          998
+        ]
+      ],
+      "uv": [
+        0.867295,
+        0.609773,
+        0.992023,
+        0.686855
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        520.0,
+        200.0
+      ],
+      "size": [
+        120.0,
+        78.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_015.png"
+    },
+    {
+      "id": "capstan_wheel",
+      "name": "Capstan Wheel",
+      "type": "mechanism",
+      "frame": {
+        "x": 1067,
+        "y": 886,
+        "w": 123,
+        "h": 123
+      },
+      "corners": [
+        [
+          1067,
+          886
+        ],
+        [
+          1190,
+          886
+        ],
+        [
+          1190,
+          1009
+        ],
+        [
+          1067,
+          1009
+        ]
+      ],
+      "uv": [
+        0.773749,
+        0.609773,
+        0.862944,
+        0.694425
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        600.0,
+        170.0
+      ],
+      "size": [
+        90.0,
+        90.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_013.png"
+    },
+    {
+      "id": "tape_mechanism",
+      "name": "Tape Mechanism",
+      "type": "mechanism",
+      "frame": {
+        "x": 666,
+        "y": 3,
+        "w": 633,
+        "h": 440
+      },
+      "corners": [
+        [
+          666,
+          3
+        ],
+        [
+          1299,
+          3
+        ],
+        [
+          1299,
+          443
+        ],
+        [
+          666,
+          443
+        ]
+      ],
+      "uv": [
+        0.482959,
+        0.002065,
+        0.941987,
+        0.304886
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        375.0,
+        280.0
+      ],
+      "size": [
+        560.0,
+        390.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_002.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 657,
+        "h": 495
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          660,
+          3
+        ],
+        [
+          660,
+          498
+        ],
+        [
+          3,
+          498
+        ]
+      ],
+      "uv": [
+        0.002175,
+        0.002065,
+        0.478608,
+        0.342739
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        375.0,
+        285.0
+      ],
+      "size": [
+        657.0,
+        495.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_001.png"
+    },
+    {
+      "id": "display_bezel",
+      "name": "Display Bezel",
+      "type": "display",
+      "frame": {
+        "x": 688,
+        "y": 1260,
+        "w": 179,
+        "h": 106
+      },
+      "corners": [
+        [
+          688,
+          1260
+        ],
+        [
+          867,
+          1260
+        ],
+        [
+          867,
+          1366
+        ],
+        [
+          688,
+          1366
+        ]
+      ],
+      "uv": [
+        0.498912,
+        0.867171,
+        0.628716,
+        0.940124
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        150.0
+      ],
+      "size": [
+        140.0,
+        83.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_016.png"
+    },
+    {
+      "id": "play_button",
+      "name": "Play Button",
+      "type": "button",
+      "frame": {
+        "x": 873,
+        "y": 1260,
+        "w": 157,
+        "h": 78
+      },
+      "corners": [
+        [
+          873,
+          1260
+        ],
+        [
+          1030,
+          1260
+        ],
+        [
+          1030,
+          1338
+        ],
+        [
+          873,
+          1338
+        ]
+      ],
+      "uv": [
+        0.633067,
+        0.867171,
+        0.746918,
+        0.920853
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        250.0,
+        490.0
+      ],
+      "size": [
+        110.0,
+        55.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_017.png"
+    },
+    {
+      "id": "slider_switch",
+      "name": "Slider Switch",
+      "type": "button_pad",
+      "frame": {
+        "x": 520,
+        "y": 1374,
+        "w": 244,
+        "h": 67
+      },
+      "corners": [
+        [
+          520,
+          1374
+        ],
+        [
+          764,
+          1374
+        ],
+        [
+          764,
+          1441
+        ],
+        [
+          520,
+          1441
+        ]
+      ],
+      "uv": [
+        0.377085,
+        0.94563,
+        0.554025,
+        0.991741
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        440.0,
+        490.0
+      ],
+      "size": [
+        180.0,
+        50.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 13,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\walkman\\parts_b\\part_018.png"
+    }
+  ]
+}

@@ -1,0 +1,781 @@
+{
+  "device": "psp",
+  "generated": "2026-08-12T02:42:05",
+  "texture": "texture.png",
+  "texture_size": [
+    1472,
+    1612
+  ],
+  "canvas": [
+    900,
+    450
+  ],
+  "part_count": 15,
+  "parts": [
+    {
+      "id": "umd_door",
+      "name": "UMD Door",
+      "type": "housing_part",
+      "frame": {
+        "x": 838,
+        "y": 1031,
+        "w": 262,
+        "h": 353
+      },
+      "corners": [
+        [
+          838,
+          1031
+        ],
+        [
+          1100,
+          1031
+        ],
+        [
+          1100,
+          1384
+        ],
+        [
+          838,
+          1384
+        ]
+      ],
+      "uv": [
+        0.569293,
+        0.639578,
+        0.747283,
+        0.858561
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        250.0
+      ],
+      "size": [
+        180.0,
+        240.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_001.png"
+    },
+    {
+      "id": "battery_door",
+      "name": "Battery Door",
+      "type": "housing_part",
+      "frame": {
+        "x": 3,
+        "y": 1401,
+        "w": 301,
+        "h": 208
+      },
+      "corners": [
+        [
+          3,
+          1401
+        ],
+        [
+          304,
+          1401
+        ],
+        [
+          304,
+          1609
+        ],
+        [
+          3,
+          1609
+        ]
+      ],
+      "uv": [
+        0.002038,
+        0.869107,
+        0.206522,
+        0.998139
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        620.0,
+        300.0
+      ],
+      "size": [
+        280.0,
+        193.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts_b\\part_003.png"
+    },
+    {
+      "id": "mid_frame",
+      "name": "Chassis",
+      "type": "chassis",
+      "frame": {
+        "x": 3,
+        "y": 578,
+        "w": 785,
+        "h": 447
+      },
+      "corners": [
+        [
+          3,
+          578
+        ],
+        [
+          788,
+          578
+        ],
+        [
+          788,
+          1025
+        ],
+        [
+          3,
+          1025
+        ]
+      ],
+      "uv": [
+        0.002038,
+        0.358561,
+        0.535326,
+        0.635856
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        225.0
+      ],
+      "size": [
+        780.0,
+        360.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_016.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 1106,
+        "y": 1031,
+        "w": 359,
+        "h": 253
+      },
+      "corners": [
+        [
+          1106,
+          1031
+        ],
+        [
+          1465,
+          1031
+        ],
+        [
+          1465,
+          1284
+        ],
+        [
+          1106,
+          1284
+        ]
+      ],
+      "uv": [
+        0.751359,
+        0.639578,
+        0.995245,
+        0.796526
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        620.0,
+        300.0
+      ],
+      "size": [
+        280.0,
+        197.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_029.png"
+    },
+    {
+      "id": "umd_drive",
+      "name": "UMD Drive",
+      "type": "mechanism",
+      "frame": {
+        "x": 794,
+        "y": 578,
+        "w": 572,
+        "h": 381
+      },
+      "corners": [
+        [
+          794,
+          578
+        ],
+        [
+          1366,
+          578
+        ],
+        [
+          1366,
+          959
+        ],
+        [
+          794,
+          959
+        ]
+      ],
+      "uv": [
+        0.539402,
+        0.358561,
+        0.927989,
+        0.594913
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        300.0,
+        250.0
+      ],
+      "size": [
+        300.0,
+        200.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_023.png"
+    },
+    {
+      "id": "speaker_l",
+      "name": "Left Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 1151,
+        "y": 1401,
+        "w": 166,
+        "h": 102
+      },
+      "corners": [
+        [
+          1151,
+          1401
+        ],
+        [
+          1317,
+          1401
+        ],
+        [
+          1317,
+          1503
+        ],
+        [
+          1151,
+          1503
+        ]
+      ],
+      "uv": [
+        0.781929,
+        0.869107,
+        0.894701,
+        0.932382
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        120.0,
+        130.0
+      ],
+      "size": [
+        90.0,
+        55.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_007.png"
+    },
+    {
+      "id": "speaker_r",
+      "name": "Right Speaker",
+      "type": "speaker",
+      "frame": {
+        "x": 1323,
+        "y": 1401,
+        "w": 143,
+        "h": 100
+      },
+      "corners": [
+        [
+          1323,
+          1401
+        ],
+        [
+          1466,
+          1401
+        ],
+        [
+          1466,
+          1501
+        ],
+        [
+          1323,
+          1501
+        ]
+      ],
+      "uv": [
+        0.898777,
+        0.869107,
+        0.995924,
+        0.931141
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        790.0,
+        130.0
+      ],
+      "size": [
+        80.0,
+        56.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_008.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 776,
+        "h": 569
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          779,
+          3
+        ],
+        [
+          779,
+          572
+        ],
+        [
+          3,
+          572
+        ]
+      ],
+      "uv": [
+        0.002038,
+        0.001861,
+        0.529212,
+        0.354839
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        250.0
+      ],
+      "size": [
+        690.0,
+        330.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_022.png"
+    },
+    {
+      "id": "shield_plate",
+      "name": "Shield Plate",
+      "type": "chassis",
+      "frame": {
+        "x": 310,
+        "y": 1401,
+        "w": 205,
+        "h": 169
+      },
+      "corners": [
+        [
+          310,
+          1401
+        ],
+        [
+          515,
+          1401
+        ],
+        [
+          515,
+          1570
+        ],
+        [
+          310,
+          1570
+        ]
+      ],
+      "uv": [
+        0.210598,
+        0.869107,
+        0.349864,
+        0.973945
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        300.0
+      ],
+      "size": [
+        160.0,
+        132.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_024.png"
+    },
+    {
+      "id": "membrane_dpad",
+      "name": "D-Pad Membrane",
+      "type": "membrane",
+      "frame": {
+        "x": 975,
+        "y": 1401,
+        "w": 170,
+        "h": 110
+      },
+      "corners": [
+        [
+          975,
+          1401
+        ],
+        [
+          1145,
+          1401
+        ],
+        [
+          1145,
+          1511
+        ],
+        [
+          975,
+          1511
+        ]
+      ],
+      "uv": [
+        0.662364,
+        0.869107,
+        0.777853,
+        0.937345
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        135.0,
+        243.0
+      ],
+      "size": [
+        130.0,
+        84.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_021.png"
+    },
+    {
+      "id": "lcd_screen",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 785,
+        "y": 3,
+        "w": 497,
+        "h": 480
+      },
+      "corners": [
+        [
+          785,
+          3
+        ],
+        [
+          1282,
+          3
+        ],
+        [
+          1282,
+          483
+        ],
+        [
+          785,
+          483
+        ]
+      ],
+      "uv": [
+        0.533288,
+        0.001861,
+        0.870924,
+        0.299628
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        268.0
+      ],
+      "size": [
+        440.0,
+        410.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_004.png"
+    },
+    {
+      "id": "front_shell",
+      "name": "Front Shell",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 1031,
+        "w": 829,
+        "h": 364
+      },
+      "corners": [
+        [
+          3,
+          1031
+        ],
+        [
+          832,
+          1031
+        ],
+        [
+          832,
+          1395
+        ],
+        [
+          3,
+          1395
+        ]
+      ],
+      "uv": [
+        0.002038,
+        0.639578,
+        0.565217,
+        0.865385
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        450.0,
+        225.0
+      ],
+      "size": [
+        829.0,
+        364.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 11,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_002.png"
+    },
+    {
+      "id": "dpad",
+      "name": "D-Pad",
+      "type": "button_pad",
+      "frame": {
+        "x": 691,
+        "y": 1401,
+        "w": 155,
+        "h": 157
+      },
+      "corners": [
+        [
+          691,
+          1401
+        ],
+        [
+          846,
+          1401
+        ],
+        [
+          846,
+          1558
+        ],
+        [
+          691,
+          1558
+        ]
+      ],
+      "uv": [
+        0.469429,
+        0.869107,
+        0.574728,
+        0.966501
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        135.0,
+        243.0
+      ],
+      "size": [
+        130.0,
+        132.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 12,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_006.png"
+    },
+    {
+      "id": "face_buttons",
+      "name": "Face Buttons",
+      "type": "button_pad",
+      "frame": {
+        "x": 521,
+        "y": 1401,
+        "w": 164,
+        "h": 163
+      },
+      "corners": [
+        [
+          521,
+          1401
+        ],
+        [
+          685,
+          1401
+        ],
+        [
+          685,
+          1564
+        ],
+        [
+          521,
+          1564
+        ]
+      ],
+      "uv": [
+        0.35394,
+        0.869107,
+        0.465353,
+        0.970223
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        765.0,
+        205.0
+      ],
+      "size": [
+        150.0,
+        149.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 13,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_005.png"
+    },
+    {
+      "id": "analog_stick",
+      "name": "Analog Stick",
+      "type": "stick",
+      "frame": {
+        "x": 852,
+        "y": 1401,
+        "w": 117,
+        "h": 141
+      },
+      "corners": [
+        [
+          852,
+          1401
+        ],
+        [
+          969,
+          1401
+        ],
+        [
+          969,
+          1542
+        ],
+        [
+          852,
+          1542
+        ]
+      ],
+      "uv": [
+        0.578804,
+        0.869107,
+        0.658288,
+        0.956576
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        137.0,
+        317.0
+      ],
+      "size": [
+        55.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 14,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\psp\\parts\\part_011.png"
+    }
+  ]
+}

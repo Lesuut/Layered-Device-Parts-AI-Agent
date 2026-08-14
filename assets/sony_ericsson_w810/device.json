@@ -1,0 +1,577 @@
+{
+  "device": "sony_ericsson_w810",
+  "generated": "2026-08-13T03:23:16",
+  "texture": "texture.png",
+  "texture_size": [
+    1351,
+    1915
+  ],
+  "canvas": [
+    560,
+    920
+  ],
+  "part_count": 11,
+  "parts": [
+    {
+      "id": "back_cover",
+      "name": "Back Cover",
+      "type": "housing_rear",
+      "frame": {
+        "x": 451,
+        "y": 3,
+        "w": 359,
+        "h": 752
+      },
+      "corners": [
+        [
+          451,
+          3
+        ],
+        [
+          810,
+          3
+        ],
+        [
+          810,
+          755
+        ],
+        [
+          451,
+          755
+        ]
+      ],
+      "uv": [
+        0.333827,
+        0.001567,
+        0.599556,
+        0.394256
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        460.0
+      ],
+      "size": [
+        406.0,
+        850.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 0,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_020.png"
+    },
+    {
+      "id": "chassis",
+      "name": "Mid Frame",
+      "type": "chassis",
+      "frame": {
+        "x": 816,
+        "y": 3,
+        "w": 389,
+        "h": 752
+      },
+      "corners": [
+        [
+          816,
+          3
+        ],
+        [
+          1205,
+          3
+        ],
+        [
+          1205,
+          755
+        ],
+        [
+          816,
+          755
+        ]
+      ],
+      "uv": [
+        0.603997,
+        0.001567,
+        0.891932,
+        0.394256
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        460.0
+      ],
+      "size": [
+        408.0,
+        790.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 1,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_019.png"
+    },
+    {
+      "id": "battery",
+      "name": "Battery",
+      "type": "battery",
+      "frame": {
+        "x": 722,
+        "y": 860,
+        "w": 270,
+        "h": 391
+      },
+      "corners": [
+        [
+          722,
+          860
+        ],
+        [
+          992,
+          860
+        ],
+        [
+          992,
+          1251
+        ],
+        [
+          722,
+          1251
+        ]
+      ],
+      "uv": [
+        0.534419,
+        0.449086,
+        0.734271,
+        0.653264
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        620.0
+      ],
+      "size": [
+        250.0,
+        362.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 2,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_024.png"
+    },
+    {
+      "id": "main_pcb",
+      "name": "Main Board",
+      "type": "circuit_board",
+      "frame": {
+        "x": 3,
+        "y": 860,
+        "w": 367,
+        "h": 749
+      },
+      "corners": [
+        [
+          3,
+          860
+        ],
+        [
+          370,
+          860
+        ],
+        [
+          370,
+          1609
+        ],
+        [
+          3,
+          1609
+        ]
+      ],
+      "uv": [
+        0.002221,
+        0.449086,
+        0.273871,
+        0.840209
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        440.0
+      ],
+      "size": [
+        350.0,
+        715.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 3,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_009.png"
+    },
+    {
+      "id": "speaker",
+      "name": "Earpiece",
+      "type": "speaker",
+      "frame": {
+        "x": 511,
+        "y": 1615,
+        "w": 136,
+        "h": 82
+      },
+      "corners": [
+        [
+          511,
+          1615
+        ],
+        [
+          647,
+          1615
+        ],
+        [
+          647,
+          1697
+        ],
+        [
+          511,
+          1697
+        ]
+      ],
+      "uv": [
+        0.378238,
+        0.843342,
+        0.478905,
+        0.886162
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        277.0,
+        105.0
+      ],
+      "size": [
+        110.0,
+        66.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 4,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_007.png"
+    },
+    {
+      "id": "keypad",
+      "name": "Keypad",
+      "type": "button_pad",
+      "frame": {
+        "x": 998,
+        "y": 860,
+        "w": 347,
+        "h": 311
+      },
+      "corners": [
+        [
+          998,
+          860
+        ],
+        [
+          1345,
+          860
+        ],
+        [
+          1345,
+          1171
+        ],
+        [
+          998,
+          1171
+        ]
+      ],
+      "uv": [
+        0.738712,
+        0.449086,
+        0.995559,
+        0.611488
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        277.0,
+        660.0
+      ],
+      "size": [
+        300.0,
+        270.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 5,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_018.png"
+    },
+    {
+      "id": "nav_ring",
+      "name": "Navigation Ring",
+      "type": "button_pad",
+      "frame": {
+        "x": 3,
+        "y": 1615,
+        "w": 293,
+        "h": 297
+      },
+      "corners": [
+        [
+          3,
+          1615
+        ],
+        [
+          296,
+          1615
+        ],
+        [
+          296,
+          1912
+        ],
+        [
+          3,
+          1912
+        ]
+      ],
+      "uv": [
+        0.002221,
+        0.843342,
+        0.219097,
+        0.998433
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        277.0,
+        734.0
+      ],
+      "size": [
+        113.0,
+        114.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 6,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_015.png"
+    },
+    {
+      "id": "btn_call",
+      "name": "Call Key",
+      "type": "button",
+      "frame": {
+        "x": 302,
+        "y": 1615,
+        "w": 100,
+        "h": 103
+      },
+      "corners": [
+        [
+          302,
+          1615
+        ],
+        [
+          402,
+          1615
+        ],
+        [
+          402,
+          1718
+        ],
+        [
+          302,
+          1718
+        ]
+      ],
+      "uv": [
+        0.223538,
+        0.843342,
+        0.297557,
+        0.897128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        144.0,
+        734.0
+      ],
+      "size": [
+        86.0,
+        88.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 7,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_011.png"
+    },
+    {
+      "id": "btn_end",
+      "name": "End Key",
+      "type": "button",
+      "frame": {
+        "x": 408,
+        "y": 1615,
+        "w": 97,
+        "h": 101
+      },
+      "corners": [
+        [
+          408,
+          1615
+        ],
+        [
+          505,
+          1615
+        ],
+        [
+          505,
+          1716
+        ],
+        [
+          408,
+          1716
+        ]
+      ],
+      "uv": [
+        0.301999,
+        0.843342,
+        0.373797,
+        0.896084
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        409.0,
+        734.0
+      ],
+      "size": [
+        86.0,
+        89.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 8,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\part_013.png"
+    },
+    {
+      "id": "display",
+      "name": "LCD Screen",
+      "type": "display",
+      "frame": {
+        "x": 376,
+        "y": 860,
+        "w": 340,
+        "h": 544
+      },
+      "corners": [
+        [
+          376,
+          860
+        ],
+        [
+          716,
+          860
+        ],
+        [
+          716,
+          1404
+        ],
+        [
+          376,
+          1404
+        ]
+      ],
+      "uv": [
+        0.278312,
+        0.449086,
+        0.529978,
+        0.733159
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        277.0,
+        361.0
+      ],
+      "size": [
+        310.0,
+        445.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 9,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\display_lcd.png"
+    },
+    {
+      "id": "front_panel",
+      "name": "Front Panel",
+      "type": "housing_front",
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 442,
+        "h": 851
+      },
+      "corners": [
+        [
+          3,
+          3
+        ],
+        [
+          445,
+          3
+        ],
+        [
+          445,
+          854
+        ],
+        [
+          3,
+          854
+        ]
+      ],
+      "uv": [
+        0.002221,
+        0.001567,
+        0.329386,
+        0.445953
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "position": [
+        280.0,
+        460.0
+      ],
+      "size": [
+        442.0,
+        851.0
+      ],
+      "scale": 1.0,
+      "rotation": 0.0,
+      "layer": 10,
+      "source": "C:\\Users\\Artem\\Desktop\\Device  Generator\\work\\sony_ericsson_w810\\parts\\front_panel.png"
+    }
+  ]
+}

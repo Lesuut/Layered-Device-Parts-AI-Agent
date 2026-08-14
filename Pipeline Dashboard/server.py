@@ -278,8 +278,26 @@ class Gallery:
         return sorted(self.items.values(), key=lambda i: i["ts"])
 
 
+def active_session(events: list[dict]) -> tuple[str, list[dict]]:
+    """Показываем только последнюю сессию.
+
+    Сессий может быть открыто несколько сразу: старая продолжает слать события
+    в ту же папку и без этого фильтра дописывалась бы в панель новой, а панель
+    новой не начиналась бы с чистого листа. Режем по последнему SessionStart и
+    выкидываем всё, что помечено чужой сессией.
+    """
+    start_at, sid = 0, ""
+    for i, ev in enumerate(events):
+        if ev.get("event") == "SessionStart":
+            start_at, sid = i, str(ev.get("session") or "")
+    tail = events[start_at:]
+    if sid:
+        tail = [e for e in tail if str(e.get("session") or sid) == sid]
+    return sid, tail
+
+
 def build_state() -> dict:
-    events = read_events()
+    session, events = active_session(read_events())
     steps = {k: {"key": k, "title": t, "hint": h, "status": "pending", "count": 0}
              for k, t, h in STEPS}
     order = [k for k, _, _ in STEPS]
@@ -410,6 +428,7 @@ def build_state() -> dict:
     done = sum(1 for s in steps.values() if s["status"] == "done")
     return {
         "version": len(events),
+        "session": session,
         "now": time.time(),
         "started": started,
         "last_ts": last_ts,
@@ -484,6 +503,61 @@ def thumbnail(path: Path, width: int) -> bytes | None:
     return data
 
 
+# ---------------------------------------------------------------------------
+# Запись device.json из вьювера
+# ---------------------------------------------------------------------------
+#
+# Вьювер, открытый двойным кликом по ОТКРЫТЬ_<device>.html, живёт на file:// и
+# сам писать на диск не может — браузер даёт только «Сохранить как» с окном
+# проводника. Поэтому кнопка «Сохранить» шлёт JSON сюда, а файл на диск кладёт
+# уже сервер, ровно по тому пути, из которого ассет и был вшит.
+
+SAVE_DIRS = (PROJECT / "assets", PROJECT / "work")
+
+
+def save_device_json(raw_path: str, device: dict) -> dict:
+    """Записать device.json по абсолютному пути внутри проекта."""
+    if not isinstance(device, dict) or not device.get("parts"):
+        return {"ok": False, "error": "bad_device", "message": "в теле нет parts"}
+    try:
+        path = Path(raw_path).resolve()
+    except OSError:
+        return {"ok": False, "error": "bad_path", "message": "путь не разобрался"}
+    if path.suffix.lower() != ".json":
+        return {"ok": False, "error": "not_json", "message": "писать можно только .json"}
+    # наружу проекта не пишем никогда, даже по прямой просьбе страницы
+    if not any(_inside(path, d) for d in SAVE_DIRS):
+        return {"ok": False, "error": "outside", "message": f"путь вне assets/ и work/: {path}"}
+    if not path.is_file():
+        return {"ok": False, "error": "no_file", "message": f"файла нет: {path}"}
+
+    path.write_text(json.dumps(device, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # ассет вшит в ОТКРЫТЬ_*.html копией — пересобираем, иначе следующее
+    # открытие покажет старую сборку
+    viewer = None
+    try:
+        sys.path.insert(0, str(PROJECT / "Asset Builder MCP"))
+        import asset_builder as ab  # noqa: PLC0415
+
+        name = f"ОТКРЫТЬ_{ab.slug(device.get('device', 'device'))}.html"
+        res = ab.build_standalone_viewer(path, path.parent / name)
+        if res.get("ok"):
+            viewer = res.get("file")
+    except Exception as exc:  # пересборка не критична, сам JSON уже записан
+        viewer = f"не пересобрал: {exc}"
+
+    return {"ok": True, "path": str(path), "viewer": viewer}
+
+
+def _inside(path: Path, root: Path) -> bool:
+    try:
+        path.relative_to(root.resolve())
+        return True
+    except ValueError:
+        return False
+
+
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -495,6 +569,9 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", cache)
+        # вьювер приходит с file:// (Origin: null) — без этого браузер режет ответ
+        self.send_header("Access-Control-Allow-Origin", self.headers.get("Origin") or "*")
+        self.send_header("Vary", "Origin")
         self.end_headers()
         try:
             self.wfile.write(body)
@@ -531,6 +608,38 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, data, "image/png", cache="max-age=30")
 
         self._send(404, b"not found", "text/plain; charset=utf-8")
+
+    # Записывать даём только своим: страница с file:// шлёт Origin: null,
+    # дашборд — http://127.0.0.1. Чужой сайт из браузера сюда не достучится.
+    def _origin_ok(self) -> bool:
+        origin = self.headers.get("Origin")
+        if not origin or origin == "null":
+            return True
+        return origin.startswith("http://127.0.0.1") or origin.startswith("http://localhost")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", self.headers.get("Origin") or "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Max-Age", "600")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def do_POST(self):
+        route = urllib.parse.urlparse(self.path).path
+        if route != "/api/save-device":
+            return self._send(404, b"not found", "text/plain; charset=utf-8")
+        if not self._origin_ok():
+            return self._send(403, b'{"ok":false,"error":"origin"}', "application/json")
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+            payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            res = save_device_json(payload.get("path", ""), payload.get("device"))
+        except Exception as exc:
+            res = {"ok": False, "error": "crash", "message": str(exc)}
+        body = json.dumps(res, ensure_ascii=False).encode("utf-8")
+        self._send(200 if res.get("ok") else 400, body, "application/json; charset=utf-8")
 
 
 # ---------------------------------------------------------------------------
