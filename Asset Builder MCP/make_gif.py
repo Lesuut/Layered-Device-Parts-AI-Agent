@@ -68,7 +68,11 @@ def capture_frames(page, args, schema: bool) -> list[Image.Image]:
 
     page.wait_for_function("() => window.__capture && window.__capture.ready()", timeout=20000)
     page.evaluate("() => window.__capture.chrome(false)")
-    page.evaluate("on => window.__capture.schema(on)", schema)
+    # Выноски тянутся за деталями с задержкой — это часть механики, и на записи
+    # она должна остаться. Часы им подменяем на шаг кадра: сколько мс длится
+    # кадр GIF, столько выноска и проживает за одну позу.
+    step = 0 if args.still else args.delay
+    page.evaluate("a => window.__capture.schema(a[0], a[1])", [schema, step])
 
     # Шаг слоя считаем от полного хода разборки: фиксированный шаг разносил
     # 14-слойную консоль вчетверо дальше 6-слойного телефона, и половина
@@ -90,9 +94,7 @@ def capture_frames(page, args, schema: bool) -> list[Image.Image]:
         if b and b["w"] > 0 and b["h"] > 0:
             zoom *= min(mw / b["w"], mh / b["h"])
 
-    shots: list[Image.Image] = []
-    total = 1 if args.still else args.frames
-    for i in range(total):
+    def pose(i: int) -> None:
         t = 0.0 if args.still else i / args.frames
         ry = args.swing * math.sin(2 * math.pi * t)
         explode = args.still_explode if args.still else (1 - math.cos(2 * math.pi * t)) / 2
@@ -104,6 +106,20 @@ def capture_frames(page, args, schema: bool) -> list[Image.Image]:
             "a => window.__capture.pose(a[0], a[1], a[2], a[3], a[4])",
             [args.rx, ry, explode, z, spread],
         )
+
+    total = 1 if args.still else args.frames
+
+    # Прогревочный круг без съёмки. Выноска отстаёт от детали, значит её
+    # положение зависит от предыдущих кадров — сняв петлю с холодного старта,
+    # на стыке получили бы рывок. После круга отставание выходит на свой цикл,
+    # и последний кадр стыкуется с первым.
+    if not args.still:
+        for i in range(total):
+            pose(i)
+
+    shots: list[Image.Image] = []
+    for i in range(total):
+        pose(i)
         shots.append(Image.open(io.BytesIO(page.screenshot())).convert("RGB"))
     return shots
 

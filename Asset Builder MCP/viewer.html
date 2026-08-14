@@ -294,10 +294,13 @@
   // мгновенно. Здесь id → {элементы, текущая и целевая точка конца}.
   const schemaNodes = new Map();
   let schemaRaf = 0, schemaLast = 0, schemaOx = 0;
-  // Запись кадров (make_gif.py): выноска обязана встать на место в том же
-  // кадре, что и деталь. Плавный ход хорош глазу и вреден покадровой съёмке —
-  // скриншот ловил бы линии на полпути к цели.
-  let schemaSnap = false;
+  // Запись кадров (make_gif.py). Съёмка идёт позами, а не в реальном времени:
+  // между скриншотами настоящих миллисекунд проходит сколько угодно, и ход
+  // выносок по часам получился бы рваным. Здесь задаётся шаг виртуального
+  // времени — сколько мс «проживает» выноска за один вызов pose(). Ставим его
+  // равным задержке кадра GIF, и на записи выноски тянутся за деталями ровно
+  // так же плавно, как в живом вьювере. 0 — обычный режим, по часам.
+  let schemaStepMs = 0;
   const partById = id => device && device.parts.find(p => p.id === id);
   const nodeById = id => nodes.find(n => n.dataset.id === id);
   // поля X/Y/W/H в списке: id → {x, y, w, h}. Нужны, чтобы перетаскивание
@@ -832,9 +835,9 @@
   // детали ставится сразу — она обязана сидеть на детали кадр в кадр.
   function paintSchema(ts) {
     schemaRaf = 0;
-    const dt = schemaLast ? Math.min(ts - schemaLast, 80) : 16;
+    const dt = schemaStepMs || (schemaLast ? Math.min(ts - schemaLast, 80) : 16);
     schemaLast = ts;
-    const k = schemaSnap ? 1 : 1 - Math.exp(-dt / 380);  // постоянная времени: больше — мягче ход
+    const k = 1 - Math.exp(-dt / 380);  // постоянная времени: больше — мягче ход
     let moving = false;
 
     schemaNodes.forEach(s => {
@@ -858,8 +861,10 @@
       s.sub.setAttribute('text-anchor', anchor);
     });
 
-    if (moving) schemaRaf = requestAnimationFrame(paintSchema);
-    else schemaLast = 0;
+    // На записи следующий кадр приносит pose(): свой rAF тут только сбил бы
+    // виртуальные часы, продвинув выноски между скриншотами.
+    if (moving && !schemaStepMs) schemaRaf = requestAnimationFrame(paintSchema);
+    else if (!moving) schemaLast = 0;
   }
 
   function drawSchema() {
@@ -1471,8 +1476,10 @@
       }
       build();   // сцена стала выше — пересчитать автомасштаб под новый размер
     },
-    schema: on => {
-      schemaSnap = true;
+    // stepMs — сколько виртуальных мс проходит за кадр записи; 0 оставляет
+    // выноски на настоящих часах (так снимаются статичные скриншоты)
+    schema: (on, stepMs) => {
+      schemaStepMs = stepMs || 0;
       schemaChk.checked = !!on;
       drawSchema();
     },
