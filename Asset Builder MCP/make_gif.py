@@ -87,12 +87,20 @@ def capture_frames(page, args, schema: bool) -> list[Image.Image]:
     mh = args.margin_h if args.margin_h is not None else (0.74 if schema else 0.86)
     zoom = args.zoom
     if not args.still:
-        page.evaluate(
-            "a => window.__capture.pose(a[0], 0, 1, a[1], a[2])", [args.rx, zoom, spread]
-        )
-        b = page.evaluate("() => window.__capture.bounds()")
-        if b and b["w"] > 0 and b["h"] > 0:
-            zoom *= min(mw / b["w"], mh / b["h"])
+        # Мерим полную разборку в трёх крайних позах качания: повёрнутая
+        # сборка шире прямой, и подгон только по ry=0 срезал крайние детали.
+        worst_w = worst_h = 0.0
+        for ry in (0.0, args.swing, -args.swing):
+            page.evaluate(
+                "a => window.__capture.pose(a[0], a[1], 1, a[2], a[3])",
+                [args.rx, ry, zoom, spread],
+            )
+            b = page.evaluate("() => window.__capture.bounds()")
+            if b:
+                worst_w = max(worst_w, b["w"])
+                worst_h = max(worst_h, b["h"])
+        if worst_w > 0 and worst_h > 0:
+            zoom *= min(mw / worst_w, mh / worst_h)
 
     def pose(i: int) -> None:
         t = 0.0 if args.still else i / args.frames

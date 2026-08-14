@@ -260,8 +260,10 @@ here can never drift from what the tool actually renders.
 py "Asset Builder MCP/make_gif.py" nokia_3310
 py "Asset Builder MCP/make_gif.py" gameboy_advance --no-schema --colors 64 --frames 40 --delay 90 --width 560 --height 420
 
-# the device gallery
+# the device gallery, and the animated wall at the bottom of this page
 py "Asset Builder MCP/make_gif.py" --all --grid
+py "Asset Builder MCP/make_gif.py" --all --no-schema --frames 24 --delay 100 --colors 48 \
+    --width 240 --height 240 --travel 190 --margin-w 0.92 --margin-h 0.92 --out docs/media/tiles
 
 # viewer, dashboard and atlas stills
 py docs/shots.py
@@ -269,8 +271,15 @@ py docs/shots.py
 
 The loop is seamless by construction: the swing is `sin(2πt)` and the teardown
 is `(1 − cos(2πt)) / 2`, so the last frame meets the first. Framing is measured,
-not guessed — the recorder poses the asset fully exploded, reads its on-screen
-bounding box back out of the page, and picks the scale from that.
+not guessed — the recorder poses the asset fully exploded at both ends of the
+swing, reads its on-screen bounding box back out of the page, and picks the
+scale from that, so a 14-layer console frames as well as a 6-layer phone.
+
+Type callouts still trail their parts on the recording, the way they do live.
+They run on a virtual clock stepped by the frame delay rather than by
+`requestAnimationFrame` — that is what made screenshot timing decide the phase.
+Since a trailing callout depends on the frames before it, the recorder runs one
+silent lap first so the lag settles into its cycle before capture starts.
 
 ---
 
@@ -283,3 +292,78 @@ bounding box back out of the page, and picks the scale from that.
 - `assets/nokia_3310/` is the reference asset — 7 layers, built end to end
   through this pipeline. Use it as the shape of `device.json` and as a test file
   for the viewer.
+
+---
+
+## Every device, coming apart
+
+All 22 assets on the same loop: assembled, layers pulled apart in teardown
+order, back together. Same recorder, same viewer, 24 frames each.
+
+<table>
+  <tr>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/blackberry.gif" width="150" alt="blackberry taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/compact_camera.gif" width="150" alt="compact_camera taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/discman.gif" width="150" alt="discman taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/gameboy_advance.gif" width="150" alt="gameboy_advance taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/gameboy_pocket.gif" width="150" alt="gameboy_pocket taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/gamepad_ds2.gif" width="150" alt="gamepad_ds2 taken apart"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>blackberry</b></sub></td>
+    <td align="center"><sub><b>compact_camera</b></sub></td>
+    <td align="center"><sub><b>discman</b></sub></td>
+    <td align="center"><sub><b>gameboy_advance</b></sub></td>
+    <td align="center"><sub><b>gameboy_pocket</b></sub></td>
+    <td align="center"><sub><b>gamepad_ds2</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/ipod_classic.gif" width="150" alt="ipod_classic taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/motorola_razr.gif" width="150" alt="motorola_razr taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nintendo_dsi.gif" width="150" alt="nintendo_dsi taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_2110.gif" width="150" alt="nokia_2110 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_3210.gif" width="150" alt="nokia_3210 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_3310.gif" width="150" alt="nokia_3310 taken apart"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>ipod_classic</b></sub></td>
+    <td align="center"><sub><b>motorola_razr</b></sub></td>
+    <td align="center"><sub><b>nintendo_dsi</b></sub></td>
+    <td align="center"><sub><b>nokia_2110</b></sub></td>
+    <td align="center"><sub><b>nokia_3210</b></sub></td>
+    <td align="center"><sub><b>nokia_3310</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_5110.gif" width="150" alt="nokia_5110 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_8110.gif" width="150" alt="nokia_8110 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/nokia_ngage.gif" width="150" alt="nokia_ngage taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/polaroid.gif" width="150" alt="polaroid taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/psp.gif" width="150" alt="psp taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/retro_con.gif" width="150" alt="retro_con taken apart"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>nokia_5110</b></sub></td>
+    <td align="center"><sub><b>nokia_8110</b></sub></td>
+    <td align="center"><sub><b>nokia_ngage</b></sub></td>
+    <td align="center"><sub><b>polaroid</b></sub></td>
+    <td align="center"><sub><b>psp</b></sub></td>
+    <td align="center"><sub><b>retro_con</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/sharp_gx30.gif" width="150" alt="sharp_gx30 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/sony_ericsson_w810.gif" width="150" alt="sony_ericsson_w810 taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/tamagotchi.gif" width="150" alt="tamagotchi taken apart"></td>
+    <td align="center" width="16.6%"><img src="docs/media/tiles/walkman.gif" width="150" alt="walkman taken apart"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>sharp_gx30</b></sub></td>
+    <td align="center"><sub><b>sony_ericsson_w810</b></sub></td>
+    <td align="center"><sub><b>tamagotchi</b></sub></td>
+    <td align="center"><sub><b>walkman</b></sub></td>
+  </tr>
+</table>
+
+<p align="center">
+  <sub>Rebuild the whole wall with<br>
+  <code>py "Asset Builder MCP/make_gif.py" --all --no-schema --frames 24 --delay 100 --colors 48 --width 240 --height 240 --travel 190 --margin-w 0.92 --margin-h 0.92 --out docs/media/tiles</code></sub>
+</p>
