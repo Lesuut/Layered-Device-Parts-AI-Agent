@@ -294,6 +294,10 @@
   // мгновенно. Здесь id → {элементы, текущая и целевая точка конца}.
   const schemaNodes = new Map();
   let schemaRaf = 0, schemaLast = 0, schemaOx = 0;
+  // Запись кадров (make_gif.py): выноска обязана встать на место в том же
+  // кадре, что и деталь. Плавный ход хорош глазу и вреден покадровой съёмке —
+  // скриншот ловил бы линии на полпути к цели.
+  let schemaSnap = false;
   const partById = id => device && device.parts.find(p => p.id === id);
   const nodeById = id => nodes.find(n => n.dataset.id === id);
   // поля X/Y/W/H в списке: id → {x, y, w, h}. Нужны, чтобы перетаскивание
@@ -830,7 +834,7 @@
     schemaRaf = 0;
     const dt = schemaLast ? Math.min(ts - schemaLast, 80) : 16;
     schemaLast = ts;
-    const k = 1 - Math.exp(-dt / 380);  // постоянная времени: больше — мягче ход
+    const k = schemaSnap ? 1 : 1 - Math.exp(-dt / 380);  // постоянная времени: больше — мягче ход
     let moving = false;
 
     schemaNodes.forEach(s => {
@@ -1437,6 +1441,79 @@
   }
 
   window.addEventListener('resize', () => { if (device) { build(); } });
+
+  // ---------- пульт для покадровой записи ----------
+  // make_gif.py открывает эту же страницу в headless Chrome и снимает кадры.
+  // Дотянуться до view/layout снаружи он не может — вьювер живёт в замыкании,
+  // а встроенная кнопка «Анимация» крутится на requestAnimationFrame: её фаза
+  // зависит от того, когда успел сработать скриншот, и петля не сходится.
+  // Поэтому наружу торчит узкий детерминированный пульт: поставили позу —
+  // сняли кадр. На поведение страницы для человека он не влияет.
+  window.__capture = {
+    ready: () => !!device && nodes.length > 0,
+    // span — на сколько ступеней расходятся слои: полный ход разборки равен
+    // span * spread, и без него шаг слоя пришлось бы подбирать под каждое
+    // устройство руками (у телефона 6 слоёв, у консоли 14).
+    info: () => {
+      if (!device) return null;
+      const ls = device.parts.map(p => p.layer);
+      return {
+        device: device.device,
+        parts: device.parts.length,
+        span: Math.max(Math.max(...ls) - Math.min(...ls), 1),
+      };
+    },
+    // Спрятать всю обвязку: остаётся сцена со сборкой и легенда типов.
+    chrome: show => {
+      for (const sel of ['header', 'footer', '#list', '#hud', '#drop']) {
+        const el = document.querySelector(sel);
+        if (el) el.style.display = show ? '' : 'none';
+      }
+      build();   // сцена стала выше — пересчитать автомасштаб под новый размер
+    },
+    schema: on => {
+      schemaSnap = true;
+      schemaChk.checked = !!on;
+      drawSchema();
+    },
+    // Габарит всей сборки на экране в текущей позе, в долях сцены. Скрипт
+    // записи подбирает по нему масштаб: разлетевшаяся сборка выше собранной,
+    // и «на глаз» подобранный зум резал крайние слои у каждого второго
+    // устройства.
+    bounds: () => {
+      const box = stage.getBoundingClientRect();
+      let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+      for (const n of nodes) {
+        if (n.style.display === 'none') continue;
+        const r = n.getBoundingClientRect();
+        minX = Math.min(minX, r.left); maxX = Math.max(maxX, r.right);
+        minY = Math.min(minY, r.top);  maxY = Math.max(maxY, r.bottom);
+      }
+      if (maxX < minX) return null;
+      return {
+        w: (maxX - minX) / box.width,
+        h: (maxY - minY) / box.height,
+      };
+    },
+
+    // rx/ry — градусы, explode 0..1, zoom — доля автомасштаба, spread — шаг слоя в px
+    pose: (rx, ry, explode, zoom, spread) => {
+      view.rx = rx;
+      view.ry = ry;
+      view.explode = explode;
+      if (zoom != null) view.zoom = zoom;
+      if (spread != null) view.spread = spread;
+      // ползунки — часть кадра на скриншотах интерфейса: если их не двигать,
+      // «Разборка 0%» подписана под разложенной на слои сборкой
+      expl.value = String(Math.round(explode * 100));
+      explVal.textContent = expl.value + '%';
+      document.getElementById('zoom').value = String(Math.round(view.zoom * 100));
+      layout();
+      // layout() ставит выноскам цель, но красит их следующий rAF. Со снапом
+      // один вызов догоняет их до цели прямо здесь, в этом же кадре.
+      if (schemaChk.checked) paintSchema(performance.now());
+    },
+  };
 
   // ---------- автозагрузка вшитого ассета ----------
   // file:// не даёт странице читать соседние файлы (CORS), поэтому упаковщик
